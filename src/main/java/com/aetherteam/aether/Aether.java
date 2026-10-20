@@ -18,6 +18,7 @@ import com.aetherteam.aether.inventory.AetherAccessorySlots;
 import com.aetherteam.aether.integration.twilightforest.TwilightForestIntegration;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.item.AetherCreativeTabs;
+import com.aetherteam.aether.item.AetherItemComponents;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.combat.AetherArmorMaterials;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
@@ -73,6 +74,7 @@ public final class Aether {
         AetherLootFunctions.bootstrap();
         AetherLootConditions.bootstrap();
         AetherLootModifiers.register();
+        AetherItemComponents.register();
         AetherDataComponents.bootstrap();
         AetherRecipeBookCategories.bootstrap();
         AetherRecipeTypes.bootstrap();
