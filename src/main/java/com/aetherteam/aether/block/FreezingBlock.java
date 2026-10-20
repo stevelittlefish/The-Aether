@@ -80,6 +80,14 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
     }
 
     /**
+     * Empties the recipe cache, so it is rebuilt from the recipe manager on next use.
+     */
+    static void clearCache() {
+        cachedBlocks.clear();
+        cachedResults.clear();
+    }
+
+    /**
      * Caches the {@link AetherRecipeTypes#ICESTONE_FREEZABLE} recipes through the level's {@link net.minecraft.world.item.crafting.RecipeManager}.
      *
      * @param level The {@link Level} that the recipe occurs in.

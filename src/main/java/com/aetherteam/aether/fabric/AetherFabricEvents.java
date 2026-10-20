@@ -10,6 +10,7 @@ import com.aetherteam.aether.data.migration.LegacyPlayerDataMigration;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.ai.goal.BeeGrowBerryBushGoal;
 import com.aetherteam.aether.entity.ai.goal.FoxEatBerryBushGoal;
+import com.aetherteam.aether.block.FreezingBlock;
 import com.aetherteam.aether.block.portal.AetherPortalInteractions;
 import com.aetherteam.aether.item.tools.abilities.ToolBlockInteractions;
 import com.aetherteam.aether.item.tools.abilities.ToolAbilities;
@@ -59,7 +60,12 @@ public final class AetherFabricEvents {
 
     private static void registerServerLifecycleEvents() {
         ServerLifecycleEvents.SERVER_STARTING.register(AetherConfig::loadServer);
-        ServerLifecycleEvents.SERVER_STOPPED.register(server -> AetherConfig.unloadServer());
+        ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
+            AetherConfig.unloadServer();
+            FreezingBlock.clearCache();
+        });
+        // NeoForge cleared the freezing recipe cache from a reload listener.
+        ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, resourceManager, success) -> FreezingBlock.clearCache());
     }
 
     private static void registerPlayerEvents() {
