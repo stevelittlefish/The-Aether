@@ -2,6 +2,7 @@ package com.aetherteam.aether.item;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.entity.AttackStrengthSnapshot;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.accessories.api.AccessoriesAPI;
@@ -26,8 +27,15 @@ public final class EquipmentUtil {
      * @return Whether the attack was full strength, as a {@link Boolean}.
      */
     public static boolean isFullStrength(LivingEntity attacker) {
+        if (!(attacker instanceof Player player)) {
+            return true;
+        }
+        // During an attack the live meter has already been reset by vanilla; use the value from when the attack began.
+        float strength = player instanceof AttackStrengthSnapshot snapshot && !Float.isNaN(snapshot.aether$getAttackStrengthSnapshot())
+                ? snapshot.aether$getAttackStrengthSnapshot()
+                : player.getAttackStrengthScale(1.0F);
         boolean combatifyLoaded = FabricLoader.getInstance().isModLoaded("combatify");
-        return !(attacker instanceof Player player) || (combatifyLoaded ? player.getAttackStrengthScale(1.0F) >= 1.95F : player.getAttackStrengthScale(1.0F) >= 1.0F);
+        return combatifyLoaded ? strength >= 1.95F : strength >= 1.0F;
     }
 
     /**

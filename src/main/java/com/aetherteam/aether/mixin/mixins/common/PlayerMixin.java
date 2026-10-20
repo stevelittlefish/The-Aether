@@ -2,6 +2,7 @@ package com.aetherteam.aether.mixin.mixins.common;
 
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.entity.AetherMounting;
+import com.aetherteam.aether.entity.AttackStrengthSnapshot;
 import com.aetherteam.aether.item.accessories.abilities.AccessoryAbilities;
 import com.aetherteam.aether.item.tools.abilities.ToolAbilities;
 import com.aetherteam.aether.world.AetherTravelController;
@@ -18,6 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -25,9 +27,35 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 @Mixin(Player.class)
-public abstract class PlayerMixin {
+public abstract class PlayerMixin implements AttackStrengthSnapshot {
+    @Unique
+    private float aether$attackStrengthSnapshot = Float.NaN;
+
     @Shadow
     protected abstract boolean wantsToStopRiding();
+
+    @Shadow
+    public abstract float getAttackStrengthScale(float adjustTicks);
+
+    @Override
+    public float aether$getAttackStrengthSnapshot() {
+        return this.aether$attackStrengthSnapshot;
+    }
+
+    /**
+     * Records the attack strength before vanilla resets it, so full-strength weapon abilities can read it while the target is hurt.
+     *
+     * @see AttackStrengthSnapshot
+     */
+    @Inject(at = @At("HEAD"), method = "attack(Lnet/minecraft/world/entity/Entity;)V")
+    private void aether$captureAttackStrength(Entity target, CallbackInfo ci) {
+        this.aether$attackStrengthSnapshot = this.getAttackStrengthScale(1.0F);
+    }
+
+    @Inject(at = @At("RETURN"), method = "attack(Lnet/minecraft/world/entity/Entity;)V")
+    private void aether$releaseAttackStrength(Entity target, CallbackInfo ci) {
+        this.aether$attackStrengthSnapshot = Float.NaN;
+    }
 
     /**
      * Damages gloves only once during a sweeping attack, instead of once for every damaged entity in the attack.
