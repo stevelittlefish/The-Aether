@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:icestone_stairs"
+        "recipes": "aether:icestone_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

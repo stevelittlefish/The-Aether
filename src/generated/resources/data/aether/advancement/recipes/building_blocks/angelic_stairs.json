@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:angelic_stairs"
+        "recipes": "aether:angelic_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

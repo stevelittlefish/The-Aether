@@ -3,15 +3,13 @@
   "criteria": {
     "kill_sun_spirit": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "aether:sun_spirit"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether:sun_spirit"
           }
-        ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     }

@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:random_selector",
+  "default": {
+    "feature": "aether:single_gold_dungeon_flower",
+    "placement": [
+      {
+        "type": "minecraft:block_predicate_filter",
+        "predicate": {
+          "type": "minecraft:matching_block_tag",
+          "tag": "minecraft:air"
+        }
+      }
+    ]
+  },
+  "features": [
+    {
+      "chance": 0.66,
+      "feature": {
+        "feature": "aether:golden_oak_tree",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether:golden_oak_sapling"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

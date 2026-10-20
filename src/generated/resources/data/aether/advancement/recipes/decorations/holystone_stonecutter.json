@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:holystone_stonecutter"
+        "recipes": "aether:holystone_stonecutter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

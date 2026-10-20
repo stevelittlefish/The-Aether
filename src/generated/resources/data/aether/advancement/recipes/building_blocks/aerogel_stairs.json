@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:aerogel_stairs"
+        "recipes": "aether:aerogel_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

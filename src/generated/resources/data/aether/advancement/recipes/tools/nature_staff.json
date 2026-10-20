@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:nature_staff"
+        "recipes": "aether:nature_staff"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

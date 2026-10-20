@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:aether_saddle"
+        "recipes": "aether:aether_saddle"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

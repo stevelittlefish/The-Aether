@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:skyroot_loom"
+        "recipes": "aether:skyroot_loom"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:random_selector",
+  "default": {
+    "feature": "aether:skyroot_tree",
+    "placement": [
+      {
+        "type": "minecraft:block_predicate_filter",
+        "predicate": {
+          "type": "minecraft:would_survive",
+          "state": "aether:skyroot_sapling"
+        }
+      }
+    ]
+  },
+  "features": [
+    {
+      "chance": 0.01,
+      "feature": {
+        "feature": "aether:golden_oak_tree",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether:golden_oak_sapling"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

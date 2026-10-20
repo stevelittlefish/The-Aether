@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:aether_tune_enchanting"
+        "recipes": "aether:aether_tune_enchanting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

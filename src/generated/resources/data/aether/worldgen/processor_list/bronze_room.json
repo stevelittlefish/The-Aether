@@ -12,9 +12,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "aether:sentry_stone"
-          }
+          "output_state": "aether:sentry_stone"
         },
         {
           "input_predicate": {
@@ -25,12 +23,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "aether:mossy_holystone",
-            "Properties": {
-              "double_drops": "false"
-            }
-          }
+          "output_state": "aether:mossy_holystone"
         }
       ]
     },
@@ -46,15 +39,10 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "aether:trapped_carved_stone"
-          },
+          "output_state": "aether:trapped_carved_stone",
           "position_predicate": {
-            "axis": "y",
-            "max_chance": 0.0,
             "max_dist": 1,
             "min_chance": 1.0,
-            "min_dist": 0,
             "predicate_type": "minecraft:axis_aligned_linear_pos"
           }
         },
@@ -67,15 +55,10 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "aether:trapped_sentry_stone"
-          },
+          "output_state": "aether:trapped_sentry_stone",
           "position_predicate": {
-            "axis": "y",
-            "max_chance": 0.0,
             "max_dist": 1,
             "min_chance": 1.0,
-            "min_dist": 0,
             "predicate_type": "minecraft:axis_aligned_linear_pos"
           }
         }

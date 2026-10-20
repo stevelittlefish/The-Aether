@@ -12,9 +12,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "aether:locked_sentry_stone"
-          }
+          "output_state": "aether:locked_sentry_stone"
         }
       ]
     },

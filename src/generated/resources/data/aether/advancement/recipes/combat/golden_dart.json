@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:golden_dart"
+        "recipes": "aether:golden_dart"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

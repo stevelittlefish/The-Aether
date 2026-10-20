@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:golden_leggings_repairing"
+        "recipes": "aether:golden_leggings_repairing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

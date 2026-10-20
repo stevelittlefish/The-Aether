@@ -2,12 +2,9 @@
   "type": "aether:large_aercloud",
   "biomes": "#aether:has_large_aercloud",
   "blocks": {
-    "type": "minecraft:simple_state_provider",
-    "state": {
-      "Name": "aether:cold_aercloud",
-      "Properties": {
-        "double_drops": "true"
-      }
+    "id": "aether:cold_aercloud",
+    "properties": {
+      "double_drops": "true"
     }
   },
   "rangeY": 32,

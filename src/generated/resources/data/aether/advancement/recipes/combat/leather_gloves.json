@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:leather_gloves"
+        "recipes": "aether:leather_gloves"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:skyroot_note_block"
+        "recipes": "aether:skyroot_note_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

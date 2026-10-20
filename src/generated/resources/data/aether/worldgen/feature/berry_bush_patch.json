@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:simple_block",
+  "to_place": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": {
+          "id": "aether:berry_bush",
+          "properties": {
+            "double_drops": "true"
+          }
+        },
+        "weight": 1
+      }
+    ]
+  }
+}

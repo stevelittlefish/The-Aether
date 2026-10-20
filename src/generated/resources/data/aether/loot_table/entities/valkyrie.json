@@ -6,14 +6,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": 1.0,
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "aether:victory_medal"
+          "name": "aether:victory_medal",
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": 1.0
+          }
         }
       ],
       "rolls": 1.0

@@ -3,27 +3,23 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "block": "aether:skyroot_bed",
-              "condition": "minecraft:block_state_property",
-              "properties": {
-                "part": "head"
-              }
+          "name": "aether:skyroot_bed",
+          "condition": {
+            "type": "minecraft:match_block",
+            "blocks": "aether:skyroot_bed",
+            "state": {
+              "part": "head"
             }
-          ],
-          "name": "aether:skyroot_bed"
+          }
         }
       ],
-      "rolls": 1.0
+      "rolls": 1.0,
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      }
     }
   ],
   "random_sequence": "aether:blocks/skyroot_bed"

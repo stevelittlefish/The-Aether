@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:yellow_cape"
+        "recipes": "aether:yellow_cape"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

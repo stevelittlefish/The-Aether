@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:golden_shovel_repairing"
+        "recipes": "aether:golden_shovel_repairing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:white_cape"
+        "recipes": "aether:white_cape"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

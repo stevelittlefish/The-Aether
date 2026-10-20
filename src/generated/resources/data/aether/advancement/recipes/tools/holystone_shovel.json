@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:holystone_shovel"
+        "recipes": "aether:holystone_shovel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

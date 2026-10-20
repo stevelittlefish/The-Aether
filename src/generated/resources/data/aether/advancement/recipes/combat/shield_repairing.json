@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:shield_repairing"
+        "recipes": "aether:shield_repairing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

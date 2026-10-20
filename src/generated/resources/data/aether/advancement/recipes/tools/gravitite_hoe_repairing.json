@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:gravitite_hoe_repairing"
+        "recipes": "aether:gravitite_hoe_repairing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:moa_egg_pumpkin_pie"
+        "recipes": "aether:moa_egg_pumpkin_pie"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

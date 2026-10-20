@@ -6,23 +6,23 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "aether:golden_amber",
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 2.0,
                 "min": 1.0
-              },
-              "function": "minecraft:set_count"
+              }
             },
             {
+              "type": "minecraft:apply_bonus",
               "enchantment": "minecraft:fortune",
-              "formula": "minecraft:ore_drops",
-              "function": "minecraft:apply_bonus"
+              "formula": "minecraft:ore_drops"
             }
-          ],
-          "name": "aether:golden_amber"
+          ]
         }
       ],
       "rolls": 1.0

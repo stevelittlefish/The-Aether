@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:quicksoil_glass_enchanting"
+        "recipes": "aether:quicksoil_glass_enchanting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

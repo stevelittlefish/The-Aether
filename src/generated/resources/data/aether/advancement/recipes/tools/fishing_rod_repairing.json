@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:fishing_rod_repairing"
+        "recipes": "aether:fishing_rod_repairing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

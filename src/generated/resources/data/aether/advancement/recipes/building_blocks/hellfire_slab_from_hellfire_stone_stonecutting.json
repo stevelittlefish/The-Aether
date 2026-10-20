@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:hellfire_slab_from_hellfire_stone_stonecutting"
+        "recipes": "aether:hellfire_slab_from_hellfire_stone_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

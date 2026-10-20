@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:enchanted_gravitite_enchanting"
+        "recipes": "aether:enchanted_gravitite_enchanting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

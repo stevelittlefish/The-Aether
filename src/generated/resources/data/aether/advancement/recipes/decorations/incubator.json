@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:incubator"
+        "recipes": "aether:incubator"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

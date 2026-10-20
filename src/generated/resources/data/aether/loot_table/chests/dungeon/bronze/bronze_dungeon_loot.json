@@ -53,51 +53,45 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 10.0,
-                "min": 4.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
           "name": "aether:golden_dart",
-          "weight": 3
+          "weight": 3,
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 10.0,
+              "min": 4.0
+            }
+          }
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 6.0,
-                "min": 2.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
           "name": "aether:enchanted_dart",
-          "weight": 3
+          "weight": 3,
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 6.0,
+              "min": 2.0
+            }
+          }
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 5.0,
-                "min": 2.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
           "name": "aether:poison_dart",
-          "weight": 3
+          "weight": 3,
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 5.0,
+              "min": 2.0
+            }
+          }
         },
         {
           "type": "minecraft:item",
@@ -130,48 +124,42 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 5.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
+          "name": "aether:icestone",
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 5.0,
+              "min": 1.0
             }
-          ],
-          "name": "aether:icestone"
+          }
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 4.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
+          "name": "aether:ambrosium_shard",
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 4.0,
+              "min": 1.0
             }
-          ],
-          "name": "aether:ambrosium_shard"
+          }
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 10.0,
-                "min": 2.0
-              },
-              "function": "minecraft:set_count"
+          "name": "aether:ambrosium_torch",
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 10.0,
+              "min": 2.0
             }
-          ],
-          "name": "aether:ambrosium_torch"
+          }
         }
       ],
       "rolls": {
@@ -185,35 +173,31 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 4.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
           "name": "aether:ambrosium_shard",
-          "weight": 6
+          "weight": 6,
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 4.0,
+              "min": 1.0
+            }
+          }
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 10.0,
-                "min": 2.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
           "name": "aether:ambrosium_torch",
-          "weight": 5
+          "weight": 5,
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 10.0,
+              "min": 2.0
+            }
+          }
         },
         {
           "type": "minecraft:item",
@@ -232,19 +216,17 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 10.0,
-                "min": 2.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
           "name": "minecraft:arrow",
-          "weight": 2
+          "weight": 2,
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 10.0,
+              "min": 2.0
+            }
+          }
         },
         {
           "type": "minecraft:item",
@@ -253,19 +235,17 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
           "name": "aether:skyroot_planks",
-          "weight": 2
+          "weight": 2,
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 3.0,
+              "min": 1.0
+            }
+          }
         }
       ],
       "rolls": {

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:zanite_ring"
+        "recipes": "aether:zanite_ring"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

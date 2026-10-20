@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:angelic_stone_from_pillar_stonecutting"
+        "recipes": "aether:angelic_stone_from_pillar_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

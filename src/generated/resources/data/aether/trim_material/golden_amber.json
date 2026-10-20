@@ -1,9 +1,7 @@
 {
-  "asset_name": "golden_amber",
   "description": {
     "color": "#F8B52F",
     "translate": "trim_material.aether.golden_amber"
   },
-  "ingredient": "aether:golden_amber",
-  "item_model_index": 0.6
+  "palette_id": "aether:trim/golden_amber"
 }

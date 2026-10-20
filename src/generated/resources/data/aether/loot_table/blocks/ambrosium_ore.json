@@ -1,10 +1,5 @@
 {
   "type": "minecraft:block",
-  "functions": [
-    {
-      "function": "aether:double_drops"
-    }
-  ],
   "pools": [
     {
       "bonus_rolls": 0.0,
@@ -14,38 +9,36 @@
           "children": [
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "predicates": {
-                      "minecraft:enchantments": [
-                        {
-                          "enchantments": "minecraft:silk_touch",
-                          "levels": {
-                            "min": 1
-                          }
+              "name": "aether:ambrosium_ore",
+              "condition": {
+                "type": "minecraft:match_tool",
+                "predicate": {
+                  "predicates": {
+                    "minecraft:enchantments": [
+                      {
+                        "enchantments": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
                         }
-                      ]
-                    }
+                      }
+                    ]
                   }
                 }
-              ],
-              "name": "aether:ambrosium_ore"
+              }
             },
             {
               "type": "minecraft:item",
-              "functions": [
+              "name": "aether:ambrosium_shard",
+              "modifier": [
                 {
+                  "type": "minecraft:apply_bonus",
                   "enchantment": "minecraft:fortune",
-                  "formula": "minecraft:ore_drops",
-                  "function": "minecraft:apply_bonus"
+                  "formula": "minecraft:ore_drops"
                 },
                 {
-                  "function": "minecraft:explosion_decay"
+                  "type": "minecraft:explosion_decay"
                 }
-              ],
-              "name": "aether:ambrosium_shard"
+              ]
             }
           ]
         }
@@ -53,5 +46,8 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "aether:blocks/ambrosium_ore"
+  "random_sequence": "aether:blocks/ambrosium_ore",
+  "modifier": {
+    "type": "aether:double_drops"
+  }
 }

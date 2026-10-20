@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:golden_parachute"
+        "recipes": "aether:golden_parachute"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

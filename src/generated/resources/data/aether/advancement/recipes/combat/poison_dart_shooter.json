@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:poison_dart_shooter"
+        "recipes": "aether:poison_dart_shooter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

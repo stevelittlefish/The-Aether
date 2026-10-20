@@ -3,18 +3,21 @@
   "criteria": {
     "place_banner": {
       "conditions": {
-        "location": [
-          {
-            "condition": "minecraft:location_check",
-            "predicate": {}
-          },
-          {
-            "condition": "minecraft:match_tool",
-            "predicate": {
-              "items": "minecraft:black_banner"
+        "location": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "type": "minecraft:location_check",
+              "predicate": {}
+            },
+            {
+              "type": "minecraft:match_tool",
+              "predicate": {
+                "items": "minecraft:black_banner"
+              }
             }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "minecraft:item_used_on_block"
     }
@@ -54,12 +57,12 @@
             "color": "light_blue",
             "pattern": "minecraft:gradient_up"
           },
-        {
-          "color": "light_blue",
-          "pattern": "minecraft:gradient"
-        }
-      ],
-      "minecraft:item_name": "{\"color\":\"gold\",\"translate\":\"aether.block.aether.swet_banner\"}"
+          {
+            "color": "light_blue",
+            "pattern": "minecraft:gradient"
+          }
+        ],
+        "minecraft:item_name": "{\"color\":\"gold\",\"translate\":\"aether.block.aether.swet_banner\"}"
       },
       "count": 1,
       "id": "minecraft:black_banner"

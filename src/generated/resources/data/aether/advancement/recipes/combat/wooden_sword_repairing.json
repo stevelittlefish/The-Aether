@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:wooden_sword_repairing"
+        "recipes": "aether:wooden_sword_repairing"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:gravitite_boots"
+        "recipes": "aether:gravitite_boots"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

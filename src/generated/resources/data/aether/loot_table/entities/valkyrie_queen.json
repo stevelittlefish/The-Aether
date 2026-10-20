@@ -6,14 +6,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": 1.0,
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "aether:silver_dungeon_key"
+          "name": "aether:silver_dungeon_key",
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": 1.0
+          }
         }
       ],
       "rolls": 1.0
@@ -23,14 +21,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": 1.0,
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "minecraft:golden_sword"
+          "name": "minecraft:golden_sword",
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": 1.0
+          }
         }
       ],
       "rolls": 1.0

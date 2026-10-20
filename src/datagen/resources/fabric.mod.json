@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "aether_datagen",
+  "version": "1.0.0",
+  "name": "The Aether Data Generation",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "com.aetherteam.aether.datagen.AetherDataGenerator"
+    ]
+  },
+  "depends": {
+    "aether": "*"
+  }
+}

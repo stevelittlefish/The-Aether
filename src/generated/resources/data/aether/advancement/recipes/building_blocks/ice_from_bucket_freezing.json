@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:ice_from_bucket_freezing"
+        "recipes": "aether:ice_from_bucket_freezing"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:swet_banner"
+        "recipes": "aether:swet_banner"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

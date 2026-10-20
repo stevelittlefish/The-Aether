@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:skyroot_gravitite_jukebox"
+        "recipes": "aether:skyroot_gravitite_jukebox"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

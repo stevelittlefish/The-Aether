@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:golden_ring"
+        "recipes": "aether:golden_ring"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:flint_and_steel_repairing"
+        "recipes": "aether:flint_and_steel_repairing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

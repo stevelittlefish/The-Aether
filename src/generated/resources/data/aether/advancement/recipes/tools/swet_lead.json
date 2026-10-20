@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:swet_lead"
+        "recipes": "aether:swet_lead"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -2,6 +2,7 @@ package com.aetherteam.aether.mixin.mixins.common;
 
 import com.aetherteam.aether.attachment.AetherTimeAttachment;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
+import com.aetherteam.aether.world.ScaledClockInstance;
 import net.minecraft.world.attribute.EnvironmentAttributeSystem;
 import net.minecraft.world.clock.ClockInstance;
 import net.minecraft.world.clock.ClockManager;
@@ -29,28 +30,5 @@ public class EnvironmentAttributeSystemMixin {
             int multiplier = AetherTimeAttachment.getTicksPerDayMultiplier();
             return multiplier > 1 ? new ScaledClockInstance(instance, multiplier) : instance;
         };
-    }
-
-    private record ScaledClockInstance(ClockInstance instance, int multiplier) implements ClockInstance {
-        @Override
-        public long totalTicks() {
-            return Math.floorDiv(this.instance.totalTicks(), this.multiplier);
-        }
-
-        @Override
-        public float partialTick() {
-            // The ticks lost to the division above, plus this tick's fraction, as a fraction of one scaled tick.
-            return (Math.floorMod(this.instance.totalTicks(), this.multiplier) + this.instance.partialTick()) / this.multiplier;
-        }
-
-        @Override
-        public float rate() {
-            return this.instance.rate() / this.multiplier;
-        }
-
-        @Override
-        public boolean isPaused() {
-            return this.instance.isPaused();
-        }
     }
 }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:book_of_lore"
+        "recipes": "aether:book_of_lore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

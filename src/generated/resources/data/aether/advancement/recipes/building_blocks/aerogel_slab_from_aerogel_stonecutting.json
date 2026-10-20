@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:aerogel_slab_from_aerogel_stonecutting"
+        "recipes": "aether:aerogel_slab_from_aerogel_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

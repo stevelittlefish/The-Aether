@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:iron_pendant"
+        "recipes": "aether:iron_pendant"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

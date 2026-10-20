@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:ambrosium_block"
+        "recipes": "aether:ambrosium_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

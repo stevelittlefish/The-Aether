@@ -3,35 +3,31 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "condition": "aether:config_enabled",
-          "config": "[Gameplay, Gives starting loot on entry]"
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aether:golden_parachute"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1.0,
+      "condition": {
+        "type": "aether:config_enabled",
+        "config": "[Gameplay, Gives starting loot on entry]"
+      }
     },
     {
       "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "condition": "aether:config_enabled",
-          "config": "[Gameplay, Gives starting loot on entry]"
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aether:book_of_lore"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1.0,
+      "condition": {
+        "type": "aether:config_enabled",
+        "config": "[Gameplay, Gives starting loot on entry]"
+      }
     }
   ],
   "random_sequence": "aether:advancements/enter_aether"

@@ -25,6 +25,15 @@ java {
 }
 
 fabricApi {
+    // Regenerates the dynamic registry JSON (world generation, dimensions, trims, damage types) from the bootstraps in
+    // data/resources/registries. Output goes to build/ and is synced into src/generated/resources by hand.
+    configureDataGeneration {
+        createSourceSet = true
+        modId = "aether_datagen"
+        outputDirectory = file("build/datagen-output")
+        addToResources = false
+        client = false
+    }
     configureTests {
         createSourceSet = true
         modId = "aether_gametest"

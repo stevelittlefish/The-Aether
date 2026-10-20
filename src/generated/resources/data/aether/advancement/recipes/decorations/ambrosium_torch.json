@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:ambrosium_torch"
+        "recipes": "aether:ambrosium_torch"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

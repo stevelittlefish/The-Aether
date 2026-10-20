@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:holystone_hoe_repairing"
+        "recipes": "aether:holystone_hoe_repairing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

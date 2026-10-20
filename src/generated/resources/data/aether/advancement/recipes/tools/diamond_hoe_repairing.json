@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:diamond_hoe_repairing"
+        "recipes": "aether:diamond_hoe_repairing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

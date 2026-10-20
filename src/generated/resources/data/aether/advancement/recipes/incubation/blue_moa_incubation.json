@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:blue_moa_incubation"
+        "recipes": "aether:blue_moa_incubation"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

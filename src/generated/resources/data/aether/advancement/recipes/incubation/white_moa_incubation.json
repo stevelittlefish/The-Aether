@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:white_moa_incubation"
+        "recipes": "aether:white_moa_incubation"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

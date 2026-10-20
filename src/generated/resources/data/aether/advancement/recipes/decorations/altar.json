@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:altar"
+        "recipes": "aether:altar"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

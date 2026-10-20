@@ -1,10 +1,5 @@
 {
   "type": "minecraft:block",
-  "functions": [
-    {
-      "function": "aether:double_drops"
-    }
-  ],
   "pools": [
     {
       "bonus_rolls": 0.0,
@@ -14,66 +9,62 @@
           "children": [
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:any_of",
-                  "terms": [
-                    {
-                      "condition": "minecraft:match_tool",
-                      "predicate": {
-                        "items": "#c:tools/shear"
-                      }
-                    },
-                    {
-                      "condition": "minecraft:match_tool",
-                      "predicate": {
-                        "predicates": {
-                          "minecraft:enchantments": [
-                            {
-                              "enchantments": "minecraft:silk_touch",
-                              "levels": {
-                                "min": 1
-                              }
+              "name": "aether:holiday_leaves",
+              "condition": {
+                "type": "minecraft:any_of",
+                "terms": [
+                  {
+                    "type": "minecraft:match_tool",
+                    "predicate": {
+                      "items": "#c:tools/shear"
+                    }
+                  },
+                  {
+                    "type": "minecraft:match_tool",
+                    "predicate": {
+                      "predicates": {
+                        "minecraft:enchantments": [
+                          {
+                            "enchantments": "minecraft:silk_touch",
+                            "levels": {
+                              "min": 1
                             }
-                          ]
-                        }
+                          }
+                        ]
                       }
                     }
-                  ]
-                }
-              ],
-              "name": "aether:holiday_leaves"
+                  }
+                ]
+              }
             },
             {
               "type": "minecraft:item",
-              "conditions": [
+              "name": "aether:skyroot_stick",
+              "condition": {
+                "type": "minecraft:table_bonus",
+                "chances": [
+                  0.02,
+                  0.022222223,
+                  0.025,
+                  0.033333335,
+                  0.1
+                ],
+                "enchantment": "minecraft:fortune"
+              },
+              "modifier": [
                 {
-                  "chances": [
-                    0.02,
-                    0.022222223,
-                    0.025,
-                    0.033333335,
-                    0.1
-                  ],
-                  "condition": "minecraft:table_bonus",
-                  "enchantment": "minecraft:fortune"
-                }
-              ],
-              "functions": [
-                {
+                  "type": "minecraft:set_count",
                   "add": false,
                   "count": {
                     "type": "minecraft:uniform",
                     "max": 2.0,
                     "min": 1.0
-                  },
-                  "function": "minecraft:set_count"
+                  }
                 },
                 {
-                  "function": "minecraft:explosion_decay"
+                  "type": "minecraft:explosion_decay"
                 }
-              ],
-              "name": "aether:skyroot_stick"
+              ]
             }
           ]
         }
@@ -81,5 +72,8 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "aether:blocks/holiday_leaves"
+  "random_sequence": "aether:blocks/holiday_leaves",
+  "modifier": {
+    "type": "aether:double_drops"
+  }
 }

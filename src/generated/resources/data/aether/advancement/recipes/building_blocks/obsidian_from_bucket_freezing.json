@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:obsidian_from_bucket_freezing"
+        "recipes": "aether:obsidian_from_bucket_freezing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

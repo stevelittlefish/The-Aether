@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:iron_gloves"
+        "recipes": "aether:iron_gloves"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:wooden_pickaxe_repairing"
+        "recipes": "aether:wooden_pickaxe_repairing"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

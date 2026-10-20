@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:crystal_leaves_freezing"
+        "recipes": "aether:crystal_leaves_freezing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

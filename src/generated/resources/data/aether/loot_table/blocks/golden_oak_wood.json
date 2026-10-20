@@ -1,19 +1,44 @@
 {
   "type": "minecraft:block",
-  "functions": [
-    {
-      "function": "aether:double_drops"
-    }
-  ],
   "pools": [
     {
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:match_tool",
+          "name": "aether:golden_oak_wood",
+          "condition": {
+            "type": "minecraft:match_tool",
+            "predicate": {
+              "predicates": {
+                "minecraft:enchantments": [
+                  {
+                    "enchantments": "minecraft:silk_touch",
+                    "levels": {
+                      "min": 1
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "rolls": 1.0,
+      "modifier": {
+        "type": "minecraft:explosion_decay"
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:skyroot_wood",
+          "condition": {
+            "type": "minecraft:inverted",
+            "term": {
+              "type": "minecraft:match_tool",
               "predicate": {
                 "predicates": {
                   "minecraft:enchantments": [
@@ -27,109 +52,75 @@
                 }
               }
             }
-          ],
-          "name": "aether:golden_oak_wood"
+          }
         }
       ],
-      "functions": [
-        {
-          "function": "minecraft:explosion_decay"
-        }
-      ],
-      "rolls": 1.0
+      "rolls": 1.0,
+      "modifier": {
+        "type": "minecraft:explosion_decay"
+      }
     },
     {
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:inverted",
-              "term": {
-                "condition": "minecraft:match_tool",
+          "name": "aether:golden_amber",
+          "condition": {
+            "type": "minecraft:all_of",
+            "terms": [
+              {
+                "type": "minecraft:match_tool",
                 "predicate": {
-                  "predicates": {
-                    "minecraft:enchantments": [
-                      {
-                        "enchantments": "minecraft:silk_touch",
-                        "levels": {
-                          "min": 1
+                  "items": "#aether:golden_amber_harvesters"
+                }
+              },
+              {
+                "type": "minecraft:inverted",
+                "term": {
+                  "type": "minecraft:match_tool",
+                  "predicate": {
+                    "predicates": {
+                      "minecraft:enchantments": [
+                        {
+                          "enchantments": "minecraft:silk_touch",
+                          "levels": {
+                            "min": 1
+                          }
                         }
-                      }
-                    ]
+                      ]
+                    }
                   }
                 }
               }
-            }
-          ],
-          "name": "aether:skyroot_wood"
-        }
-      ],
-      "functions": [
-        {
-          "function": "minecraft:explosion_decay"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "conditions": [
+            ]
+          },
+          "modifier": [
             {
-              "condition": "minecraft:match_tool",
-              "predicate": {
-                "items": "#aether:golden_amber_harvesters"
-              }
-            },
-            {
-              "condition": "minecraft:inverted",
-              "term": {
-                "condition": "minecraft:match_tool",
-                "predicate": {
-                  "predicates": {
-                    "minecraft:enchantments": [
-                      {
-                        "enchantments": "minecraft:silk_touch",
-                        "levels": {
-                          "min": 1
-                        }
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          ],
-          "functions": [
-            {
+              "type": "minecraft:set_count",
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 2.0,
                 "min": 1.0
-              },
-              "function": "minecraft:set_count"
+              }
             },
             {
+              "type": "minecraft:apply_bonus",
               "enchantment": "minecraft:fortune",
-              "formula": "minecraft:ore_drops",
-              "function": "minecraft:apply_bonus"
+              "formula": "minecraft:ore_drops"
             }
-          ],
-          "name": "aether:golden_amber"
+          ]
         }
       ],
-      "functions": [
-        {
-          "function": "minecraft:explosion_decay"
-        }
-      ],
-      "rolls": 1.0
+      "rolls": 1.0,
+      "modifier": {
+        "type": "minecraft:explosion_decay"
+      }
     }
   ],
-  "random_sequence": "aether:blocks/golden_oak_wood"
+  "random_sequence": "aether:blocks/golden_oak_wood",
+  "modifier": {
+    "type": "aether:double_drops"
+  }
 }

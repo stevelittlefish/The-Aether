@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:carved_slab"
+        "recipes": "aether:carved_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

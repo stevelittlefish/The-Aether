@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:golden_oak_wood"
+        "recipes": "aether:golden_oak_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

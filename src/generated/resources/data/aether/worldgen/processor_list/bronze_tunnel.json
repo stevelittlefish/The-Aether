@@ -16,9 +16,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "aether:sentry_stone"
-          }
+          "output_state": "aether:sentry_stone"
         },
         {
           "input_predicate": {
@@ -29,12 +27,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "aether:mossy_holystone",
-            "Properties": {
-              "double_drops": "false"
-            }
-          }
+          "output_state": "aether:mossy_holystone"
         }
       ]
     },

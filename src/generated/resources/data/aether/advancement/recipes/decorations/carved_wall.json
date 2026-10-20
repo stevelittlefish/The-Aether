@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:carved_wall"
+        "recipes": "aether:carved_wall"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

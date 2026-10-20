@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:ore",
+  "discard_chance_on_air_exposure": 0.0,
+  "size": 16,
+  "targets": [
+    {
+      "state": {
+        "id": "aether:ambrosium_ore",
+        "properties": {
+          "double_drops": "true"
+        }
+      },
+      "target": {
+        "predicate_type": "minecraft:tag_match",
+        "tag": "aether:holystone_ore_replaceables"
+      }
+    }
+  ]
+}

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:zanite_helmet"
+        "recipes": "aether:zanite_helmet"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -1,6 +1,7 @@
 package com.aetherteam.aether.data.resources.registries;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.world.processor.*;
 import com.aetherteam.aether.world.structurepiece.bronzedungeon.BronzeDungeonPiece;
 import com.aetherteam.aether.world.structurepiece.golddungeon.GoldDungeonPiece;
@@ -11,6 +12,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.levelgen.structure.templatesystem.AxisAlignedLinearPosTest;
+import net.minecraft.world.level.levelgen.structure.templatesystem.ProtectedBlockProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 
@@ -36,14 +38,16 @@ public class AetherStructureProcessorLists {
     private static final AxisAlignedLinearPosTest ON_FLOOR = new AxisAlignedLinearPosTest(1.0F, 0.0F, 0, 1, Direction.Axis.Y);
 
     public static void bootstrap(BootstrapContext<StructureProcessorList> context) {
+        // The tag comes from the bootstrap's lookup: since 26.3 the built-in registry rejects tags that aren't bound yet.
+        ProtectedBlockProcessor avoidDungeons = new ProtectedBlockProcessor(context.lookup(Registries.BLOCK).getOrThrow(AetherTags.Blocks.NON_BRONZE_DUNGEON_REPLACEABLE));
         register(context, BRONZE_ROOM, List.of(
             BronzeDungeonPiece.BRONZE_DUNGEON_STONE,
             BronzeDungeonPiece.TRAPPED_CARVED_STONE,
-            BronzeDungeonPiece.AVOID_DUNGEONS,
+            avoidDungeons,
             DoubleDropsProcessor.INSTANCE
         ));
         register(context, BRONZE_TUNNEL, List.of(
-            BronzeDungeonPiece.AVOID_DUNGEONS,
+            avoidDungeons,
             BronzeDungeonPiece.BRONZE_DUNGEON_STONE,
             DoubleDropsProcessor.INSTANCE
         ));

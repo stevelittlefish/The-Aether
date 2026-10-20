@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:skyroot_slab"
+        "recipes": "aether:skyroot_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

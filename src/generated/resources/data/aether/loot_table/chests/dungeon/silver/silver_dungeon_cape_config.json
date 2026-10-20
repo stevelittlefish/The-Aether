@@ -6,37 +6,29 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aether:config_enabled",
-              "config": "[Loot, Valkyrie Cape in loot]"
-            }
-          ],
-          "functions": [
-            {
-              "add": false,
-              "count": 1.0,
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "aether:valkyrie_cape"
+          "name": "aether:valkyrie_cape",
+          "condition": {
+            "type": "aether:config_enabled",
+            "config": "[Loot, Valkyrie Cape in loot]"
+          },
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": 1.0
+          }
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aether:config_enabled",
-              "config": "[Loot, Golden Feather in loot]"
-            }
-          ],
-          "functions": [
-            {
-              "add": false,
-              "count": 1.0,
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "aether:golden_feather"
+          "name": "aether:golden_feather",
+          "condition": {
+            "type": "aether:config_enabled",
+            "config": "[Loot, Golden Feather in loot]"
+          },
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": 1.0
+          }
         }
       ],
       "rolls": 1.0

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:gravitite_leggings"
+        "recipes": "aether:gravitite_leggings"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

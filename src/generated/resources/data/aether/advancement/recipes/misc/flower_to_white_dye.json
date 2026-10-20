@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:flower_to_white_dye"
+        "recipes": "aether:flower_to_white_dye"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

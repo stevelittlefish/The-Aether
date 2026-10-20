@@ -1,116 +1,14 @@
 {
-  "aquifers_enabled": false,
   "default_block": {
-    "Name": "aether:holystone",
-    "Properties": {
+    "id": "aether:holystone",
+    "properties": {
       "double_drops": "true"
     }
   },
-  "default_fluid": {
-    "Name": "minecraft:water",
-    "Properties": {
-      "level": "0"
-    }
-  },
+  "default_fluid": "minecraft:water",
   "disable_mob_generation": false,
   "legacy_random_source": false,
-  "noise": {
-    "height": 128,
-    "min_y": 0,
-    "size_horizontal": 2,
-    "size_vertical": 1
-  },
-  "noise_router": {
-    "barrier": 0,
-    "continents": 0,
-    "depth": 0,
-    "erosion": 0,
-    "final_density": {
-      "type": "minecraft:squeeze",
-      "argument": {
-        "type": "minecraft:interpolated",
-        "argument": {
-          "type": "minecraft:blend_density",
-          "argument": {
-            "type": "minecraft:add",
-            "argument1": -0.05,
-            "argument2": {
-              "type": "minecraft:add",
-              "argument1": -0.1,
-              "argument2": {
-                "type": "minecraft:mul",
-                "argument1": {
-                  "type": "minecraft:y_clamped_gradient",
-                  "from_value": 0,
-                  "from_y": 8,
-                  "to_value": 1,
-                  "to_y": 40
-                },
-                "argument2": {
-                  "type": "minecraft:add",
-                  "argument1": 0.1,
-                  "argument2": {
-                    "type": "minecraft:add",
-                    "argument1": -0.2,
-                    "argument2": {
-                      "type": "minecraft:mul",
-                      "argument1": {
-                        "type": "minecraft:y_clamped_gradient",
-                        "from_value": 1,
-                        "from_y": 56,
-                        "to_value": 0,
-                        "to_y": 128
-                      },
-                      "argument2": {
-                        "type": "minecraft:add",
-                        "argument1": 0.2,
-                        "argument2": {
-                          "type": "minecraft:add",
-                          "argument1": -0.13,
-                          "argument2": "aether:base_3d_noise_aether"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "fluid_level_floodedness": 0,
-    "fluid_level_spread": 0,
-    "initial_density_without_jaggedness": 0,
-    "lava": 0,
-    "ridges": 0,
-    "temperature": {
-      "type": "minecraft:shifted_noise",
-      "noise": "aether:temperature",
-      "shift_x": "minecraft:shift_x",
-      "shift_y": 0,
-      "shift_z": "minecraft:shift_z",
-      "xz_scale": 0.25,
-      "y_scale": 0
-    },
-    "vegetation": {
-      "type": "minecraft:shifted_noise",
-      "noise": "aether:vegetation",
-      "shift_x": "minecraft:shift_x",
-      "shift_y": 0,
-      "shift_z": "minecraft:shift_z",
-      "xz_scale": 0.25,
-      "y_scale": 0
-    },
-    "vein_gap": 0,
-    "vein_ridged": 0,
-    "vein_toggle": 0,
-    "preliminary_surface_level": 0
-  },
-  "ore_veins_enabled": false,
-  "sea_level": -64,
-  "spawn_target": [],
-  "surface_rule": {
+  "material_rule": {
     "type": "minecraft:sequence",
     "sequence": [
       {
@@ -136,8 +34,8 @@
               "then_run": {
                 "type": "minecraft:block",
                 "result_state": {
-                  "Name": "aether:aether_grass_block",
-                  "Properties": {
+                  "id": "aether:aether_grass_block",
+                  "properties": {
                     "double_drops": "true",
                     "snowy": "false"
                   }
@@ -147,8 +45,8 @@
             {
               "type": "minecraft:block",
               "result_state": {
-                "Name": "aether:aether_dirt",
-                "Properties": {
+                "id": "aether:aether_dirt",
+                "properties": {
                   "double_drops": "true"
                 }
               }
@@ -168,13 +66,92 @@
         "then_run": {
           "type": "minecraft:block",
           "result_state": {
-            "Name": "aether:aether_dirt",
-            "Properties": {
+            "id": "aether:aether_dirt",
+            "properties": {
               "double_drops": "true"
             }
           }
         }
       }
     ]
-  }
+  },
+  "noise": {
+    "height": 128,
+    "min_y": 0
+  },
+  "noise_router": {
+    "chunk_surface_level": 0.0,
+    "continents": 0.0,
+    "depth": 0.0,
+    "erosion": 0.0,
+    "final_density": {
+      "type": "minecraft:add",
+      "left": {
+        "type": "minecraft:squeeze",
+        "input": {
+          "type": "minecraft:interpolated",
+          "cell_size_xz": 8,
+          "cell_size_y": 4,
+          "input": {
+            "type": "minecraft:blend_density",
+            "input": {
+              "type": "minecraft:add",
+              "left": {
+                "type": "minecraft:lerp",
+                "alpha": {
+                  "type": "minecraft:gradient",
+                  "axis": "y",
+                  "from_coordinate": 8,
+                  "from_value": 0.0,
+                  "to_coordinate": 40,
+                  "to_value": 1.0
+                },
+                "first": -0.1,
+                "second": {
+                  "type": "minecraft:lerp",
+                  "alpha": {
+                    "type": "minecraft:gradient",
+                    "axis": "y",
+                    "from_coordinate": 56,
+                    "from_value": 1.0,
+                    "to_coordinate": 128,
+                    "to_value": 0.0
+                  },
+                  "first": -0.2,
+                  "second": {
+                    "type": "minecraft:add",
+                    "left": "aether:base_3d_noise_aether",
+                    "right": -0.13
+                  }
+                }
+              },
+              "right": -0.05
+            }
+          }
+        }
+      },
+      "right": {
+        "type": "minecraft:beardifier"
+      }
+    },
+    "ridges": 0.0,
+    "temperature": {
+      "type": "minecraft:noise",
+      "noise": "aether:temperature",
+      "shift_x": "minecraft:shift_x",
+      "shift_z": "minecraft:shift_z",
+      "xz_scale": 0.25,
+      "y_scale": 0.0
+    },
+    "vegetation": {
+      "type": "minecraft:noise",
+      "noise": "aether:vegetation",
+      "shift_x": "minecraft:shift_x",
+      "shift_z": "minecraft:shift_z",
+      "xz_scale": 0.25,
+      "y_scale": 0.0
+    }
+  },
+  "sea_level": -64,
+  "spawn_target": []
 }

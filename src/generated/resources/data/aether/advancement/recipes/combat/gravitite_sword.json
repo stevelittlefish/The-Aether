@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:gravitite_sword"
+        "recipes": "aether:gravitite_sword"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

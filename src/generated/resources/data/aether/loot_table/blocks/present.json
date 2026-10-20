@@ -3,93 +3,69 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "condition": "minecraft:inverted",
-          "term": {
-            "condition": "minecraft:match_tool",
-            "predicate": {
-              "predicates": {
-                "minecraft:enchantments": [
-                  {
-                    "enchantments": "minecraft:silk_touch",
-                    "levels": {
-                      "min": 1
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:stone",
+          "weight": 18,
+          "modifier": [
             {
-              "function": "aether:spawn_tnt"
+              "type": "aether:spawn_tnt"
             },
             {
+              "type": "minecraft:set_count",
               "add": false,
-              "count": 0,
-              "function": "minecraft:set_count"
+              "count": 0
             }
-          ],
-          "name": "minecraft:stone",
-          "weight": 18
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:stone",
+          "weight": 9,
+          "modifier": [
             {
-              "function": "aether:spawn_xp"
+              "type": "aether:spawn_xp"
             },
             {
+              "type": "minecraft:set_count",
               "add": false,
-              "count": 0,
-              "function": "minecraft:set_count"
+              "count": 0
             }
-          ],
-          "name": "minecraft:stone",
-          "weight": 9
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "aether:gingerbread_man",
+          "weight": 8,
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 6.0,
                 "min": 5.0
-              },
-              "function": "minecraft:set_count"
+              }
             },
             {
-              "function": "minecraft:explosion_decay"
+              "type": "minecraft:explosion_decay"
             }
-          ],
-          "name": "aether:gingerbread_man",
-          "weight": 8
+          ]
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:explosion_decay"
-            }
-          ],
-          "name": "aether:candy_cane_sword"
+          "name": "aether:candy_cane_sword",
+          "modifier": {
+            "type": "minecraft:explosion_decay"
+          }
         }
       ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "condition": "minecraft:match_tool",
+      "rolls": 1.0,
+      "condition": {
+        "type": "minecraft:inverted",
+        "term": {
+          "type": "minecraft:match_tool",
           "predicate": {
             "predicates": {
               "minecraft:enchantments": [
@@ -103,14 +79,32 @@
             }
           }
         }
-      ],
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aether:present"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1.0,
+      "condition": {
+        "type": "minecraft:match_tool",
+        "predicate": {
+          "predicates": {
+            "minecraft:enchantments": [
+              {
+                "enchantments": "minecraft:silk_touch",
+                "levels": {
+                  "min": 1
+                }
+              }
+            ]
+          }
+        }
+      }
     }
   ],
   "random_sequence": "aether:blocks/present"

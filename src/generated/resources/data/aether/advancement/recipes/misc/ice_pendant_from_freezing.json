@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:ice_pendant_from_freezing"
+        "recipes": "aether:ice_pendant_from_freezing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

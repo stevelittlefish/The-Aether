@@ -1,0 +1,16 @@
+{
+  "type": "aether:lake",
+  "fluid": {
+    "id": "minecraft:water",
+    "properties": {
+      "level": "0"
+    }
+  },
+  "top": {
+    "id": "aether:aether_grass_block",
+    "properties": {
+      "double_drops": "true",
+      "snowy": "false"
+    }
+  }
+}

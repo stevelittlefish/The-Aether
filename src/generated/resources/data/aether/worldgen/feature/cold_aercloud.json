@@ -1,0 +1,10 @@
+{
+  "type": "aether:aercloud",
+  "blocks": {
+    "id": "aether:cold_aercloud",
+    "properties": {
+      "double_drops": "true"
+    }
+  },
+  "bounds": 16
+}

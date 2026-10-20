@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:blue_aercloud_freezing"
+        "recipes": "aether:blue_aercloud_freezing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:swet_sticky_piston"
+        "recipes": "aether:swet_sticky_piston"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

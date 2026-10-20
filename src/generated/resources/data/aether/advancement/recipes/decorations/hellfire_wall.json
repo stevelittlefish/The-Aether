@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:hellfire_wall"
+        "recipes": "aether:hellfire_wall"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -6,21 +6,21 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "aether:treasure_chest",
+          "modifier": [
             {
-              "function": "minecraft:copy_name",
+              "type": "minecraft:copy_name",
               "source": "block_entity"
             },
             {
-              "function": "minecraft:copy_components",
+              "type": "minecraft:copy_components",
               "include": [
                 "aether:locked",
                 "aether:dungeon_kind"
               ],
               "source": "block_entity"
             }
-          ],
-          "name": "aether:treasure_chest"
+          ]
         }
       ],
       "rolls": 1.0

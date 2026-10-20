@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:skyroot_bed"
+        "recipes": "aether:skyroot_bed"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:zanite_gloves"
+        "recipes": "aether:zanite_gloves"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

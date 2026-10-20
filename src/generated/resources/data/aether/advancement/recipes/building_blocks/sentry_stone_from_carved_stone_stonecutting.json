@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:sentry_stone_from_carved_stone_stonecutting"
+        "recipes": "aether:sentry_stone_from_carved_stone_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

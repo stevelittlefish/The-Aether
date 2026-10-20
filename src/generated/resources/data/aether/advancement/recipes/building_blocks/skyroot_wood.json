@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:skyroot_wood"
+        "recipes": "aether:skyroot_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

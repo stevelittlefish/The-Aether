@@ -1,9 +1,7 @@
 {
-  "asset_name": "gravitite",
   "description": {
     "color": "#CC54C3",
     "translate": "trim_material.aether.gravitite"
   },
-  "ingredient": "aether:enchanted_gravitite",
-  "item_model_index": 1.0
+  "palette_id": "aether:trim/gravitite"
 }

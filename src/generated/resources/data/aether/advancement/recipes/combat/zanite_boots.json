@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:zanite_boots"
+        "recipes": "aether:zanite_boots"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
