@@ -23,6 +23,7 @@ import com.aetherteam.aether.item.combat.AetherArmorMaterials;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.components.AetherDataComponents;
 import com.aetherteam.aether.item.food.AetherFoods;
+import com.aetherteam.aether.loot.AetherLootModifiers;
 import com.aetherteam.aether.loot.conditions.AetherLootConditions;
 import com.aetherteam.aether.loot.functions.AetherLootFunctions;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
@@ -71,6 +72,7 @@ public final class Aether {
         AetherGameEvents.bootstrap();
         AetherLootFunctions.bootstrap();
         AetherLootConditions.bootstrap();
+        AetherLootModifiers.register();
         AetherDataComponents.bootstrap();
         AetherRecipeBookCategories.bootstrap();
         AetherRecipeTypes.bootstrap();
