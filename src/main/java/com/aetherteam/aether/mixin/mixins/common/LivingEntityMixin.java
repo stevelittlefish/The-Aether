@@ -16,6 +16,7 @@ import com.aetherteam.aether.item.combat.abilities.armor.GravititeArmor;
 import com.aetherteam.aether.item.combat.abilities.armor.NeptuneArmor;
 import com.aetherteam.aether.item.combat.abilities.armor.PhoenixArmor;
 import com.aetherteam.aether.item.combat.abilities.armor.ValkyrieArmor;
+import com.aetherteam.aether.item.combat.loot.CloudStaffItem;
 import com.aetherteam.aether.world.AetherTravelController;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
@@ -320,6 +321,19 @@ public abstract class LivingEntityMixin implements AccessoryUsingEntity {
             return this.aether$usingAccessoryReference.getStack();
         }
         return original.call(instance, hand);
+    }
+
+    /**
+     * Calls {@link CloudStaffItem#onEntitySwing(ItemStack, LivingEntity, InteractionHand)}, which NeoForge called from here,
+     * so swinging the Cloud Staff makes its minions shoot.
+     */
+    @Inject(method = "swing(Lnet/minecraft/world/InteractionHand;Z)V", at = @At("HEAD"), cancellable = true)
+    private void aether$onEntitySwing(InteractionHand hand, boolean updateSelf, CallbackInfo ci) {
+        LivingEntity entity = (LivingEntity) (Object) this;
+        ItemStack stack = entity.getItemInHand(hand);
+        if (stack.getItem() instanceof CloudStaffItem cloudStaff && cloudStaff.onEntitySwing(stack, entity, hand)) {
+            ci.cancel();
+        }
     }
 
     @Inject(method = "onSyncedDataUpdated(Lnet/minecraft/network/syncher/EntityDataAccessor;)V", at = @At("TAIL"))
