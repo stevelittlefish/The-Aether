@@ -65,7 +65,7 @@ public interface ShieldOfRepulsionAccessory {
     private static boolean handleDeflection(Projectile projectile, LivingEntity impactedLiving, SlotEntryReference slotResult) {
         if (!impactedLiving.equals(projectile.getOwner())) {
             var owner = projectile.getOwner();
-            projectile.deflect(ProjectileDeflection.REVERSE, impactedLiving, owner != null ? EntityReference.of(owner) : EntityReference.of(projectile), false);
+            projectile.deflect(ProjectileDeflection.REVERSE, impactedLiving, owner != null ? EntityReference.of(owner) : EntityReference.of(projectile), false, 1.0);
             projectile.setDeltaMovement(projectile.getDeltaMovement().scale(0.25));
             if (impactedLiving.level() instanceof ServerLevel serverLevel) {
                 if (impactedLiving instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {

@@ -9,6 +9,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,7 +37,7 @@ public class EnchantedAetherGrassBlock extends GrassBlock {
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         BlockPos abovePos = pos.above();
         Block grass = AetherBlocks.AETHER_GRASS_BLOCK;
         Optional<Holder.Reference<PlacedFeature>> grassFeatureOptional = level.registryAccess().lookupOrThrow(Registries.PLACED_FEATURE).get(AetherPlacedFeatures.ENCHANTED_AETHER_GRASS_BONEMEAL);
@@ -54,7 +55,7 @@ public class EnchantedAetherGrassBlock extends GrassBlock {
 
             BlockState blockState = level.getBlockState(blockPos);
             if (blockState.is(grass) && random.nextInt(10) == 0) {
-                ((BonemealableBlock) grass).performBonemeal(level, random, blockPos, blockState);
+                ((BonemealableBlock) grass).performBonemeal(level, random, blockPos, blockState, source);
             }
 
             if (blockState.isAir()) {

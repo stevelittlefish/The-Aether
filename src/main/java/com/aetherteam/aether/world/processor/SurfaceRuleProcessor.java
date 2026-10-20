@@ -10,8 +10,6 @@ import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.levelgen.carver.CarvingContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
@@ -29,7 +27,7 @@ public class SurfaceRuleProcessor implements StructureProcessor {
     public static final MapCodec<SurfaceRuleProcessor> CODEC = MapCodec.unit(SurfaceRuleProcessor.INSTANCE);
 
     /**
-     * Warning for "deprecation" is suppressed because using {@link CarvingContext#topMaterial(Function, ChunkAccess, BlockPos, boolean)} is necessary.
+     * Warning for "deprecation" is suppressed because using {@link SurfaceMaterials#topMaterial(WorldGenLevel, Function, BlockPos, boolean)} is necessary.
      */
     @Nullable
     @Override

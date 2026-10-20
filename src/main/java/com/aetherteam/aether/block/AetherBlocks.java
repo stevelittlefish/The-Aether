@@ -10,8 +10,6 @@ import com.aetherteam.aether.block.miscellaneous.UnstableObsidianBlock;
 import com.aetherteam.aether.block.natural.*;
 import com.aetherteam.aether.block.portal.AetherPortalBlock;
 import com.aetherteam.aether.block.utility.*;
-import com.aetherteam.aether.blockentity.ChestMimicBlockEntity;
-import com.aetherteam.aether.blockentity.TreasureChestBlockEntity;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
@@ -30,13 +28,13 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.StandingAndWallBlockItem;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
@@ -47,7 +45,7 @@ import java.util.function.Function;
 public class AetherBlocks {
     private static final List<BlockItemRegistration> BLOCK_ITEMS = new ArrayList<>();
 
-    public static final AetherPortalBlock AETHER_PORTAL = registerBlockOnly("aether_portal", key -> new AetherPortalBlock(Block.Properties.of().noCollision().randomTicks().strength(-1.0F).sound(SoundType.GLASS).lightLevel(AetherBlocks::lightLevel11).pushReaction(PushReaction.BLOCK).forceSolidOn().setId(key)));
+    public static final AetherPortalBlock AETHER_PORTAL = registerBlockOnly("aether_portal", key -> new AetherPortalBlock(Block.Properties.of().noCollision().randomTicks().strength(-1.0F).sound(SoundType.GLASS).lightLevel(AetherBlocks::lightLevel11).pushReaction(PushReaction.IMMOVEABLE).forceSolidOn().setId(key)));
 
     public static final Block AETHER_GRASS_BLOCK = registerKeyed("aether_grass_block", key -> new AetherGrassBlock(Block.Properties.of().mapColor(MapColor.WARPED_WART_BLOCK).randomTicks().strength(0.2F).sound(SoundType.GRASS).setId(key)));
     public static final Block ENCHANTED_AETHER_GRASS_BLOCK = registerKeyed("enchanted_aether_grass_block", key -> new EnchantedAetherGrassBlock(Block.Properties.of().mapColor(MapColor.GOLD).randomTicks().strength(0.2F).sound(SoundType.GRASS).setId(key)));
@@ -67,12 +65,12 @@ public class AetherBlocks {
     public static final Block ZANITE_ORE = registerKeyed("zanite_ore", key -> new DropExperienceBlock(UniformInt.of(3, 5), Block.Properties.of().mapColor(MapColor.WOOL).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F).requiresCorrectToolForDrops().setId(key)));
     public static final Block GRAVITITE_ORE = registerKeyed("gravitite_ore", key -> new FloatingBlock(false, Block.Properties.of().mapColor(MapColor.WOOL).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F).randomTicks().requiresCorrectToolForDrops().setId(key)));
 
-    public static final Block SKYROOT_LEAVES = registerKeyed("skyroot_leaves", key -> new AetherDoubleDropsLeaves(Block.Properties.of().mapColor(MapColor.GRASS).ignitedByLava().pushReaction(PushReaction.DESTROY).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never).setId(key)));
-    public static final Block GOLDEN_OAK_LEAVES = registerKeyed("golden_oak_leaves", key -> new LeavesWithParticlesBlock(() -> AetherParticleTypes.GOLDEN_OAK_LEAVES, Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().pushReaction(PushReaction.DESTROY).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never).setId(key)));
-    public static final Block CRYSTAL_LEAVES = registerKeyed("crystal_leaves", key -> new LeavesWithParticlesBlock(() -> AetherParticleTypes.CRYSTAL_LEAVES, Block.Properties.of().mapColor(MapColor.DIAMOND).ignitedByLava().pushReaction(PushReaction.DESTROY).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never).setId(key)));
-    public static final Block CRYSTAL_FRUIT_LEAVES = registerKeyed("crystal_fruit_leaves", key -> new CrystalFruitLeavesBlock(() -> AetherParticleTypes.CRYSTAL_LEAVES, Block.Properties.of().mapColor(MapColor.DIAMOND).ignitedByLava().pushReaction(PushReaction.DESTROY).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never).setId(key)));
-    public static final Block HOLIDAY_LEAVES = registerKeyed("holiday_leaves", key -> new LeavesWithParticlesBlock(() -> AetherParticleTypes.HOLIDAY_LEAVES, Block.Properties.of().mapColor(MapColor.COLOR_PURPLE).ignitedByLava().pushReaction(PushReaction.DESTROY).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never).setId(key)));
-    public static final Block DECORATED_HOLIDAY_LEAVES = registerKeyed("decorated_holiday_leaves", key -> new LeavesWithParticlesBlock(() -> AetherParticleTypes.HOLIDAY_LEAVES, Block.Properties.of().mapColor(MapColor.COLOR_PURPLE).ignitedByLava().pushReaction(PushReaction.DESTROY).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never).setId(key)));
+    public static final Block SKYROOT_LEAVES = registerKeyed("skyroot_leaves", key -> new AetherDoubleDropsLeaves(Block.Properties.of().mapColor(MapColor.GRASS).ignitedByLava().pushReaction(PushReaction.POPPED).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never).setId(key)));
+    public static final Block GOLDEN_OAK_LEAVES = registerKeyed("golden_oak_leaves", key -> new LeavesWithParticlesBlock(() -> AetherParticleTypes.GOLDEN_OAK_LEAVES, Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().pushReaction(PushReaction.POPPED).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never).setId(key)));
+    public static final Block CRYSTAL_LEAVES = registerKeyed("crystal_leaves", key -> new LeavesWithParticlesBlock(() -> AetherParticleTypes.CRYSTAL_LEAVES, Block.Properties.of().mapColor(MapColor.DIAMOND).ignitedByLava().pushReaction(PushReaction.POPPED).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never).setId(key)));
+    public static final Block CRYSTAL_FRUIT_LEAVES = registerKeyed("crystal_fruit_leaves", key -> new CrystalFruitLeavesBlock(() -> AetherParticleTypes.CRYSTAL_LEAVES, Block.Properties.of().mapColor(MapColor.DIAMOND).ignitedByLava().pushReaction(PushReaction.POPPED).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never).setId(key)));
+    public static final Block HOLIDAY_LEAVES = registerKeyed("holiday_leaves", key -> new LeavesWithParticlesBlock(() -> AetherParticleTypes.HOLIDAY_LEAVES, Block.Properties.of().mapColor(MapColor.COLOR_PURPLE).ignitedByLava().pushReaction(PushReaction.POPPED).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never).setId(key)));
+    public static final Block DECORATED_HOLIDAY_LEAVES = registerKeyed("decorated_holiday_leaves", key -> new LeavesWithParticlesBlock(() -> AetherParticleTypes.HOLIDAY_LEAVES, Block.Properties.of().mapColor(MapColor.COLOR_PURPLE).ignitedByLava().pushReaction(PushReaction.POPPED).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never).setId(key)));
 
     public static final RotatedPillarBlock SKYROOT_LOG = registerKeyed("skyroot_log", key -> new AetherLogBlock(Block.Properties.ofFullCopy(Blocks.OAK_LOG).setId(key)));
     public static final RotatedPillarBlock GOLDEN_OAK_LOG = registerKeyed("golden_oak_log", key -> new AetherLogBlock(Block.Properties.ofFullCopy(Blocks.OAK_LOG).setId(key)));
@@ -103,8 +101,8 @@ public class AetherBlocks {
     public static final CeilingHangingSignBlock SKYROOT_HANGING_SIGN = registerKeyed("skyroot_hanging_sign", key -> new SkyrootCeilingHangingSignBlock(AetherWoodTypes.SKYROOT, BlockBehaviour.Properties.of().mapColor(Blocks.OAK_LOG.defaultMapColor()).forceSolidOn().instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0F).ignitedByLava().setId(key)));
     public static final WallHangingSignBlock SKYROOT_WALL_HANGING_SIGN = registerBlockOnly("skyroot_wall_hanging_sign", key -> new SkyrootWallHangingSignBlock(AetherWoodTypes.SKYROOT, BlockBehaviour.Properties.of().mapColor(Blocks.OAK_LOG.defaultMapColor()).forceSolidOn().instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0F).ignitedByLava().setId(key)));
 
-    public static final Block BERRY_BUSH = registerKeyed("berry_bush", key -> new BerryBushBlock(Block.Properties.of().mapColor(MapColor.GRASS).pushReaction(PushReaction.DESTROY).strength(0.2F).sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never).setId(key)));
-    public static final Block BERRY_BUSH_STEM = registerKeyed("berry_bush_stem", key -> new BerryBushStemBlock(Block.Properties.of().mapColor(MapColor.GRASS).pushReaction(PushReaction.DESTROY).strength(0.2F).sound(SoundType.GRASS).noCollision().setId(key)));
+    public static final Block BERRY_BUSH = registerKeyed("berry_bush", key -> new BerryBushBlock(Block.Properties.of().mapColor(MapColor.GRASS).pushReaction(PushReaction.POPPED).strength(0.2F).sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherBlocks::ocelotOrParrot).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never).setId(key)));
+    public static final Block BERRY_BUSH_STEM = registerKeyed("berry_bush_stem", key -> new BerryBushStemBlock(Block.Properties.of().mapColor(MapColor.GRASS).pushReaction(PushReaction.POPPED).strength(0.2F).sound(SoundType.GRASS).noCollision().setId(key)));
     public static final FlowerPotBlock POTTED_BERRY_BUSH = registerBlockOnly("potted_berry_bush", key -> new FlowerPotBlock(BERRY_BUSH, Block.Properties.ofFullCopy(Blocks.FLOWER_POT).setId(key)));
     public static final FlowerPotBlock POTTED_BERRY_BUSH_STEM = registerBlockOnly("potted_berry_bush_stem", key -> new FlowerPotBlock(BERRY_BUSH_STEM, Block.Properties.ofFullCopy(Blocks.FLOWER_POT).setId(key)));
 
@@ -298,7 +296,7 @@ public class AetherBlocks {
         } else if (block == AMBROSIUM_TORCH) {
             return new StandingAndWallBlockItem(AMBROSIUM_TORCH, AMBROSIUM_WALL_TORCH, Direction.DOWN, properties);
         } else if (block == SKYROOT_SIGN) {
-            return new SignItem(SKYROOT_SIGN, SKYROOT_WALL_SIGN, properties.stacksTo(16));
+            return new StandingAndWallBlockItem(SKYROOT_SIGN, SKYROOT_WALL_SIGN, Direction.DOWN, properties.stacksTo(16).signText());
         } else if (block == SKYROOT_HANGING_SIGN) {
             return new HangingSignItem(SKYROOT_HANGING_SIGN, SKYROOT_WALL_HANGING_SIGN, properties.stacksTo(16));
         } else if (block == CHEST_MIMIC) {
@@ -323,7 +321,15 @@ public class AetherBlocks {
         return false;
     }
 
+
     private static boolean always(BlockState state, BlockGetter getter, BlockPos pos) {
+        return true;
+    }
+
+    /**
+     * For predicates that also take an argument, such as {@code isViewBlocking}'s near-plane box since 26.3.
+     */
+    private static <T> boolean always(BlockState state, BlockGetter getter, BlockPos pos, T argument) {
         return true;
     }
 

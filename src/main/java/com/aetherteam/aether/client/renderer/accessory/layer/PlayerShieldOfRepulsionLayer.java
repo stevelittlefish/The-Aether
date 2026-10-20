@@ -54,11 +54,8 @@ public class PlayerShieldOfRepulsionLayer extends RenderLayer<AvatarRenderState,
 
         this.getParentModel().copyTransforms(model);
         model.setupAnim(renderState);
-        collector.order(1).submitModel(model, renderState, poseStack, RenderTypes.entityTranslucent(texture), packedLight, overlay, -1, null, -1, null);
-
-        if (stack.hasFoil()) {
-            collector.order(2).submitModel(model, renderState, poseStack, RenderTypes.entityGlint(), packedLight, overlay, -1, null, -1, null);
-        }
+        // 26.3 draws enchantment glint as part of a render type and has no translucent one, so the shield shows no glint.
+        collector.order(1).submitModel(model, renderState, poseStack, RenderTypes.entityTranslucent(texture), packedLight, overlay, -1, null, -1);
     }
 
     private boolean isShieldActive(LivingEntity livingEntity) {

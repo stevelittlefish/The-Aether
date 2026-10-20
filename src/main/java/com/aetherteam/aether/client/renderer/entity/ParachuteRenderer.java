@@ -60,7 +60,7 @@ public class ParachuteRenderer extends EntityRenderer<Parachute, ParachuteRender
             return;
         }
         poseStack.pushPose();
-        poseStack.mulPose(Axis.YP.rotationDegrees(-renderState.yRot));
+        poseStack.rotate(Axis.YP.rotationDegrees(-renderState.yRot));
         poseStack.translate(-0.5, 0.0, -0.5);
         collector.order(0).submitMovingBlock(poseStack, renderState.movingBlockRenderState, -1);
         poseStack.popPose();

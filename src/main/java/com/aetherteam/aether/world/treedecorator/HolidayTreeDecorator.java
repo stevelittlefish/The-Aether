@@ -20,7 +20,7 @@ import java.util.List;
  * Decorates blocks around Holiday Trees.
  */
 public class HolidayTreeDecorator extends TreeDecorator {
-    public static final MapCodec<HolidayTreeDecorator> CODEC = BlockStateProvider.CODEC.fieldOf("provider").xmap(HolidayTreeDecorator::new, (instance) -> instance.provider);
+    public static final MapCodec<HolidayTreeDecorator> CODEC = BlockStateProvider.DIRECT_CODEC.fieldOf("provider").xmap(HolidayTreeDecorator::new, (instance) -> instance.provider);
     private final BlockStateProvider provider;
 
     public HolidayTreeDecorator(BlockStateProvider provider) {

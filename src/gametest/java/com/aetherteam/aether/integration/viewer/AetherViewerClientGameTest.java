@@ -24,7 +24,7 @@ public final class AetherViewerClientGameTest implements FabricClientGameTest {
         assertExpectedViewers(expected, jadeLoaded, wthitLoaded);
 
         try (TestSingleplayerContext singleplayer = context.worldBuilder().create()) {
-            singleplayer.getClientLevel().waitForChunksDownload();
+            singleplayer.getConnection().waitForChunksDownload();
             singleplayer.getServer().runCommand("fill -4 63 -6 4 63 3 minecraft:bedrock");
             singleplayer.getServer().runCommand("fill -4 64 -6 4 68 3 minecraft:air");
             singleplayer.getServer().runCommand("setblock 0 64 -3 minecraft:stone");

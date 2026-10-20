@@ -13,6 +13,7 @@ import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.level.dimension.DimensionType;
 
 import javax.annotation.Nullable;
+import org.joml.Vector3fc;
 
 public final class AetherSkyRendering {
     private AetherSkyRendering() {
@@ -32,7 +33,7 @@ public final class AetherSkyRendering {
         }
 
         renderState.sunAngle = getAetherSunAngle(level, partialTick);
-        renderState.skyColor = getAetherSkyColor(level, partialTick);
+        renderState.skyColor = ARGB.vector3fFromRGB24(getAetherSkyColor(level, partialTick));
         // Aether never uses vanilla's lower-half dark disc.
         renderState.shouldRenderDarkDisc = false;
 
@@ -44,14 +45,14 @@ public final class AetherSkyRendering {
         }
 
         // Keep horizon tint disabled while eternal day is active.
-        renderState.sunriseAndSunsetColor = isEternalDay(level) ? 0 : getSunriseAndSunsetColor(renderState.sunAngle);
+        renderState.sunriseAndSunsetColor = ARGB.vector4fFromARGB32(isEternalDay(level) ? 0 : getSunriseAndSunsetColor(renderState.sunAngle));
     }
 
     public static int getAetherSkyColor(ClientLevel level, float partialTick) {
         int baseSkyColor = 0x78A7FF;
         var skyColorEntry = level.dimensionType().attributes().get(EnvironmentAttributes.SKY_COLOR);
-        if (skyColorEntry != null && skyColorEntry.argument() instanceof Integer skyColor) {
-            baseSkyColor = skyColor;
+        if (skyColorEntry != null && skyColorEntry.argument() instanceof Vector3fc skyColor) {
+            baseSkyColor = ARGB.colorFromVector3f(skyColor);
         }
 
         float timeOfDay = getAetherTimeOfDay(level, partialTick);
@@ -84,6 +85,9 @@ public final class AetherSkyRendering {
     }
 
     public static int getAetherCloudColor(ClientLevel level, float partialTick) {
+        if (AetherConfig.CLIENT.disable_clouds.get()) {
+            return 0; // Since 26.3 vanilla skips clouds with a transparent colour; this replaces the cloud pass mixin.
+        }
         float timeOfDay = getAetherTimeOfDay(level, partialTick);
         float brightness = Mth.cos(timeOfDay * Mth.TWO_PI) * 2.0F + 0.5F;
         brightness = Mth.clamp(brightness, 0.0F, 1.0F);

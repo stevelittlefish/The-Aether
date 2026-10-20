@@ -66,6 +66,6 @@ public class UnstableObsidianBlock extends Block implements MeltingBehavior {
     }
 
     public PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.NORMAL;
+        return PushReaction.PUSH_PULL;
     }
 }

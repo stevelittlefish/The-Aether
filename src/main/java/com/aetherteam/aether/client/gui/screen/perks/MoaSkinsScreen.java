@@ -16,8 +16,8 @@ import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.aether.perk.types.MoaSkins;
 import com.aetherteam.aether.perk.data.User;
 import com.aetherteam.aether.perk.data.UserData;
+import com.mojang.blaze3d.Blaze3D;
 import net.minecraft.ChatFormatting;
-import net.minecraft.util.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
@@ -29,16 +29,15 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -139,20 +138,20 @@ public class MoaSkinsScreen extends Screen {
             this.addRenderableWidget(new PatreonButton(Button.builder(Component.translatable("gui.aether.moa_skins.button.donate"),
                     (pressed) -> ClientAccess.setScreen(this.minecraft, new ConfirmLinkScreen((callback) -> {
                         if (callback) {
-                            Util.getPlatform().openUri(PATREON_LINK);
+                            Blaze3D.openUri(URI.create(PATREON_LINK));
                         }
                         ClientAccess.setScreen(this.minecraft, this);
-                    }, PATREON_LINK, true))
+                    }, URI.create(PATREON_LINK), true))
             ).bounds(this.leftPos + (this.imageWidth / 2) - (54 / 2), this.topPos + this.imageHeight - 25, 54, 18)));
 
             // Button that opens a screen with a redirect to a guide for how to connect a UUID.
             this.addRenderableWidget(new PatreonButton(Button.builder(Component.literal("?"),
                     (pressed) -> ClientAccess.setScreen(this.minecraft, new ConfirmLinkScreen((callback) -> {
                         if (callback) {
-                            Util.getPlatform().openUri(HELP_LINK);
+                            Blaze3D.openUri(URI.create(HELP_LINK));
                         }
                         ClientAccess.setScreen(this.minecraft, this);
-                    }, HELP_LINK, true))
+                    }, URI.create(HELP_LINK), true))
             ).bounds(this.leftPos + (this.imageWidth / 2) + 63, this.topPos + this.imageHeight - 25, 18, 18).tooltip(Tooltip.create(Component.translatable("gui.aether.moa_skins.button.help"))), true));
         }
     }

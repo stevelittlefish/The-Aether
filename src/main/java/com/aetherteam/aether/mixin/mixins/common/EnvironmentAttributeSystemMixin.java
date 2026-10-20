@@ -3,6 +3,7 @@ package com.aetherteam.aether.mixin.mixins.common;
 import com.aetherteam.aether.attachment.AetherTimeAttachment;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import net.minecraft.world.attribute.EnvironmentAttributeSystem;
+import net.minecraft.world.clock.ClockInstance;
 import net.minecraft.world.clock.ClockManager;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
@@ -11,8 +12,11 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(EnvironmentAttributeSystem.class)
 public class EnvironmentAttributeSystemMixin {
+    /**
+     * Slows the Aether's timelines (sky, light) by its day length multiplier, so a day there lasts longer than the clock it follows.
+     */
     @Redirect(
-        method = "addDefaultLayers(Lnet/minecraft/world/attribute/EnvironmentAttributeSystem$Builder;Lnet/minecraft/world/level/Level;)V",
+        method = "addDynamicLayers(Lnet/minecraft/world/attribute/EnvironmentAttributeSystem$Builder;Lnet/minecraft/world/level/Level;)V",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;clockManager()Lnet/minecraft/world/clock/ClockManager;")
     )
     private static ClockManager aether$useScaledClockForAetherTimelines(Level level) {
@@ -21,9 +25,32 @@ public class EnvironmentAttributeSystemMixin {
             return clockManager;
         }
         return clock -> {
-            long ticks = clockManager.getTotalTicks(clock);
+            ClockInstance instance = clockManager.getInstance(clock);
             int multiplier = AetherTimeAttachment.getTicksPerDayMultiplier();
-            return multiplier > 1 ? Math.floorDiv(ticks, multiplier) : ticks;
+            return multiplier > 1 ? new ScaledClockInstance(instance, multiplier) : instance;
         };
+    }
+
+    private record ScaledClockInstance(ClockInstance instance, int multiplier) implements ClockInstance {
+        @Override
+        public long totalTicks() {
+            return Math.floorDiv(this.instance.totalTicks(), this.multiplier);
+        }
+
+        @Override
+        public float partialTick() {
+            // The ticks lost to the division above, plus this tick's fraction, as a fraction of one scaled tick.
+            return (Math.floorMod(this.instance.totalTicks(), this.multiplier) + this.instance.partialTick()) / this.multiplier;
+        }
+
+        @Override
+        public float rate() {
+            return this.instance.rate() / this.multiplier;
+        }
+
+        @Override
+        public boolean isPaused() {
+            return this.instance.isPaused();
+        }
     }
 }

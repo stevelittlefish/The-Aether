@@ -138,7 +138,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         double z = target.getZ() + targetVec.y * 3;
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(x, y, z);
         int i = 0;
-        while (mutableBlockPos.getY() > this.level().getMinY() && !this.level().getBlockState(mutableBlockPos).blocksMotion() && i <= 4) {
+        while (mutableBlockPos.getY() > this.level().getMinY() && !this.level().getBlockState(mutableBlockPos).isSolid() && i <= 4) {
             mutableBlockPos.move(Direction.DOWN);
             i++;
         }
@@ -154,7 +154,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      * @return Whether the teleportation succeeded, as a {@link Boolean}.
      */
     protected boolean teleport(double x, double y, double z) {
-        boolean flag = this.randomTeleport(x, y, z, false);
+        boolean flag = this.randomTeleport(x, y, z, false, state -> false);
         if (flag) {
             this.spawnExplosionParticles();
         }

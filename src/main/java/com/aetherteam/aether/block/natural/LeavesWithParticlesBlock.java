@@ -6,17 +6,18 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.FallingParticlesLeavesBlock;
+import net.minecraft.world.level.block.sounds.AmbientLeavesBlockSoundPlayer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
 import java.util.function.Supplier;
 
-public class LeavesWithParticlesBlock extends LeavesBlock {
+public class LeavesWithParticlesBlock extends FallingParticlesLeavesBlock {
     private final Supplier<? extends ParticleOptions> particle;
 
     public LeavesWithParticlesBlock(Supplier<? extends ParticleOptions> particle, Properties properties) {
-        super(0.01F, properties);
+        super(0.01F, AmbientLeavesBlockSoundPlayer.noAmbientSound(), properties);
         this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
         this.particle = particle;
     }

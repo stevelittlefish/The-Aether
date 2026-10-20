@@ -587,7 +587,7 @@ public class Swet extends Slime implements MountableMob {
     }
 
     @Override
-    protected boolean isDealsDamage() {
+    protected boolean canDealDamage() {
         return false;
     }
 

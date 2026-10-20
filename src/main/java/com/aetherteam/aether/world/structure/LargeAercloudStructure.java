@@ -19,7 +19,7 @@ import java.util.*;
 
 public class LargeAercloudStructure extends Structure {
     public static final MapCodec<LargeAercloudStructure> CODEC = RecordCodecBuilder.mapCodec((p_229075_) -> p_229075_.group(settingsCodec(p_229075_),
-            BlockStateProvider.CODEC.fieldOf("blocks").forGetter(structure -> structure.blocks),
+            BlockStateProvider.DIRECT_CODEC.fieldOf("blocks").forGetter(structure -> structure.blocks),
             Codec.INT.fieldOf("size").forGetter(structure -> structure.size),
             Codec.INT.fieldOf("rangeY").forGetter(o -> o.rangeY)
     ).apply(p_229075_, LargeAercloudStructure::new));

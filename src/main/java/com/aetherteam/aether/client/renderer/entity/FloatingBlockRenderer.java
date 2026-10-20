@@ -39,8 +39,8 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity, F
     }
 
     @Override
-    public boolean shouldRender(FloatingBlockEntity entity, Frustum frustum, double camX, double camY, double camZ) {
-        return super.shouldRender(entity, frustum, camX, camY, camZ) && entity.getBlockState() != entity.level().getBlockState(entity.blockPosition());
+    public boolean shouldRender(FloatingBlockEntity entity, Frustum frustum, double camX, double camY, double camZ, float partialTicks) {
+        return super.shouldRender(entity, frustum, camX, camY, camZ, partialTicks) && entity.getBlockState() != entity.level().getBlockState(entity.blockPosition());
     }
 
     @Override

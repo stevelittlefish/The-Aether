@@ -21,11 +21,12 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.resources.palette.PalettedTextureManager;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.player.Player;
@@ -135,18 +136,15 @@ public abstract class AvatarRendererMixin {
         ModelPart gloveArm = rightArm ? glovesModel.rightArm : glovesModel.leftArm;
         gloveArm.loadPose(arm.storePose());
         gloveArm.xRot = 0.0F;
-        submitNodeCollector.submitModelPart(gloveArm, poseStack, RenderTypes.armorCutoutNoCull(glovesItem.getGlovesTexture()), packedLight, OverlayTexture.NO_OVERLAY, null, DyedItemColor.getOrDefault(stack, -1), null);
+        RenderType glovesType = stack.hasFoil() ? RenderTypes.armorCutoutNoCullGlint(glovesItem.getGlovesTexture()) : RenderTypes.armorCutoutNoCull(glovesItem.getGlovesTexture());
+        submitNodeCollector.submitModelPart(gloveArm, poseStack, glovesType, packedLight, OverlayTexture.NO_OVERLAY, null, DyedItemColor.getOrDefault(stack, -1));
 
-        TextureAtlasSprite trimSprite = AccessoryRendering.getHumanoidArmorTrimSprite(stack, glovesItem);
+        PalettedTextureManager.Handle trimSprite = AccessoryRendering.getHumanoidArmorTrimTexture(stack);
         if (trimSprite != null) {
             ModelPart gloveTrimArm = rightArm ? glovesTrimModel.rightArm : glovesTrimModel.leftArm;
             gloveTrimArm.loadPose(arm.storePose());
             gloveTrimArm.xRot = 0.0F;
-            submitNodeCollector.order(1).submitModelPart(gloveTrimArm, poseStack, AccessoryRendering.getArmorTrimRenderType(stack), packedLight, OverlayTexture.NO_OVERLAY, trimSprite);
-        }
-
-        if (stack.hasFoil()) {
-            submitNodeCollector.order(trimSprite != null ? 2 : 1).submitModelPart(gloveArm, poseStack, RenderTypes.armorEntityGlint(), packedLight, OverlayTexture.NO_OVERLAY, null);
+            submitNodeCollector.order(1).submitModelPart(gloveTrimArm, poseStack, AccessoryRendering.getArmorTrimRenderType(stack, trimSprite), packedLight, OverlayTexture.NO_OVERLAY, trimSprite);
         }
     }
 
@@ -165,10 +163,6 @@ public abstract class AvatarRendererMixin {
         shieldArm.loadPose(arm.storePose());
         shieldArm.xRot = 0.0F;
         submitNodeCollector.order(2).submitModelPart(shieldArm, poseStack, RenderTypes.entityTranslucent(texture), packedLight, OverlayTexture.NO_OVERLAY, null);
-
-        if (stack.hasFoil()) {
-            submitNodeCollector.order(3).submitModelPart(shieldArm, poseStack, RenderTypes.entityGlint(), packedLight, OverlayTexture.NO_OVERLAY, null);
-        }
     }
 
     @Unique

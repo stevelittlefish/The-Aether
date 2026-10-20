@@ -6,18 +6,27 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.EntityAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 
 public final class EntityUtil {
+    /**
+     * [CODE COPY] - 26.2's {@code Swim#shouldSwim(Mob)}, removed in 26.3.
+     */
+    public static boolean shouldSwim(Mob mob) {
+        return mob.isInWater() && mob.getFluidHeight(FluidTags.WATER) > mob.getFluidJumpThreshold() || mob.isInLava();
+    }
+
     /**
      * Copies rotation values from one entity to another.
      *

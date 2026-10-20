@@ -43,7 +43,7 @@ abstract class SingleChestRenderer<T extends BlockEntity> implements BlockEntity
     protected void submitSingleChest(ChestRenderState state, PoseStack poseStack, SubmitNodeCollector collector, SpriteId material) {
         poseStack.pushPose();
         poseStack.translate(0.5F, 0.5F, 0.5F);
-        poseStack.mulPose(Axis.YP.rotationDegrees(-state.facing.toYRot()));
+        poseStack.rotate(Axis.YP.rotationDegrees(-state.facing.toYRot()));
         poseStack.translate(-0.5F, -0.5F, -0.5F);
 
         float openness = 1.0F - state.open;
@@ -58,9 +58,20 @@ abstract class SingleChestRenderer<T extends BlockEntity> implements BlockEntity
             -1,
             material,
             this.sprites,
-            0,
-            state.breakProgress
+            0
         );
+        if (state.breakProgress != null) {
+            collector.order(1).submitCrumblingOverlay(
+                this.model,
+                openness,
+                poseStack,
+                material.renderType(this.model.renderType()),
+                state.lightCoords,
+                OverlayTexture.NO_OVERLAY,
+                -1,
+                state.breakProgress
+            );
+        }
 
         poseStack.popPose();
     }

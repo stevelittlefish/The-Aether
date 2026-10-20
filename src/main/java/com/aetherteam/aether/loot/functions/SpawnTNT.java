@@ -4,6 +4,7 @@ import com.aetherteam.aether.entity.block.TntPresent;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -14,12 +15,12 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.List;
+import java.util.Optional;
 
 public class SpawnTNT extends LootItemConditionalFunction {
     public static final MapCodec<SpawnTNT> CODEC = RecordCodecBuilder.mapCodec(instance -> commonFields(instance).apply(instance, SpawnTNT::new));
 
-    protected SpawnTNT(List<LootItemCondition> conditions) {
+    protected SpawnTNT(Optional<Holder<LootItemCondition>> conditions) {
         super(conditions);
     }
 
@@ -33,7 +34,7 @@ public class SpawnTNT extends LootItemConditionalFunction {
     @Override
     protected ItemStack run(ItemStack stack, LootContext context) {
         ServerLevel serverLevel = context.getLevel();
-        Vec3 originVec = context.getOptionalParameter(LootContextParams.ORIGIN);
+        Vec3 originVec = context.getOptional(LootContextParams.ORIGIN);
         if (originVec != null) {
             TntPresent tnt = new TntPresent(serverLevel, originVec.x(), originVec.y(), originVec.z(), null);
             serverLevel.addFreshEntity(tnt);

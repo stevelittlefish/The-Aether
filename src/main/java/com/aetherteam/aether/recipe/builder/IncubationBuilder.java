@@ -6,6 +6,7 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.RecipeUnlockedTrigger;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.nbt.CompoundTag;
@@ -69,7 +70,7 @@ public class IncubationBuilder implements RecipeBuilder {
     public void save(RecipeOutput recipeOutput, ResourceKey<Recipe<?>> recipeKey) {
         Identifier id = recipeKey.identifier();
         this.ensureValid(id);
-        Advancement.Builder advancement$builder = recipeOutput.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeKey)).rewards(AdvancementRewards.Builder.recipe(recipeKey)).requirements(AdvancementRequirements.Strategy.OR);
+        Advancement.Builder advancement$builder = recipeOutput.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeOutput.lookup(Registries.RECIPE).getOrThrow(recipeKey))).rewards(AdvancementRewards.Builder.recipe(recipeKey)).requirements(AdvancementRequirements.Strategy.OR);
         Objects.requireNonNull(advancement$builder);
         this.criteria.forEach(advancement$builder::addCriterion);
         recipeOutput.accept(recipeKey, new IncubationRecipe(this.group == null ? "" : this.group, this.ingredient, this.entity, Optional.ofNullable(this.tag), this.incubationTime), advancement$builder.build(Identifier.fromNamespaceAndPath(id.getNamespace(), "recipes/incubation/" + id.getPath())));

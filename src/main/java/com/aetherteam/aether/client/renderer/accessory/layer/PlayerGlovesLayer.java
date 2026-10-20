@@ -12,8 +12,9 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.palette.PalettedTextureManager;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
@@ -55,17 +56,15 @@ public class PlayerGlovesLayer extends RenderLayer<AvatarRenderState, PlayerMode
 
         this.getParentModel().copyTransforms(model);
         model.setupAnim(renderState);
-        collector.order(0).submitModel(model, renderState, poseStack, RenderTypes.armorCutoutNoCull(glovesItem.getGlovesTexture()), packedLight, overlay, color, null, -1, null);
+        // Since 26.3 the enchantment glint is part of the armor render type rather than a pass of its own.
+        RenderType glovesType = stack.hasFoil() ? RenderTypes.armorCutoutNoCullGlint(glovesItem.getGlovesTexture()) : RenderTypes.armorCutoutNoCull(glovesItem.getGlovesTexture());
+        collector.order(0).submitModel(model, renderState, poseStack, glovesType, packedLight, overlay, color, null, -1);
 
-        TextureAtlasSprite trimSprite = AccessoryRendering.getHumanoidArmorTrimSprite(stack, glovesItem);
+        PalettedTextureManager.Handle trimSprite = AccessoryRendering.getHumanoidArmorTrimTexture(stack);
         if (trimSprite != null) {
             this.getParentModel().copyTransforms(trimModel);
             trimModel.setupAnim(renderState);
-            collector.order(1).submitModel(trimModel, renderState, poseStack, AccessoryRendering.getArmorTrimRenderType(stack), packedLight, overlay, -1, trimSprite, -1, null);
-        }
-
-        if (stack.hasFoil()) {
-            collector.order(trimSprite != null ? 2 : 1).submitModel(model, renderState, poseStack, RenderTypes.armorEntityGlint(), packedLight, overlay, -1, null, -1, null);
+            collector.order(1).submitModel(trimModel, renderState, poseStack, AccessoryRendering.getArmorTrimRenderType(stack, trimSprite), packedLight, overlay, -1, trimSprite, -1);
         }
     }
 }

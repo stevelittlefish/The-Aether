@@ -21,7 +21,7 @@ public class CockatriceMarkingsLayer<T extends BipedBirdRenderState, M extends B
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector collector, int packedLight, T renderState, float netHeadYaw, float headPitch) {
         if (!renderState.isInvisible) {
-            collector.order(0).submitModel(this.getParentModel(), renderState, poseStack, RenderTypes.eyes(COCKATRICE_MARKINGS), 15728640, LivingEntityRenderer.getOverlayCoords(renderState, 0.0F), -1, null);
+            collector.order(0).submitModel(this.getParentModel(), renderState, poseStack, RenderTypes.eyes(COCKATRICE_MARKINGS), 15728640, LivingEntityRenderer.getOverlayCoords(renderState, 0.0F), -1);
         }
     }
 }

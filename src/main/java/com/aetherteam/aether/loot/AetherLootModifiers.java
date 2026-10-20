@@ -60,12 +60,12 @@ public final class AetherLootModifiers {
      * Removes Wheat Seeds from grass broken without shears in biomes tagged {@link AetherTags.Biomes#NO_WHEAT_SEEDS}.
      */
     private static void removeSeeds(LootContext context, List<ItemStack> drops) {
-        BlockState state = context.getOptionalParameter(LootContextParams.BLOCK_STATE);
-        Vec3 origin = context.getOptionalParameter(LootContextParams.ORIGIN);
+        BlockState state = context.getOptional(LootContextParams.BLOCK_STATE);
+        Vec3 origin = context.getOptional(LootContextParams.ORIGIN);
         if (state == null || origin == null || !(state.is(Blocks.SHORT_GRASS) || state.is(Blocks.TALL_GRASS))) {
             return;
         }
-        ItemInstance tool = context.getOptionalParameter(LootContextParams.TOOL);
+        ItemInstance tool = context.getOptional(LootContextParams.TOOL);
         if (tool != null && tool.is(Items.SHEARS)) {
             return;
         }
@@ -78,8 +78,8 @@ public final class AetherLootModifiers {
      * Gives a Berry Bush on Enchanted Grass a 50% chance of an extra Blue Berry.
      */
     private static void enchantedGrassBerries(LootContext context, List<ItemStack> drops) {
-        BlockState state = context.getOptionalParameter(LootContextParams.BLOCK_STATE);
-        Vec3 origin = context.getOptionalParameter(LootContextParams.ORIGIN);
+        BlockState state = context.getOptional(LootContextParams.BLOCK_STATE);
+        Vec3 origin = context.getOptional(LootContextParams.ORIGIN);
         if (state == null || origin == null || !state.is(AetherBlocks.BERRY_BUSH)) {
             return;
         }
@@ -94,8 +94,8 @@ public final class AetherLootModifiers {
      * Doubles mob drops when a mob is killed with a full-strength hit from a {@link SkyrootWeapon}.
      */
     private static void skyrootDoubleDrops(LootContext context, List<ItemStack> drops) {
-        Entity attacker = context.getOptionalParameter(LootContextParams.DIRECT_ATTACKING_ENTITY);
-        Entity target = context.getOptionalParameter(LootContextParams.THIS_ENTITY);
+        Entity attacker = context.getOptional(LootContextParams.DIRECT_ATTACKING_ENTITY);
+        Entity target = context.getOptional(LootContextParams.THIS_ENTITY);
         if (attacker instanceof LivingEntity livingAttacker && target != null
                 && EquipmentUtil.isFullStrength(livingAttacker)
                 && livingAttacker.getMainHandItem().getItem() instanceof SkyrootWeapon
@@ -112,8 +112,8 @@ public final class AetherLootModifiers {
      * Gives a 1 in 4 chance of doubled drops when a pig-type mob is killed with a full-strength hit from a Pig Slayer.
      */
     private static void pigSlayerDrops(LootContext context, List<ItemStack> drops) {
-        Entity attacker = context.getOptionalParameter(LootContextParams.DIRECT_ATTACKING_ENTITY);
-        Entity target = context.getOptionalParameter(LootContextParams.THIS_ENTITY);
+        Entity attacker = context.getOptional(LootContextParams.DIRECT_ATTACKING_ENTITY);
+        Entity target = context.getOptional(LootContextParams.THIS_ENTITY);
         if (attacker instanceof LivingEntity livingAttacker && target instanceof LivingEntity livingTarget
                 && EquipmentUtil.isFullStrength(livingAttacker)
                 && livingAttacker.getMainHandItem().is(AetherItems.PIG_SLAYER)
@@ -132,8 +132,8 @@ public final class AetherLootModifiers {
      * enchantments where the gloves can take them.
      */
     private static void glovesLoot(LootContext context, List<ItemStack> drops) {
-        Vec3 origin = context.getOptionalParameter(LootContextParams.ORIGIN);
-        Entity entity = context.getOptionalParameter(LootContextParams.THIS_ENTITY);
+        Vec3 origin = context.getOptional(LootContextParams.ORIGIN);
+        Entity entity = context.getOptional(LootContextParams.THIS_ENTITY);
         if (origin == null || entity == null) {
             return;
         }

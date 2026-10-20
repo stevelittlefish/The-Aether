@@ -15,6 +15,22 @@ public class SunAltarWhitelist {
     public static final File SUN_ALTAR_WHITELIST_FILE = new File(Aether.DIRECTORY.toString(), "sun_altar_whitelist.json");
     private static final NotificationService NO_OP_NOTIFICATION_SERVICE = new NotificationService() {
         @Override
+        public void worldUpgradeStarted() {
+        }
+
+        @Override
+        public void worldUpgradeProgress(float progressPercentage) {
+        }
+
+        @Override
+        public void worldUpgradeFinished() {
+        }
+
+        @Override
+        public void worldUpgradeFailed(String reason) {
+        }
+
+        @Override
         public void ipBanned(net.minecraft.server.players.IpBanListEntry entry) {
         }
 

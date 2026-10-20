@@ -57,7 +57,7 @@ public final class PlayerTagAccessoryLayer extends RenderLayer<AvatarRenderState
         poseStack.pushPose();
         this.getParentModel().head.translateAndRotate(poseStack);
         poseStack.translate(0.0F, -0.25F, 0.0F);
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+        poseStack.rotate(Axis.YP.rotationDegrees(180.0F));
         poseStack.scale(0.625F, -0.625F, -0.625F);
         this.submitItem(stack, entity, ItemDisplayContext.HEAD, poseStack, collector, light, outlineColor);
         poseStack.popPose();
@@ -75,8 +75,8 @@ public final class PlayerTagAccessoryLayer extends RenderLayer<AvatarRenderState
     private void submitShield(ItemStack stack, LivingEntity entity, PoseStack poseStack, SubmitNodeCollector collector, int light, AvatarRenderState renderState) {
         poseStack.pushPose();
         this.getParentModel().translateToHand(renderState, HumanoidArm.LEFT, poseStack);
-        poseStack.mulPose(Axis.XP.rotationDegrees(-90.0F));
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+        poseStack.rotate(Axis.XP.rotationDegrees(-90.0F));
+        poseStack.rotate(Axis.YP.rotationDegrees(180.0F));
         poseStack.translate(-1.0F / 16.0F, 2.0F / 16.0F, -10.0F / 16.0F);
         this.submitItem(stack, entity, ItemDisplayContext.THIRD_PERSON_LEFT_HAND, poseStack, collector, light, renderState.outlineColor);
         poseStack.popPose();

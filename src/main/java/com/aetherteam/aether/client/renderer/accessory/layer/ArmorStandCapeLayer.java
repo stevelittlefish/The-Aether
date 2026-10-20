@@ -40,8 +40,8 @@ public class ArmorStandCapeLayer extends RenderLayer<ArmorStandRenderState, Armo
 
         poseStack.pushPose();
         poseStack.translate(0.0F, 0.0F, 0.0925F);
-        poseStack.mulPose(Axis.XP.rotationDegrees(3.0F));
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+        poseStack.rotate(Axis.XP.rotationDegrees(3.0F));
+        poseStack.rotate(Axis.YP.rotationDegrees(180.0F));
         this.capeModel.setupAnim(renderState);
         renderColoredCutoutModel(this.capeModel, texture, poseStack, collector, packedLight, renderState, -1, 0);
         poseStack.popPose();

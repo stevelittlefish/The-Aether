@@ -40,7 +40,7 @@ public class PhygHaloLayer<M extends PigModel> extends RenderLayer<PhygRenderSta
             this.phygHalo.halo.yRot = quadrupedModelAccessor.aether$getHead().yRot;
             this.phygHalo.halo.xRot = quadrupedModelAccessor.aether$getHead().xRot;
             this.phygHalo.setupAnim(renderState);
-            collector.order(0).submitModel(this.phygHalo, renderState, poseStack, RenderTypes.eyes(HALO_LOCATION), packedLight, LivingEntityRenderer.getOverlayCoords(renderState, 0.0F), 1073741823, null);
+            collector.order(0).submitModel(this.phygHalo, renderState, poseStack, RenderTypes.eyes(HALO_LOCATION), packedLight, LivingEntityRenderer.getOverlayCoords(renderState, 0.0F), 1073741823);
         }
     }
 }

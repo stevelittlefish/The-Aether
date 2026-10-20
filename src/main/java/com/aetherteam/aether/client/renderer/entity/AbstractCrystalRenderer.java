@@ -40,11 +40,11 @@ public abstract class AbstractCrystalRenderer<T extends AbstractCrystal, R exten
         poseStack.translate(0.0, 0.4, 0.0);
         float f = renderState.ageInTicks;
         var orderedCollector = collector.order(0);
-        poseStack.mulPose(Axis.XP.rotationDegrees(f * 0.1F * 360.0F));
+        poseStack.rotate(Axis.XP.rotationDegrees(f * 0.1F * 360.0F));
         orderedCollector.submitModelPart(this.crystal.crystal1, poseStack, this.crystal.renderType(this.getTextureLocation(renderState)), renderState.lightCoords, OverlayTexture.NO_OVERLAY, null);
-        poseStack.mulPose(Axis.YP.rotationDegrees(f * 0.1F * 360.0F));
+        poseStack.rotate(Axis.YP.rotationDegrees(f * 0.1F * 360.0F));
         orderedCollector.submitModelPart(this.crystal.crystal2, poseStack, this.crystal.renderType(this.getTextureLocation(renderState)), renderState.lightCoords, OverlayTexture.NO_OVERLAY, null);
-        poseStack.mulPose(Axis.ZP.rotationDegrees(f * 0.1F * 360.0F));
+        poseStack.rotate(Axis.ZP.rotationDegrees(f * 0.1F * 360.0F));
         orderedCollector.submitModelPart(this.crystal.crystal3, poseStack, this.crystal.renderType(this.getTextureLocation(renderState)), renderState.lightCoords, OverlayTexture.NO_OVERLAY, null);
         poseStack.popPose();
         super.submit(renderState, poseStack, collector, cameraRenderState);

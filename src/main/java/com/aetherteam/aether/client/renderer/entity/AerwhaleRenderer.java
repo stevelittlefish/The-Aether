@@ -52,7 +52,7 @@ public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, AerwhaleRende
     @Override
     protected void setupRotations(AerwhaleRenderState renderState, PoseStack poseStack, float bob, float yBodyRotation) {
         super.setupRotations(renderState, poseStack, bob, yBodyRotation);
-        poseStack.mulPose(Axis.XP.rotationDegrees(renderState.xRotData));
+        poseStack.rotate(Axis.XP.rotationDegrees(renderState.xRotData));
     }
 
     @Override

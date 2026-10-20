@@ -2,6 +2,7 @@ package com.aetherteam.aether.loot.functions;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.item.ItemStack;
@@ -11,12 +12,12 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.List;
+import java.util.Optional;
 
 public class SpawnXP extends LootItemConditionalFunction {
     public static final MapCodec<SpawnXP> CODEC = RecordCodecBuilder.mapCodec(instance -> commonFields(instance).apply(instance, SpawnXP::new));
 
-    protected SpawnXP(List<LootItemCondition> conditions) {
+    protected SpawnXP(Optional<Holder<LootItemCondition>> conditions) {
         super(conditions);
     }
 
@@ -30,7 +31,7 @@ public class SpawnXP extends LootItemConditionalFunction {
     @Override
     protected ItemStack run(ItemStack stack, LootContext context) {
         ServerLevel serverLevel = context.getLevel();
-        Vec3 originVec = context.getOptionalParameter(LootContextParams.ORIGIN);
+        Vec3 originVec = context.getOptional(LootContextParams.ORIGIN);
         if (originVec != null) {
             int randomNumber = (int) ((4 * serverLevel.getRandom().nextDouble()) + 6);
             while (randomNumber > 0) {

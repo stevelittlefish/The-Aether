@@ -3,6 +3,7 @@ package com.aetherteam.aether.mixin.mixins.client;
 import com.aetherteam.aether.client.renderer.level.AetherSkyRendering;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.attribute.EnvironmentAttributeSystem;
 import net.minecraft.world.attribute.EnvironmentAttributes;
@@ -31,9 +32,9 @@ public class ClientLevelMixin {
         });
 
         result.addTimeBasedLayer(EnvironmentAttributes.SKY_COLOR, (current, tickId) ->
-                AetherSkyRendering.getAetherSkyColor(level, 0.0F));
+                ARGB.vector3fFromRGB24(AetherSkyRendering.getAetherSkyColor(level, 0.0F)));
 
         result.addTimeBasedLayer(EnvironmentAttributes.CLOUD_COLOR, (current, tickId) ->
-                AetherSkyRendering.getAetherCloudColor(level, 0.0F));
+                ARGB.vector4fFromARGB32(AetherSkyRendering.getAetherCloudColor(level, 0.0F)));
     }
 }

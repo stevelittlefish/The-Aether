@@ -34,7 +34,7 @@ public class SentryGlowLayer<T extends SentryRenderState, M extends EntityModel<
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector collector, int packedLight, T renderState, float netHeadYaw, float headPitch) {
         if (renderState.awake) {
-            collector.order(0).submitModel(this.getParentModel(), renderState, poseStack, RenderTypes.eyes(SENTRY_EYE), 15728640, LivingEntityRenderer.getOverlayCoords(renderState, 0.0F), -1, null);
+            collector.order(0).submitModel(this.getParentModel(), renderState, poseStack, RenderTypes.eyes(SENTRY_EYE), 15728640, LivingEntityRenderer.getOverlayCoords(renderState, 0.0F), -1);
         }
     }
 }

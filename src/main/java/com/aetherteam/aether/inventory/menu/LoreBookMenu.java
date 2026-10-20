@@ -20,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Prediction;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -104,9 +105,9 @@ public class LoreBookMenu extends AbstractContainerMenu {
             ItemStack stack = this.loreInventory.getItem(0);
             if (!stack.isEmpty()) {
                 if (player.isAlive() && !serverPlayer.hasDisconnected()) {
-                    player.getInventory().placeItemBackInInventory(stack);
+                    player.getInventory().placeItemBackInInventory(stack, Prediction.SERVER_ONLY);
                 } else {
-                    player.drop(stack, false);
+                    player.drop(stack, false, Prediction.SERVER_ONLY);
                 }
                 this.loreInventory.setItem(0, ItemStack.EMPTY);
             }

@@ -143,8 +143,9 @@ public abstract class LivingEntityMixin implements AccessoryUsingEntity {
         MobAccessorySpawning.dropAccessories((LivingEntity) (Object) this, level, recentlyHit);
     }
 
-    @Inject(method = "drop(Lnet/minecraft/world/item/ItemStack;ZZ)Lnet/minecraft/world/entity/item/ItemEntity;", at = @At("RETURN"))
-    private void aether$trackPlayerDeathDrop(ItemStack stack, boolean dropAround, boolean includeName, CallbackInfoReturnable<ItemEntity> cir) {
+    // Death drops are created here (by Inventory#dropAll) since 26.3, rather than through drop(ItemStack, boolean, boolean).
+    @Inject(method = "createItemStackToDrop(Lnet/minecraft/world/item/ItemStack;ZZ)Lnet/minecraft/world/entity/item/ItemEntity;", at = @At("RETURN"))
+    private void aether$trackPlayerDeathDrop(ItemStack stack, boolean randomly, boolean thrownFromHand, CallbackInfoReturnable<ItemEntity> cir) {
         if (this.aether$trackingDeathDrops) {
             AetherTravelController.trackPlayerDeathDrop((LivingEntity) (Object) this, cir.getReturnValue());
         }
@@ -200,8 +201,8 @@ public abstract class LivingEntityMixin implements AccessoryUsingEntity {
         return AetherCombat.modifyDamageAfterReductions((LivingEntity) (Object) this, source, damage);
     }
 
-    @ModifyReturnValue(method = "getVisibilityPercent(Lnet/minecraft/world/entity/Entity;)D", at = @At("RETURN"))
-    private double aether$modifyVisibility(double original, Entity lookingEntity) {
+    @ModifyReturnValue(method = "getVisibilityPercent(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;)D", at = @At("RETURN"))
+    private double aether$modifyVisibility(double original, ServerLevel level, Entity lookingEntity) {
         return AccessoryAbilities.modifyVisibility((LivingEntity) (Object) this, lookingEntity, original);
     }
 
@@ -231,7 +232,8 @@ public abstract class LivingEntityMixin implements AccessoryUsingEntity {
         }
     }
 
-    @WrapOperation(method = {"canGlide()Z", "updateFallFlying()V", "onEquippedItemBroken(Lnet/minecraft/world/item/Item;Lnet/minecraft/world/entity/EquipmentSlot;)V"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getItemBySlot(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"))
+    // Since 26.3 onEquippedItemBroken is handed the broken stack, so it no longer needs the accessory substituted.
+    @WrapOperation(method = {"canGlide()Z", "updateFallFlying()V"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getItemBySlot(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"))
     private ItemStack aether$useAccessoryElytraForVanillaFlightChecks(LivingEntity instance, EquipmentSlot slot, Operation<ItemStack> original) {
         ItemStack stack = original.call(instance, slot);
         if (this.aether$breakingAccessoryEquipmentSlot == slot && !this.aether$breakingAccessoryEquipmentStack.isEmpty()) {

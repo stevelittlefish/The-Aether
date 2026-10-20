@@ -3,14 +3,13 @@ package com.aetherteam.aether.client.renderer.accessory;
 import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.accessories.api.AccessoriesAPI;
 import com.aetherteam.aether.accessories.api.AccessoriesContainer;
-import com.aetherteam.aether.accessories.api.slot.SlotEntryReference;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
-import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.accessories.api.slot.SlotTypeReference;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
+import net.minecraft.client.resources.palette.PalettedTextureManager;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,6 +19,7 @@ import net.minecraft.world.item.equipment.trim.ArmorTrim;
 
 import java.util.Map;
 import java.util.function.Predicate;
+import javax.annotation.Nullable;
 
 public final class AccessoryRendering {
     private AccessoryRendering() {
@@ -53,20 +53,23 @@ public final class AccessoryRendering {
         return null;
     }
 
-    public static TextureAtlasSprite getHumanoidArmorTrimSprite(ItemStack stack, GlovesItem glovesItem) {
+    /**
+     * The humanoid armor trim texture for trimmed gloves, in the trim material's palette. Since 26.3 trims are paletted on
+     * demand rather than baked into an atlas; vanilla's per-equipment palette overrides (the darker variants) aren't applied.
+     */
+    @Nullable
+    public static PalettedTextureManager.Handle getHumanoidArmorTrimTexture(ItemStack stack) {
         ArmorTrim trim = stack.get(DataComponents.TRIM);
         if (trim == null) {
             return null;
         }
-        return Minecraft.getInstance()
-            .getAtlasManager()
-            .getAtlasOrThrow(Sheets.ARMOR_TRIMS_SHEET)
-            .getSprite(trim.layerAssetId("humanoid", glovesItem.getMaterial().assetId()));
+        Identifier baseTexture = trim.pattern().value().assetId().withPath(path -> EquipmentClientInfo.LayerType.HUMANOID.trimAssetPrefix() + "/" + path);
+        return Minecraft.getInstance().getPalettedTextureManager().getOrPrepare(baseTexture, trim.material().value().paletteId());
     }
 
-    public static RenderType getArmorTrimRenderType(ItemStack stack) {
+    public static RenderType getArmorTrimRenderType(ItemStack stack, PalettedTextureManager.Handle texture) {
         ArmorTrim trim = stack.get(DataComponents.TRIM);
-        return trim != null ? Sheets.armorTrimsSheet(trim.pattern().value().decal()) : null;
+        return RenderTypes.armorTrim(texture.textureLocation(), trim != null && trim.pattern().value().decal());
     }
 
     public static ItemStack getVisibleAccessory(LivingEntity livingEntity, SlotTypeReference slotType, int slotIndex) {

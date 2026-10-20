@@ -94,29 +94,29 @@ public class AetherItems {
 
     // Tools
     public static final PickaxeItem SKYROOT_PICKAXE = register("skyroot_pickaxe", properties -> new SkyrootPickaxeItem(properties));
-    public static final AxeItem SKYROOT_AXE = register("skyroot_axe", properties -> new SkyrootAxeItem(properties));
-    public static final ShovelItem SKYROOT_SHOVEL = register("skyroot_shovel", properties -> new SkyrootShovelItem(properties));
-    public static final HoeItem SKYROOT_HOE = register("skyroot_hoe", properties -> new SkyrootHoeItem(properties));
+    public static final Item SKYROOT_AXE = register("skyroot_axe", properties -> new SkyrootAxeItem(properties));
+    public static final Item SKYROOT_SHOVEL = register("skyroot_shovel", properties -> new SkyrootShovelItem(properties));
+    public static final Item SKYROOT_HOE = register("skyroot_hoe", properties -> new SkyrootHoeItem(properties));
 
     public static final PickaxeItem HOLYSTONE_PICKAXE = register("holystone_pickaxe", properties -> new HolystonePickaxeItem(properties));
-    public static final AxeItem HOLYSTONE_AXE = register("holystone_axe", properties -> new HolystoneAxeItem(properties));
-    public static final ShovelItem HOLYSTONE_SHOVEL = register("holystone_shovel", properties -> new HolystoneShovelItem(properties));
-    public static final HoeItem HOLYSTONE_HOE = register("holystone_hoe", properties -> new HolystoneHoeItem(properties));
+    public static final Item HOLYSTONE_AXE = register("holystone_axe", properties -> new HolystoneAxeItem(properties));
+    public static final Item HOLYSTONE_SHOVEL = register("holystone_shovel", properties -> new HolystoneShovelItem(properties));
+    public static final Item HOLYSTONE_HOE = register("holystone_hoe", properties -> new HolystoneHoeItem(properties));
 
     public static final PickaxeItem ZANITE_PICKAXE = register("zanite_pickaxe", properties -> new ZanitePickaxeItem(properties));
-    public static final AxeItem ZANITE_AXE = register("zanite_axe", properties -> new ZaniteAxeItem(properties));
-    public static final ShovelItem ZANITE_SHOVEL = register("zanite_shovel", properties -> new ZaniteShovelItem(properties));
-    public static final HoeItem ZANITE_HOE = register("zanite_hoe", properties -> new ZaniteHoeItem(properties));
+    public static final Item ZANITE_AXE = register("zanite_axe", properties -> new ZaniteAxeItem(properties));
+    public static final Item ZANITE_SHOVEL = register("zanite_shovel", properties -> new ZaniteShovelItem(properties));
+    public static final Item ZANITE_HOE = register("zanite_hoe", properties -> new ZaniteHoeItem(properties));
 
     public static final PickaxeItem GRAVITITE_PICKAXE = register("gravitite_pickaxe", properties -> new GravititePickaxeItem(properties));
-    public static final AxeItem GRAVITITE_AXE = register("gravitite_axe", properties -> new GravititeAxeItem(properties));
-    public static final ShovelItem GRAVITITE_SHOVEL = register("gravitite_shovel", properties -> new GravititeShovelItem(properties));
-    public static final HoeItem GRAVITITE_HOE = register("gravitite_hoe", properties -> new GravititeHoeItem(properties));
+    public static final Item GRAVITITE_AXE = register("gravitite_axe", properties -> new GravititeAxeItem(properties));
+    public static final Item GRAVITITE_SHOVEL = register("gravitite_shovel", properties -> new GravititeShovelItem(properties));
+    public static final Item GRAVITITE_HOE = register("gravitite_hoe", properties -> new GravititeHoeItem(properties));
 
     public static final PickaxeItem VALKYRIE_PICKAXE = register("valkyrie_pickaxe", properties -> new ValkyriePickaxeItem(properties.rarity(AETHER_LOOT)));
-    public static final AxeItem VALKYRIE_AXE = register("valkyrie_axe", properties -> new ValkyrieAxeItem(properties.rarity(AETHER_LOOT)));
-    public static final ShovelItem VALKYRIE_SHOVEL = register("valkyrie_shovel", properties -> new ValkyrieShovelItem(properties.rarity(AETHER_LOOT)));
-    public static final HoeItem VALKYRIE_HOE = register("valkyrie_hoe", properties -> new ValkyrieHoeItem(properties.rarity(AETHER_LOOT)));
+    public static final Item VALKYRIE_AXE = register("valkyrie_axe", properties -> new ValkyrieAxeItem(properties.rarity(AETHER_LOOT)));
+    public static final Item VALKYRIE_SHOVEL = register("valkyrie_shovel", properties -> new ValkyrieShovelItem(properties.rarity(AETHER_LOOT)));
+    public static final Item VALKYRIE_HOE = register("valkyrie_hoe", properties -> new ValkyrieHoeItem(properties.rarity(AETHER_LOOT)));
 
     // Weapons
     public static final SwordItem SKYROOT_SWORD = register("skyroot_sword", properties -> new SkyrootSwordItem(properties));

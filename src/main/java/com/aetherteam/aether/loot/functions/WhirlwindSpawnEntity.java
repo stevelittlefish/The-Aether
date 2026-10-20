@@ -3,6 +3,7 @@ package com.aetherteam.aether.loot.functions;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.predicates.entity.EntityTypePredicate;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.valueproviders.IntProvider;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.List;
+import java.util.Optional;
 
 public class WhirlwindSpawnEntity extends LootItemConditionalFunction {
     public static final MapCodec<WhirlwindSpawnEntity> CODEC = RecordCodecBuilder.mapCodec(instance -> commonFields(instance)
@@ -28,7 +29,7 @@ public class WhirlwindSpawnEntity extends LootItemConditionalFunction {
     private final EntityTypePredicate entityType;
     private final IntProvider count;
 
-    protected WhirlwindSpawnEntity(List<LootItemCondition> conditions, EntityTypePredicate entityType, IntProvider count) {
+    protected WhirlwindSpawnEntity(Optional<Holder<LootItemCondition>> conditions, EntityTypePredicate entityType, IntProvider count) {
         super(conditions);
         this.entityType = entityType;
         this.count = count;
@@ -44,7 +45,7 @@ public class WhirlwindSpawnEntity extends LootItemConditionalFunction {
     @Override
     protected ItemStack run(ItemStack stack, LootContext context) {
         ServerLevel serverLevel = context.getLevel();
-        Vec3 originVec = context.getOptionalParameter(LootContextParams.ORIGIN);
+        Vec3 originVec = context.getOptional(LootContextParams.ORIGIN);
         if (originVec != null) {
             for (int i = 0; i < this.count.sample(serverLevel.getRandom()); i++) {
                     HolderSet<EntityType<?>> holderSet = this.entityType.types();

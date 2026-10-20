@@ -39,7 +39,7 @@ public class MoaEmissiveLayer extends RenderLayer<MoaRenderState, MoaModel> {
     public void submit(PoseStack poseStack, SubmitNodeCollector collector, int packedLight, MoaRenderState renderState, float netHeadYaw, float headPitch) {
         Identifier moaSkin = this.getMoaSkinLocation(renderState);
         if (moaSkin != null && !renderState.isInvisible) {
-            collector.order(0).submitModel(this.getParentModel(), renderState, poseStack, RenderTypes.eyes(moaSkin), 15728640, LivingEntityRenderer.getOverlayCoords(renderState, 0.0F), -1, null);
+            collector.order(0).submitModel(this.getParentModel(), renderState, poseStack, RenderTypes.eyes(moaSkin), 15728640, LivingEntityRenderer.getOverlayCoords(renderState, 0.0F), -1);
         }
     }
 

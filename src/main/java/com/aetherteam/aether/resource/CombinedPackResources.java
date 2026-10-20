@@ -1,9 +1,10 @@
 package com.aetherteam.aether.resource;
 
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.packs.AbstractPackResources;
-import net.minecraft.server.packs.CompositePackResources;
+import net.minecraft.server.packs.AbstractPackMetadataResources;
+import net.minecraft.server.packs.OverlayedPackResources;
 import net.minecraft.server.packs.PackLocationInfo;
+import net.minecraft.server.packs.PackMetadataResources;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
@@ -24,11 +25,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * Merges the shared classic assets with a release-specific classic resource pack.
  */
-public final class CombinedPackResources extends AbstractPackResources {
+public final class CombinedPackResources extends AbstractPackMetadataResources implements PackResources {
     private final PackMetadataSection packInfo;
     private final List<PackResources> packs;
     private final Map<String, List<PackResources>> assets;
@@ -89,7 +91,7 @@ public final class CombinedPackResources extends AbstractPackResources {
     }
 
     @Override
-    public void listResources(PackType type, String namespace, String path, ResourceOutput output) {
+    public void listResources(PackType type, String namespace, String path, PackResources.ResourceOutput output) {
         for (PackResources pack : this.packs) {
             pack.listResources(type, namespace, path, output);
         }
@@ -125,7 +127,11 @@ public final class CombinedPackResources extends AbstractPackResources {
     public record CombinedResourcesSupplier(PackMetadataSection packInfo, List<Path> packPaths,
                                             Path sourcePack) implements Pack.ResourcesSupplier {
         @Override
-        public PackResources openPrimary(PackLocationInfo location) {
+        public PackMetadataResources openMetadata(PackLocationInfo location) {
+            return this.openPrimary(location);
+        }
+
+        private CombinedPackResources openPrimary(PackLocationInfo location) {
             List<PathPackResources> packs = this.packPaths.stream()
                     .map(path -> new PathPackResources(location, path))
                     .toList();
@@ -133,10 +139,10 @@ public final class CombinedPackResources extends AbstractPackResources {
         }
 
         @Override
-        public PackResources openFull(PackLocationInfo location, Pack.Metadata metadata) {
+        public Stream<PackResources> openResources(PackLocationInfo location, Pack.Metadata metadata) {
             PackResources primary = this.openPrimary(location);
             if (metadata.overlays().isEmpty()) {
-                return primary;
+                return Stream.of(primary);
             }
 
             List<PackResources> overlays = new ArrayList<>(metadata.overlays().size());
@@ -144,7 +150,7 @@ public final class CombinedPackResources extends AbstractPackResources {
                 overlays.add(new CombinedPackResources(location, this.packInfo, List.of(),
                         this.sourcePack.resolve(overlay)));
             }
-            return new CompositePackResources(primary, overlays);
+            return Stream.of(new OverlayedPackResources(primary, overlays));
         }
     }
 }

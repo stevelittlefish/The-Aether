@@ -2,6 +2,7 @@ package com.aetherteam.aether.entity;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
+import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.aetherteam.aether.network.packet.serverbound.StepHeightPacket;
 import net.minecraft.resources.Identifier;
@@ -14,7 +15,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.behavior.Swim;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import com.aetherteam.aether.network.AetherPacketSender;
@@ -96,11 +96,11 @@ public interface MountableMob {
                         vehicle.push(0.0, 0.1 * (jumpBoost.getAmplifier() + 1), 0.0);
                     }
                 }
-                vehicle.hurtMarked = true;
+                vehicle.syncVelocity = true;
                 vehicle.onJump(vehicle);
-            } else if (vehicle.getPlayerJumped() && vehicle.isMountJumping() && vehicle.canJump() && Swim.shouldSwim(vehicle)) {
+            } else if (vehicle.getPlayerJumped() && vehicle.isMountJumping() && vehicle.canJump() && EntityUtil.shouldSwim(vehicle)) {
                 vehicle.jumpFromGround();
-                vehicle.hurtMarked = true;
+                vehicle.syncVelocity = true;
                 vehicle.onJump(vehicle);
             }
             // Handles step height.

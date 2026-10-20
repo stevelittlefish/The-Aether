@@ -34,7 +34,7 @@ public class SliderGlowLayer extends RenderLayer<SliderRenderState, SliderModel>
     public void submit(PoseStack poseStack, SubmitNodeCollector collector, int packedLight, SliderRenderState renderState, float netHeadYaw, float headPitch) {
         if (renderState.awake) {
             Identifier texture = renderState.critical ? SLIDER_AWAKE_CRITICAL_GLOW : SLIDER_AWAKE_GLOW;
-            collector.order(0).submitModel(this.getParentModel(), renderState, poseStack, RenderTypes.eyes(texture), 15728640, LivingEntityRenderer.getOverlayCoords(renderState, 0.0F), -1, null);
+            collector.order(0).submitModel(this.getParentModel(), renderState, poseStack, RenderTypes.eyes(texture), 15728640, LivingEntityRenderer.getOverlayCoords(renderState, 0.0F), -1);
         }
     }
 }

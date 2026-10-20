@@ -31,7 +31,7 @@ public class SwetOuterLayer extends RenderLayer<SwetRenderState, SlimeModel> {
             int overlay = LivingEntityRenderer.getOverlayCoords(renderState, 0.0F);
             RenderType renderType = outline ? RenderTypes.outline(this.texture) : RenderTypes.entityTranslucent(this.texture);
             this.outer.setupAnim(renderState);
-            collector.order(1).submitModel(this.outer, renderState, poseStack, renderType, packedLight, overlay, -1, null, renderState.outlineColor, null);
+            collector.order(1).submitModel(this.outer, renderState, poseStack, renderType, packedLight, overlay, -1, null, renderState.outlineColor);
         }
     }
 }

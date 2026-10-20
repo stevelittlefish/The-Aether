@@ -3,6 +3,7 @@ package com.aetherteam.aether.mixin.mixins.client;
 import com.aetherteam.aether.client.renderer.level.AetherSkyRendering;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import com.mojang.renderpearl.api.commands.RenderPass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -19,15 +20,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(SkyRenderer.class)
 public abstract class SkyRendererMixin {
     @Shadow
-    private void renderSun(float alpha, PoseStack poseStack) {
+    private void renderSun(RenderPass renderPass, float alpha, PoseStack poseStack) {
     }
 
     @Shadow
-    private void renderMoon(MoonPhase moonPhase, float alpha, PoseStack poseStack) {
+    private void renderMoon(RenderPass renderPass, MoonPhase moonPhase, float alpha, PoseStack poseStack) {
     }
 
     @Shadow
-    private void renderStars(float alpha, PoseStack poseStack) {
+    private void renderStars(RenderPass renderPass, float alpha, PoseStack poseStack) {
     }
 
     @Inject(method = "extractRenderState", at = @At("RETURN"), require = 1)
@@ -36,7 +37,7 @@ public abstract class SkyRendererMixin {
     }
 
     @Inject(method = "renderSunMoonAndStars", at = @At("HEAD"), cancellable = true, require = 1)
-    private void aether$renderAetherCelestials(PoseStack poseStack, float sunAngle, float moonAngle, float starAngle, MoonPhase moonPhase, float rainBrightness, float starBrightness, CallbackInfo ci) {
+    private void aether$renderAetherCelestials(RenderPass renderPass, PoseStack poseStack, float sunAngle, float moonAngle, float starAngle, MoonPhase moonPhase, float rainBrightness, float starBrightness, CallbackInfo ci) {
         ClientLevel level = Minecraft.getInstance().level;
         if (!AetherSkyRendering.isCustomSkyEnabled(level)) {
             return;
@@ -52,22 +53,22 @@ public abstract class SkyRendererMixin {
         }
 
         poseStack.pushPose();
-        poseStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
+        poseStack.rotate(Axis.YP.rotationDegrees(-90.0F));
 
         poseStack.pushPose();
-        poseStack.mulPose(Axis.XP.rotation(sunAngle));
-        this.renderSun(sunOpacity, poseStack);
+        poseStack.rotate(Axis.XP.rotation(sunAngle));
+        this.renderSun(renderPass, sunOpacity, poseStack);
         poseStack.popPose();
 
         poseStack.pushPose();
-        poseStack.mulPose(Axis.XP.rotation(moonAngle));
-        this.renderMoon(moonPhase, moonOpacity, poseStack);
+        poseStack.rotate(Axis.XP.rotation(moonAngle));
+        this.renderMoon(renderPass, moonPhase, moonOpacity, poseStack);
         poseStack.popPose();
 
         if (starBrightness > 0.0F) {
             poseStack.pushPose();
-            poseStack.mulPose(Axis.XP.rotation(starAngle));
-            this.renderStars(starBrightness, poseStack);
+            poseStack.rotate(Axis.XP.rotation(starAngle));
+            this.renderStars(renderPass, starBrightness, poseStack);
             poseStack.popPose();
         }
 
