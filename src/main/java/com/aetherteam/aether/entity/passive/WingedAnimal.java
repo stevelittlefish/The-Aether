@@ -48,6 +48,12 @@ public abstract class WingedAnimal extends MountableAnimal {
                 this.setEntityOnGround(false);
             }
         }
+        if (this.level().isClientSide()) {
+            // Eases the wings toward folded on the ground and spread in the air. 1.21.1 did this per frame in
+            // QuadrupedWingsModel#setupAnim (1/37.5 of the way); render states can't write back, so it's per tick here.
+            float aimingForFold = this.isEntityOnGround() ? 0.1F : 1.0F;
+            this.wingFold += (aimingForFold - this.wingFold) / 12.5F;
+        }
     }
 
     /**
