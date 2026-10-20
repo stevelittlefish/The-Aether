@@ -10,7 +10,6 @@ import com.aetherteam.aether.command.SunAltarWhitelist;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.network.AetherPacketSender;
 import com.aetherteam.aether.network.packet.clientbound.OpenSunAltarPacket;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,16 +26,10 @@ import net.minecraft.world.phys.BlockHitResult;
 
 public class SunAltarBlock extends BaseEntityBlock {
 
-    public static final MapCodec<SunAltarBlock> CODEC = simpleCodec(SunAltarBlock::new);
-
     public SunAltarBlock(Properties properties) {
         super(properties);
     }
 
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

@@ -6,67 +6,71 @@ import com.aetherteam.aether.data.resources.registries.AetherPlacedFeatures;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 import java.util.List;
 
 public class AetherBiomeBuilders {
-    public static Biome skyrootMeadowBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+    public static Biome skyrootMeadowBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<WorldCarver> worldCarvers) {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.SKYROOT_MEADOW_TREES_PLACEMENT));
     }
 
-    public static Biome skyrootGroveBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+    public static Biome skyrootGroveBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<WorldCarver> worldCarvers) {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.SKYROOT_GROVE_TREES_PLACEMENT));
     }
 
-    public static Biome skyrootWoodlandBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+    public static Biome skyrootWoodlandBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<WorldCarver> worldCarvers) {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.SKYROOT_WOODLAND_TREES_PLACEMENT));
     }
 
-    public static Biome skyrootForestBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+    public static Biome skyrootForestBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<WorldCarver> worldCarvers) {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.SKYROOT_FOREST_TREES_PLACEMENT));
     }
 
     public static Biome makeDefaultBiome(BiomeGenerationSettings.Builder builder) {
         MobSpawnSettings.Builder spawnSettings = new MobSpawnSettings.Builder()
-                .addMobCharge(AetherEntityTypes.COCKATRICE, 0.5, 0.15)
-                .addMobCharge(AetherEntityTypes.AECHOR_PLANT, 0.4, 0.11)
-                .addMobCharge(AetherEntityTypes.BLUE_SWET, 0.5, 0.1)
-                .addMobCharge(AetherEntityTypes.GOLDEN_SWET, 0.5, 0.1)
-                .addMobCharge(AetherEntityTypes.WHIRLWIND, 0.4, 0.1)
-                .addMobCharge(AetherEntityTypes.EVIL_WHIRLWIND, 0.4, 0.1)
+                .addMobSpawnCost(AetherEntityTypes.COCKATRICE, 0.5, 0.15)
+                .addMobSpawnCost(AetherEntityTypes.AECHOR_PLANT, 0.4, 0.11)
+                .addMobSpawnCost(AetherEntityTypes.BLUE_SWET, 0.5, 0.1)
+                .addMobSpawnCost(AetherEntityTypes.GOLDEN_SWET, 0.5, 0.1)
+                .addMobSpawnCost(AetherEntityTypes.WHIRLWIND, 0.4, 0.1)
+                .addMobSpawnCost(AetherEntityTypes.EVIL_WHIRLWIND, 0.4, 0.1)
 
-                .addSpawn(AetherMobCategory.AETHER_DARKNESS_MONSTER, 8, new MobSpawnSettings.SpawnerData(AetherEntityTypes.COCKATRICE, 1, 1))
-                .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, 7, new MobSpawnSettings.SpawnerData(AetherEntityTypes.AECHOR_PLANT, 1, 1))
-                .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, 6, new MobSpawnSettings.SpawnerData(AetherEntityTypes.BLUE_SWET, 1, 1))
-                .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, 6, new MobSpawnSettings.SpawnerData(AetherEntityTypes.GOLDEN_SWET, 1, 1))
-                .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, 3, new MobSpawnSettings.SpawnerData(AetherEntityTypes.WHIRLWIND, 1, 1))
-                .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, 1, new MobSpawnSettings.SpawnerData(AetherEntityTypes.EVIL_WHIRLWIND, 1, 1))
+                .addSpawn(AetherEntityTypes.COCKATRICE, AetherMobCategory.AETHER_DARKNESS_MONSTER, 8, count(1, 1))
+                .addSpawn(AetherEntityTypes.AECHOR_PLANT, AetherMobCategory.AETHER_SURFACE_MONSTER, 7, count(1, 1))
+                .addSpawn(AetherEntityTypes.BLUE_SWET, AetherMobCategory.AETHER_SURFACE_MONSTER, 6, count(1, 1))
+                .addSpawn(AetherEntityTypes.GOLDEN_SWET, AetherMobCategory.AETHER_SURFACE_MONSTER, 6, count(1, 1))
+                .addSpawn(AetherEntityTypes.WHIRLWIND, AetherMobCategory.AETHER_SURFACE_MONSTER, 3, count(1, 1))
+                .addSpawn(AetherEntityTypes.EVIL_WHIRLWIND, AetherMobCategory.AETHER_SURFACE_MONSTER, 1, count(1, 1))
 
-                .creatureGenerationProbability(0.25F)
-                .addSpawn(MobCategory.CREATURE, 10, new MobSpawnSettings.SpawnerData(AetherEntityTypes.PHYG, 3, 4))
-                .addSpawn(MobCategory.CREATURE, 12, new MobSpawnSettings.SpawnerData(AetherEntityTypes.SHEEPUFF, 3, 4))
-                .addSpawn(MobCategory.CREATURE, 12, new MobSpawnSettings.SpawnerData(AetherEntityTypes.FLYING_COW, 2, 5))
-                .addSpawn(MobCategory.CREATURE, 11, new MobSpawnSettings.SpawnerData(AetherEntityTypes.AERBUNNY, 3, 3))
-                .addSpawn(MobCategory.CREATURE, 8, new MobSpawnSettings.SpawnerData(AetherEntityTypes.MOA, 1, 3));
+                .addSpawn(AetherEntityTypes.PHYG, MobCategory.CREATURE, 10, count(3, 4))
+                .addSpawn(AetherEntityTypes.SHEEPUFF, MobCategory.CREATURE, 12, count(3, 4))
+                .addSpawn(AetherEntityTypes.FLYING_COW, MobCategory.CREATURE, 12, count(2, 5))
+                .addSpawn(AetherEntityTypes.AERBUNNY, MobCategory.CREATURE, 11, count(3, 3))
+                .addSpawn(AetherEntityTypes.MOA, MobCategory.CREATURE, 8, count(1, 3));
 
         if (AetherMobCategory.hasCustomSkyMonsterCategory()) {
-            spawnSettings.addMobCharge(AetherEntityTypes.ZEPHYR, 0.6, 0.16)
-                    .addSpawn(AetherMobCategory.AETHER_SKY_MONSTER, 20, new MobSpawnSettings.SpawnerData(AetherEntityTypes.ZEPHYR, 1, 1));
+            spawnSettings.addMobSpawnCost(AetherEntityTypes.ZEPHYR, 0.6, 0.16)
+                    .addSpawn(AetherEntityTypes.ZEPHYR, AetherMobCategory.AETHER_SKY_MONSTER, 20, count(1, 1));
         }
         if (AetherMobCategory.hasCustomAerwhaleCategory()) {
-            spawnSettings.addMobCharge(AetherEntityTypes.AERWHALE, 0.5, 0.11)
-                    .addSpawn(AetherMobCategory.AETHER_AERWHALE, 10, new MobSpawnSettings.SpawnerData(AetherEntityTypes.AERWHALE, 1, 1));
+            spawnSettings.addMobSpawnCost(AetherEntityTypes.AERWHALE, 0.5, 0.11)
+                    .addSpawn(AetherEntityTypes.AERWHALE, AetherMobCategory.AETHER_AERWHALE, 10, count(1, 1));
         }
 
         return fullDefinition(
                 false,
                 0.8F,
                 0.0F,
+                0.25F,
                 new BiomeSpecialEffects.Builder()
                         .waterColor(0x3f_76_e4)
                         .grassColorOverride(0xb1_ff_cb)
@@ -99,16 +103,21 @@ public class AetherBiomeBuilders {
         );
     }
 
-    public static Biome fullDefinition(boolean precipitation, float temperature, float downfall, BiomeSpecialEffects effects, MobSpawnSettings spawnSettings, BiomeGenerationSettings generationSettings, Biome.TemperatureModifier temperatureModifier) {
+    public static Biome fullDefinition(boolean precipitation, float temperature, float downfall, float creatureGenerationProbability, BiomeSpecialEffects effects, MobSpawnSettings spawnSettings, BiomeGenerationSettings generationSettings, Biome.TemperatureModifier temperatureModifier) {
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(precipitation)
                 .temperature(temperature)
                 .downfall(downfall)
+                .setAttribute(EnvironmentAttributes.CREATURE_WORLD_GEN_SPAWN_PROBABILITY, creatureGenerationProbability)
                 .specialEffects(effects)
                 .mobSpawnSettings(spawnSettings)
                 .generationSettings(generationSettings)
                 .temperatureAdjustment(temperatureModifier)
                 .build();
+    }
+
+    private static IntProvider count(int min, int max) {
+        return min == max ? ConstantInt.of(min) : UniformInt.of(min, max);
     }
 
     public static BiomeSource buildAetherBiomeSource(HolderGetter<Biome> biomes) {

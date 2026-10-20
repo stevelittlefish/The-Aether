@@ -2,14 +2,13 @@ package com.aetherteam.aether.item.tools.holystone;
 
 import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.tools.abilities.HolystoneTool;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 
 /**
  * Ambrosium dropping behavior is called by {@link com.aetherteam.aether.item.tools.abilities.ToolAbilities#handleHolystoneToolAbility}.
  */
-public class HolystoneAxeItem extends AxeItem implements HolystoneTool {
+public class HolystoneAxeItem extends Item implements HolystoneTool {
     public HolystoneAxeItem(Item.Properties properties) {
-        super(AetherItemTiers.HOLYSTONE, 7.0F, -3.2F, properties);
+        super(properties.axe(AetherItemTiers.HOLYSTONE, 7.0F, -3.2F));
     }
 }

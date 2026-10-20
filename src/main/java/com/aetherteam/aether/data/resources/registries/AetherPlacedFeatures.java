@@ -19,7 +19,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
@@ -57,7 +57,7 @@ public class AetherPlacedFeatures {
     }
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
-        HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
+        HolderGetter<Feature> configuredFeatures = context.lookup(Registries.FEATURE);
         register(context, COLD_AERCLOUD_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.COLD_AERCLOUD_CONFIGURATION), AetherPlacedFeatureBuilders.aercloudPlacement(32, 64, 7));
         register(context, BLUE_AERCLOUD_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.BLUE_AERCLOUD_CONFIGURATION), AetherPlacedFeatureBuilders.aercloudPlacement(32, 64, 24));
         register(context, GOLDEN_AERCLOUD_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.GOLDEN_AERCLOUD_CONFIGURATION), AetherPlacedFeatureBuilders.aercloudPlacement(96, 32, 75));
@@ -141,11 +141,11 @@ public class AetherPlacedFeatures {
             PlacementUtils.isEmpty(), RarityFilter.onAverageOnceEvery(16));
     }
 
-    private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?, ?>> configuration, List<PlacementModifier> modifiers) {
+    private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<Feature> configuration, List<PlacementModifier> modifiers) {
         context.register(key, new PlacedFeature(configuration, List.copyOf(modifiers)));
     }
 
-    private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?, ?>> configuration, PlacementModifier... modifiers) {
+    private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<Feature> configuration, PlacementModifier... modifiers) {
         register(context, key, configuration, List.of(modifiers));
     }
 }

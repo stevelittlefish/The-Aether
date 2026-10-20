@@ -37,6 +37,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -53,7 +54,6 @@ import javax.annotation.Nullable;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * [CODE COPY] - {@link net.minecraft.world.entity.animal.sheep.Sheep}.<br><br>
@@ -213,7 +213,7 @@ public class Sheepuff extends AetherAnimal implements Shearable {
             DyeColor color = com.aetherteam.aether.util.DyeUtil.colorOf(dyeItem);
             if (this.getColor() != color) {
                 if (this.getPuffed() && itemstack.getCount() >= 2) {
-                    player.swing(hand);
+                    player.swing(hand, SwingAnimation.DEFAULT, false);
                     if (!player.level().isClientSide()) {
                         this.setColor(color);
                         if (!player.getAbilities().instabuild) {
@@ -221,7 +221,7 @@ public class Sheepuff extends AetherAnimal implements Shearable {
                         }
                     }
                 } else if (!this.getPuffed()) {
-                    player.swing(hand);
+                    player.swing(hand, SwingAnimation.DEFAULT, false);
                     if (!player.level().isClientSide()) {
                         this.setColor(color);
                         if (!player.getAbilities().instabuild) {

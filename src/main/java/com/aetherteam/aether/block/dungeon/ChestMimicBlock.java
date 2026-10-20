@@ -4,7 +4,6 @@ import com.aetherteam.aether.blockentity.ChestMimicBlockEntity;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.monster.dungeon.Mimic;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -37,7 +36,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * Mostly copied from {@link ChestBlock} without inventory functionality.
  */
 public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
-    public static final MapCodec<ChestMimicBlock> CODEC = simpleCodec(ChestMimicBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 14.0, 15.0);
@@ -47,10 +45,6 @@ public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterlogge
         this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
     }
 
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

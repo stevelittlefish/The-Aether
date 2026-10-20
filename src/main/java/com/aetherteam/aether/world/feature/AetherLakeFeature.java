@@ -1,8 +1,9 @@
 package com.aetherteam.aether.world.feature;
 
-import com.aetherteam.aether.world.configuration.AetherLakeConfiguration;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
@@ -10,26 +11,29 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
 /**
  * [CODE COPY] - {@link net.minecraft.world.level.levelgen.feature.LakeFeature}.<br><br>
  * Modified to be for water only.
  */
 @SuppressWarnings("deprecation")
-public class AetherLakeFeature extends Feature<AetherLakeConfiguration> {
+public record AetherLakeFeature(Holder<BlockStateProvider> fluid, Holder<BlockStateProvider> top) implements Feature {
+    public static final MapCodec<AetherLakeFeature> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+            BlockStateProvider.CODEC.fieldOf("fluid").forGetter(AetherLakeFeature::fluid),
+            BlockStateProvider.CODEC.fieldOf("top").forGetter(AetherLakeFeature::top)
+    ).apply(instance, AetherLakeFeature::new));
     private static final BlockState AIR = Blocks.CAVE_AIR.defaultBlockState();
 
-    public AetherLakeFeature(Codec<AetherLakeConfiguration> codec) {
-        super(codec);
+    @Override
+    public MapCodec<AetherLakeFeature> codec() {
+        return CODEC;
     }
 
-    public boolean place(FeaturePlaceContext<AetherLakeConfiguration> context) {
-        BlockPos blockPos = context.origin();
-        WorldGenLevel level = context.level();
-        RandomSource random = context.random();
-        AetherLakeConfiguration aetherLakeConfiguration = context.config();
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos blockPos) {
         if (blockPos.getY() <= level.getMinY() + 4) {
             return false;
         } else {
@@ -60,7 +64,7 @@ public class AetherLakeFeature extends Feature<AetherLakeConfiguration> {
                 }
             }
 
-            BlockState fluidBlockState = aetherLakeConfiguration.fluid().getState(level, random, blockPos);
+            BlockState fluidBlockState = this.fluid.value().getState(level, random, blockPos);
 
             for (int k1 = 0; k1 < 16; ++k1) {
                 for (int k = 0; k < 16; ++k) {
@@ -97,7 +101,7 @@ public class AetherLakeFeature extends Feature<AetherLakeConfiguration> {
                 }
             }
 
-            BlockState topBlockState = aetherLakeConfiguration.top().getState(level, random, blockPos);
+            BlockState topBlockState = this.top.value().getState(level, random, blockPos);
             if (!topBlockState.isAir()) {
                 for (int i2 = 0; i2 < 16; ++i2) {
                     for (int j3 = 0; j3 < 16; ++j3) {

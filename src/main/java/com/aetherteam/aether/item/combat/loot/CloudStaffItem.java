@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -37,7 +38,7 @@ public class CloudStaffItem extends Item {
         ItemStack heldItem = player.getItemInHand(hand);
         var data = player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER);
         if (data.getCloudMinions().isEmpty()) {
-            player.swing(hand);
+            player.swing(hand, SwingAnimation.DEFAULT, false);
             if (!level.isClientSide()) {
                 if (!player.getAbilities().instabuild) {
                     heldItem.hurtAndBreak(1, player, hand);
@@ -50,7 +51,7 @@ public class CloudStaffItem extends Item {
             }
             this.spawnExplosionParticles(player);
         } else if (player.isShiftKeyDown()) {
-            player.swing(hand);
+            player.swing(hand, SwingAnimation.DEFAULT, false);
             for (CloudMinion cloudMinion : data.getCloudMinions()) {
                 cloudMinion.setLifeSpan(0);
             }

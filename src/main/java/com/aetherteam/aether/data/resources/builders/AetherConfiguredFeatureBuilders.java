@@ -1,34 +1,35 @@
 package com.aetherteam.aether.data.resources.builders;
 
 import com.aetherteam.aether.block.AetherBlockStateProperties;
-import com.aetherteam.aether.world.configuration.AercloudConfiguration;
-import com.aetherteam.aether.world.configuration.AetherLakeConfiguration;
+import com.aetherteam.aether.world.feature.AercloudFeature;
+import com.aetherteam.aether.world.feature.AetherLakeFeature;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.SpringConfiguration;
+import net.minecraft.world.level.levelgen.feature.SimpleBlockFeature;
+import net.minecraft.world.level.levelgen.feature.SpringFeature;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.material.FluidState;
 
 public class AetherConfiguredFeatureBuilders {
-    public static AercloudConfiguration aercloud(int bounds, BlockState blockState) {
-        return new AercloudConfiguration(bounds, BlockStateProvider.simple(blockState.setValue(AetherBlockStateProperties.DOUBLE_DROPS, true)));
+    public static AercloudFeature aercloud(int bounds, BlockState blockState) {
+        return new AercloudFeature(bounds, BlockStateProvider.holderOf(blockState.setValue(AetherBlockStateProperties.DOUBLE_DROPS, true)));
     }
 
-    public static AetherLakeConfiguration lake(BlockStateProvider fluid, BlockStateProvider top) {
-        return new AetherLakeConfiguration(fluid, top);
+    public static AetherLakeFeature lake(Holder<BlockStateProvider> fluid, Holder<BlockStateProvider> top) {
+        return new AetherLakeFeature(fluid, top);
     }
 
-    public static SimpleBlockConfiguration grassPatch(BlockStateProvider block, int tries) {
-        return new SimpleBlockConfiguration(block);
+    public static SimpleBlockFeature grassPatch(BlockStateProvider block, int tries) {
+        return new SimpleBlockFeature(block);
     }
 
-    public static SimpleBlockConfiguration tallGrassPatch(BlockStateProvider block) {
-        return new SimpleBlockConfiguration(block);
+    public static SimpleBlockFeature tallGrassPatch(BlockStateProvider block) {
+        return new SimpleBlockFeature(block);
     }
 
-    public static SpringConfiguration spring(FluidState fluid, boolean requiresBlocksBelow, int rockCount, int holeCount, HolderSet<Block> validBlocks) {
-        return new SpringConfiguration(fluid, requiresBlocksBelow, rockCount, holeCount, validBlocks);
+    public static SpringFeature spring(FluidState fluid, boolean requiresBlocksBelow, int rockCount, int holeCount, HolderSet<Block> validBlocks) {
+        return new SpringFeature(fluid, requiresBlocksBelow, rockCount, holeCount, validBlocks);
     }
 }

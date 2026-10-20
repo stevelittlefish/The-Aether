@@ -8,7 +8,7 @@ import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 
@@ -36,7 +36,7 @@ public class HolidayFoliagePlacer extends FoliagePlacer {
      * @param level             The {@link WorldGenLevel}.
      * @param foliageSetter     The {@link BiConsumer} of a {@link BlockPos} and {@link BlockState} used for block placement.
      * @param random            The {@link RandomSource}.
-     * @param config            The {@link TreeConfiguration}.
+     * @param tree            The {@link TreeFeature}.
      * @param maxFreeTreeHeight The {@link Integer} for the maximum tree height.
      * @param attachment        A {@link net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer.FoliageAttachment} to add foliage to.
      * @param foliageHeight     The {@link Integer} for the foliage height.
@@ -44,37 +44,37 @@ public class HolidayFoliagePlacer extends FoliagePlacer {
      * @param offset            The {@link Integer} for the foliage offset.
      */
     @Override
-    protected void createFoliage(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, int maxFreeTreeHeight, FoliagePlacer.FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {
+    protected void createFoliage(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeFeature tree, int maxFreeTreeHeight, FoliagePlacer.FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {
         BlockPos blockPos = attachment.pos();
         int i = 0;
         for (int l = offset; l >= offset - 7; --l) {
             switch (i) {
                 default ->
-                        this.placeLeavesRow(level, foliageSetter, random, config, blockPos, i, l, attachment.doubleTrunk());
+                        this.placeLeavesRow(level, foliageSetter, random, tree, blockPos, i, l, attachment.doubleTrunk());
                 case 1 ->
-                        this.placeLeavesRow(level, foliageSetter, random, config, blockPos, 1, l, attachment.doubleTrunk());
+                        this.placeLeavesRow(level, foliageSetter, random, tree, blockPos, 1, l, attachment.doubleTrunk());
                 case 2 -> {
-                    this.placeLeavesRow(level, foliageSetter, random, config, blockPos, 1, l, attachment.doubleTrunk());
-                    this.placeLeavesRow(level, foliageSetter, random, config, blockPos.east().north(), 0, l, attachment.doubleTrunk());
-                    this.placeLeavesRow(level, foliageSetter, random, config, blockPos.west().north(), 0, l, attachment.doubleTrunk());
-                    this.placeLeavesRow(level, foliageSetter, random, config, blockPos.east().south(), 0, l, attachment.doubleTrunk());
-                    this.placeLeavesRow(level, foliageSetter, random, config, blockPos.west().south(), 0, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, foliageSetter, random, tree, blockPos, 1, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, foliageSetter, random, tree, blockPos.east().north(), 0, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, foliageSetter, random, tree, blockPos.west().north(), 0, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, foliageSetter, random, tree, blockPos.east().south(), 0, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, foliageSetter, random, tree, blockPos.west().south(), 0, l, attachment.doubleTrunk());
                 }
-                case 3 -> disk360(level, foliageSetter, random, config, attachment.doubleTrunk(), blockPos, l, 1, 1);
+                case 3 -> disk360(level, foliageSetter, random, tree, attachment.doubleTrunk(), blockPos, l, 1, 1);
                 case 4 -> {
-                    this.placeLeavesRow(level, foliageSetter, random, config, blockPos, 2, l, attachment.doubleTrunk());
-                    disk360(level, foliageSetter, random, config, attachment.doubleTrunk(), blockPos, l, 3, 0);
-                    this.placeLeavesRow(level, foliageSetter, random, config, blockPos.east(2).north(2), 0, l, attachment.doubleTrunk());
-                    this.placeLeavesRow(level, foliageSetter, random, config, blockPos.west(2).north(2), 0, l, attachment.doubleTrunk());
-                    this.placeLeavesRow(level, foliageSetter, random, config, blockPos.east(2).south(2), 0, l, attachment.doubleTrunk());
-                    this.placeLeavesRow(level, foliageSetter, random, config, blockPos.west(2).south(2), 0, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, foliageSetter, random, tree, blockPos, 2, l, attachment.doubleTrunk());
+                    disk360(level, foliageSetter, random, tree, attachment.doubleTrunk(), blockPos, l, 3, 0);
+                    this.placeLeavesRow(level, foliageSetter, random, tree, blockPos.east(2).north(2), 0, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, foliageSetter, random, tree, blockPos.west(2).north(2), 0, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, foliageSetter, random, tree, blockPos.east(2).south(2), 0, l, attachment.doubleTrunk());
+                    this.placeLeavesRow(level, foliageSetter, random, tree, blockPos.west(2).south(2), 0, l, attachment.doubleTrunk());
                 }
-                case 5 -> disk360(level, foliageSetter, random, config, attachment.doubleTrunk(), blockPos, l, 1, 2);
+                case 5 -> disk360(level, foliageSetter, random, tree, attachment.doubleTrunk(), blockPos, l, 1, 2);
                 case 6 -> {
-                    this.placeLeavesRow(level, foliageSetter, random, config, blockPos, 3, l, attachment.doubleTrunk());
-                    disk360(level, foliageSetter, random, config, attachment.doubleTrunk(), blockPos, l, 4, 0);
+                    this.placeLeavesRow(level, foliageSetter, random, tree, blockPos, 3, l, attachment.doubleTrunk());
+                    disk360(level, foliageSetter, random, tree, attachment.doubleTrunk(), blockPos, l, 4, 0);
                 }
-                case 7 -> disk360(level, foliageSetter, random, config, attachment.doubleTrunk(), blockPos, l, 2, 2);
+                case 7 -> disk360(level, foliageSetter, random, tree, attachment.doubleTrunk(), blockPos, l, 2, 2);
             }
             ++i;
         }
@@ -86,18 +86,18 @@ public class HolidayFoliagePlacer extends FoliagePlacer {
      * @param level         The {@link WorldGenLevel}.
      * @param foliageSetter The {@link BiConsumer} of a {@link BlockPos} and {@link BlockState} used for block placement.
      * @param random        The {@link RandomSource}.
-     * @param config        The {@link TreeConfiguration}.
+     * @param tree        The {@link TreeFeature}.
      * @param doubleTrunk   Whether the tree has a 2x2 trunk, as a {@link Boolean}.
      * @param blockPos      The initial {@link BlockPos}.
      * @param height        The {@link Integer} height for placement.
      * @param distance      The {@link Integer} distance for offsetting the position.
      * @param range         The {@link Integer} range for placement.
      */
-    private void disk360(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, boolean doubleTrunk, BlockPos blockPos, int height, int distance, int range) {
-        this.placeLeavesRow(level, foliageSetter, random, config, blockPos.east(distance), range, height, doubleTrunk);
-        this.placeLeavesRow(level, foliageSetter, random, config, blockPos.south(distance), range, height, doubleTrunk);
-        this.placeLeavesRow(level, foliageSetter, random, config, blockPos.west(distance), range, height, doubleTrunk);
-        this.placeLeavesRow(level, foliageSetter, random, config, blockPos.north(distance), range, height, doubleTrunk);
+    private void disk360(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeFeature tree, boolean doubleTrunk, BlockPos blockPos, int height, int distance, int range) {
+        this.placeLeavesRow(level, foliageSetter, random, tree, blockPos.east(distance), range, height, doubleTrunk);
+        this.placeLeavesRow(level, foliageSetter, random, tree, blockPos.south(distance), range, height, doubleTrunk);
+        this.placeLeavesRow(level, foliageSetter, random, tree, blockPos.west(distance), range, height, doubleTrunk);
+        this.placeLeavesRow(level, foliageSetter, random, tree, blockPos.north(distance), range, height, doubleTrunk);
     }
 
     /**
@@ -105,11 +105,11 @@ public class HolidayFoliagePlacer extends FoliagePlacer {
      *
      * @param random The {@link RandomSource}.
      * @param height The {@link Integer} for the foliage height.
-     * @param config The {@link TreeConfiguration}.
+     * @param tree The {@link TreeFeature}.
      * @return The {@link Integer} for the foliage height.
      */
     @Override
-    public int foliageHeight(RandomSource random, int height, TreeConfiguration config) {
+    public int foliageHeight(RandomSource random, int height, TreeFeature tree) {
         return Math.max(4, height - this.trunkHeight.sample(random));
     }
 

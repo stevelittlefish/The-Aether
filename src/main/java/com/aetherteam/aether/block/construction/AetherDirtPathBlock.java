@@ -1,32 +1,14 @@
 package com.aetherteam.aether.block.construction;
 
 import com.aetherteam.aether.block.AetherBlocks;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirtPathBlock;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.PathBlock;
 
-public class AetherDirtPathBlock extends DirtPathBlock {
+/**
+ * Aether Dirt Path, which reverts to Aether Dirt. Since 26.3 vanilla's {@link PathBlock} takes the block to revert to,
+ * replacing the code copied from {@code DirtPathBlock}.
+ */
+public class AetherDirtPathBlock extends PathBlock {
     public AetherDirtPathBlock(Properties properties) {
-        super(properties);
-    }
-
-    /**
-     * [CODE COPY] - {@link DirtPathBlock#getStateForPlacement(BlockPlaceContext)}.
-     */
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return !this.defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? Block.pushEntitiesUp(this.defaultBlockState(), AetherBlocks.AETHER_DIRT.defaultBlockState(), context.getLevel(), context.getClickedPos()) : this.defaultBlockState();
-    }
-
-    /**
-     * [CODE COPY] - {@link DirtPathBlock#tick(BlockState, ServerLevel, BlockPos, RandomSource)}.
-     */
-    @Override
-    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        AetherFarmBlock.turnToDirt(state, level, pos);
+        super(AetherBlocks.AETHER_DIRT, properties);
     }
 }

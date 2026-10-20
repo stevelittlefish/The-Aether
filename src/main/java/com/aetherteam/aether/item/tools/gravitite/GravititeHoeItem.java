@@ -3,13 +3,12 @@ package com.aetherteam.aether.item.tools.gravitite;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.tools.abilities.GravititeTool;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 
-public class GravititeHoeItem extends HoeItem implements GravititeTool {
+public class GravititeHoeItem extends Item implements GravititeTool {
     public GravititeHoeItem(Item.Properties properties) {
-        super(AetherItemTiers.GRAVITITE, -3.0F, 0.0F, properties);
+        super(properties.hoe(AetherItemTiers.GRAVITITE, -3.0F, 0.0F));
     }
 
     /**

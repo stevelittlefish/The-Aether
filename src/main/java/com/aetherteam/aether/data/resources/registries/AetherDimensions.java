@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.attribute.EnvironmentAttributeMap;
 import net.minecraft.world.attribute.EnvironmentAttributes;
@@ -42,9 +43,9 @@ public class AetherDimensions {
         HolderGetter<WorldClock> clocks = context.lookup(Registries.WORLD_CLOCK);
         HolderGetter<net.minecraft.world.level.block.Block> blocks = context.lookup(Registries.BLOCK);
         EnvironmentAttributeMap attributes = EnvironmentAttributeMap.builder()
-                .set(EnvironmentAttributes.FOG_COLOR, 0xC0D8FF)
-                .set(EnvironmentAttributes.SKY_COLOR, 0x78A7FF)
-                .set(EnvironmentAttributes.CLOUD_COLOR, -855638017) // 0xCCFFFFFF
+                .set(EnvironmentAttributes.FOG_COLOR, ARGB.vector3fFromRGB24(0xC0D8FF))
+                .set(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(0x78A7FF))
+                .set(EnvironmentAttributes.CLOUD_COLOR, ARGB.vector4fFromARGB32(-855638017)) // 0xCCFFFFFF
                 .set(EnvironmentAttributes.CLOUD_HEIGHT, 192.33F)
                 .build();
 

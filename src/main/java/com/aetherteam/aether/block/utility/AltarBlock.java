@@ -4,7 +4,6 @@ import com.aetherteam.aether.blockentity.AbstractAetherFurnaceBlockEntity;
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.blockentity.AltarBlockEntity;
 import com.aetherteam.aether.client.AetherSoundEvents;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundSource;
@@ -19,16 +18,10 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class AltarBlock extends AbstractFurnaceBlock {
 
-    public static final MapCodec<AltarBlock> CODEC = simpleCodec(AltarBlock::new);
-
     public AltarBlock(Properties properties) {
         super(properties);
     }
 
-    @Override
-    protected MapCodec<? extends AbstractFurnaceBlock> codec() {
-        return CODEC;
-    }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

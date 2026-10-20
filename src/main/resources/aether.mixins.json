@@ -33,7 +33,6 @@
     "common.accessor.BeeAccessor",
     "common.accessor.BlockLootAccessor",
     "common.accessor.BoatAccessor",
-    "common.accessor.ChunkAccessAccessor",
     "common.accessor.CauldronInteractionDispatcherAccessor",
     "common.accessor.ConcretePowderBlockAccessor",
     "common.accessor.CraftingMenuAccessor",

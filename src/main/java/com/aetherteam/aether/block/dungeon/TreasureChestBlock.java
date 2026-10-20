@@ -4,7 +4,6 @@ import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.blockentity.TreasureChestBlockEntity;
 import com.aetherteam.aether.item.components.AetherDataComponents;
 import com.aetherteam.aether.item.components.DungeonKind;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -43,7 +42,6 @@ import java.util.function.Supplier;
  * Mostly copied from {@link ChestBlock}.
  */
 public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEntity> implements SimpleWaterloggedBlock {
-    public static final MapCodec<TreasureChestBlock> CODEC = simpleCodec(TreasureChestBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 14.0, 15.0);
@@ -57,10 +55,6 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
         this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
     }
 
-    @Override
-    protected MapCodec<? extends AbstractChestBlock<TreasureChestBlockEntity>> codec() {
-        return CODEC;
-    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

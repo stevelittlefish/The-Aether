@@ -19,8 +19,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.SimpleBlockFeature;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -47,10 +46,10 @@ public class BronzeDungeonSurfaceRuins extends StructurePiece {
         .add(AetherBlocks.MOSSY_HOLYSTONE.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true), 3)
         .add(AetherBlocks.MOSSY_HOLYSTONE_SLAB.defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, SlabType.TOP), 3)
         .build());
-    private static final ConfiguredFeature<?, ? extends Feature<?>> MIXED_FLOWER_PATCH = new ConfiguredFeature<>(Feature.SIMPLE_BLOCK, AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(WeightedList.<BlockState>builder()
+    private static final SimpleBlockFeature MIXED_FLOWER_PATCH = AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(WeightedList.<BlockState>builder()
         .add(AetherFeatureStates.PURPLE_FLOWER, 1)
         .add(AetherFeatureStates.WHITE_FLOWER, 1)
-    ), 24));
+    ), 24);
 
     public BronzeDungeonSurfaceRuins(BoundingBox horizontalBounds) {
         super(AetherStructurePieceTypes.BRONZE_SURFACE_RUINS, 0, horizontalBounds);

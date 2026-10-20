@@ -44,7 +44,7 @@ public class LargeAercloudChunk extends StructurePiece {
                 this.positions.add(new BlockPos(position[0], position[1], position[2]));
             }
         }
-        this.blocks = BlockStateProvider.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, tag.get("Blocks"))).getPartialOrThrow();
+        this.blocks = BlockStateProvider.DIRECT_CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, tag.get("Blocks"))).getPartialOrThrow();
     }
 
     protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
@@ -53,7 +53,7 @@ public class LargeAercloudChunk extends StructurePiece {
             positions.add(new IntArrayTag(new int[]{position.getX(), position.getY(), position.getZ()}));
         }
         tag.put("Positions", positions);
-        BlockStateProvider.CODEC.encodeStart(NbtOps.INSTANCE, this.blocks).resultOrPartial(Aether.LOGGER::error).ifPresent(value -> tag.put("Blocks", value));
+        BlockStateProvider.DIRECT_CODEC.encodeStart(NbtOps.INSTANCE, this.blocks).resultOrPartial(Aether.LOGGER::error).ifPresent(value -> tag.put("Blocks", value));
     }
 
     @Override

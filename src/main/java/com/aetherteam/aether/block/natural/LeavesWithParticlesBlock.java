@@ -1,7 +1,6 @@
 package com.aetherteam.aether.block.natural;
 
 import com.aetherteam.aether.block.AetherBlockStateProperties;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.RandomSource;
@@ -15,17 +14,11 @@ import java.util.function.Supplier;
 
 public class LeavesWithParticlesBlock extends LeavesBlock {
     private final Supplier<? extends ParticleOptions> particle;
-    private final MapCodec<? extends LeavesBlock> codec = MapCodec.unit(this);
 
     public LeavesWithParticlesBlock(Supplier<? extends ParticleOptions> particle, Properties properties) {
         super(0.01F, properties);
         this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
         this.particle = particle;
-    }
-
-    @Override
-    public MapCodec<? extends LeavesBlock> codec() {
-        return this.codec;
     }
 
     @Override

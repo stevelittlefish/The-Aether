@@ -5,7 +5,6 @@ import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.blockentity.FreezerBlockEntity;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundSource;
@@ -20,16 +19,10 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class FreezerBlock extends AbstractFurnaceBlock {
 
-    public static final MapCodec<FreezerBlock> CODEC = simpleCodec(FreezerBlock::new);
-
     public FreezerBlock(Properties properties) {
         super(properties);
     }
 
-    @Override
-    protected MapCodec<? extends AbstractFurnaceBlock> codec() {
-        return CODEC;
-    }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

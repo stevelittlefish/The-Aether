@@ -36,6 +36,7 @@ import net.minecraft.world.item.component.BlocksAttacks;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.world.item.component.SwingAnimation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -327,12 +328,12 @@ public abstract class LivingEntityMixin implements AccessoryUsingEntity {
      * Calls {@link CloudStaffItem#onEntitySwing(ItemStack, LivingEntity, InteractionHand)}, which NeoForge called from here,
      * so swinging the Cloud Staff makes its minions shoot.
      */
-    @Inject(method = "swing(Lnet/minecraft/world/InteractionHand;Z)V", at = @At("HEAD"), cancellable = true)
-    private void aether$onEntitySwing(InteractionHand hand, boolean updateSelf, CallbackInfo ci) {
+    @Inject(method = "swing(Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/component/SwingAnimation;Z)Z", at = @At("HEAD"), cancellable = true)
+    private void aether$onEntitySwing(InteractionHand hand, SwingAnimation animation, boolean sendToSwingingEntity, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity entity = (LivingEntity) (Object) this;
         ItemStack stack = entity.getItemInHand(hand);
         if (stack.getItem() instanceof CloudStaffItem cloudStaff && cloudStaff.onEntitySwing(stack, entity, hand)) {
-            ci.cancel();
+            cir.setReturnValue(false);
         }
     }
 

@@ -7,7 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.level.levelgen.DensityFunction;
+import net.minecraft.world.level.levelgen.densityfunction.DensityFunction;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
@@ -20,7 +20,7 @@ public class AetherNoiseSettings {
 
     public static void bootstrap(BootstrapContext<NoiseGeneratorSettings> context) {
         HolderGetter<DensityFunction> densityFunctions = context.lookup(Registries.DENSITY_FUNCTION);
-        HolderGetter<NormalNoise.NoiseParameters> noise = context.lookup(Registries.NOISE);
+        HolderGetter<NormalNoise> noise = context.lookup(Registries.NOISE);
         context.register(SKYLANDS, AetherNoiseBuilders.skylandsNoiseSettings(densityFunctions, noise));
     }
 }

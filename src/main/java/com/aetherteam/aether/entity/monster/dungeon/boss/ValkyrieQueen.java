@@ -57,7 +57,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -67,6 +66,7 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.world.item.component.SwingAnimation;
 import com.aetherteam.aether.entity.EntityGriefingRules;
 import com.aetherteam.aether.network.AetherPacketSender;
 
@@ -198,12 +198,12 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                                 && (upperState.getShape(this.level(), upperPosition).equals(Shapes.block()) || !upperState.getCollisionShape(this.level(), upperPosition).isEmpty())
                                 && (this.getDungeon() == null || this.getDungeon().roomBounds().contains(Vec3.atCenterOf(upperPosition)))) {
                             this.level().destroyBlock(upperPosition, true, this);
-                            this.swing(InteractionHand.MAIN_HAND);
+                            this.swing(InteractionHand.MAIN_HAND, SwingAnimation.DEFAULT, false);
                         } else if (this.isBreakable(lowerState) // Check lower block at player height.
                                 && (lowerState.getShape(this.level(), lowerPosition).equals(Shapes.block()) || !lowerState.getCollisionShape(this.level(), lowerPosition).isEmpty())
                                 && (this.getDungeon() == null || this.getDungeon().roomBounds().contains(Vec3.atCenterOf(lowerPosition)))) {
                             this.level().destroyBlock(lowerPosition, true, this);
-                            this.swing(InteractionHand.MAIN_HAND);
+                            this.swing(InteractionHand.MAIN_HAND, SwingAnimation.DEFAULT, false);
                         }
                     }
                 }

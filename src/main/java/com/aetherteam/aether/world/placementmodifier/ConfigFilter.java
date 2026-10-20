@@ -9,12 +9,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementFilter;
-import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 /**
  * A {@link PlacementFilter} to prevent the feature from generating when the specified config condition is set to false.
  */
-public class ConfigFilter extends PlacementFilter {
+public class ConfigFilter implements PlacementFilter {
     public static final MapCodec<ConfigFilter> CODEC = Codec.STRING.comapFlatMap(ConfigFilter::buildDeserialization, configFilter -> ConfigSerializationUtil.serialize(configFilter.config)).fieldOf("value");
 
     private final BooleanConfigEntry config;
@@ -27,13 +26,13 @@ public class ConfigFilter extends PlacementFilter {
     }
 
     @Override
-    protected boolean shouldPlace(PlacementContext context, RandomSource random, BlockPos pos) {
+    public boolean shouldPlace(PlacementContext context, RandomSource random, BlockPos pos) {
         return this.config.get();
     }
 
     @Override
-    public PlacementModifierType<?> type() {
-        return AetherPlacementModifiers.CONFIG_FILTER;
+    public MapCodec<ConfigFilter> codec() {
+        return CODEC;
     }
 
     private static DataResult<ConfigFilter> buildDeserialization(String configId) {

@@ -8,6 +8,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.level.Level;
 
 public class LifeShardItem extends Item implements ConsumableItem {
@@ -29,7 +30,7 @@ public class LifeShardItem extends Item implements ConsumableItem {
         if (!player.isCreative()) {
             var aetherPlayer = player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER);
             if (aetherPlayer.getLifeShardCount() < aetherPlayer.getLifeShardLimit()) {
-                player.swing(hand);
+                player.swing(hand, SwingAnimation.DEFAULT, false);
                 if (!level.isClientSide()) {
                     this.consume(this, heldStack, player);
                     aetherPlayer.setSyncedToClients(player, AetherPlayerAttachment.LIFE_SHARD_COUNT_SYNC_KEY, aetherPlayer.getLifeShardCount() + 1);

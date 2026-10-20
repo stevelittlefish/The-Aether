@@ -6,9 +6,9 @@ import com.aetherteam.aether.entity.block.FloatingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -44,7 +44,7 @@ public interface GravititeTool {
                         level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
                         itemStack.hurtAndBreak(4, player, hand);
                     } else {
-                        player.swing(hand);
+                        player.swing(hand, SwingAnimation.DEFAULT, false);
                     }
                     return true;
                 }

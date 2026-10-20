@@ -2,7 +2,6 @@ package com.aetherteam.aether.block.natural;
 
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.blockentity.IcestoneBlockEntity;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -17,16 +16,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class IcestoneBlock extends BaseEntityBlock {
 
-    public static final MapCodec<IcestoneBlock> CODEC = simpleCodec(IcestoneBlock::new);
-
     public IcestoneBlock(Properties properties) {
         super(properties);
     }
 
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
 
     @Nullable
     @Override

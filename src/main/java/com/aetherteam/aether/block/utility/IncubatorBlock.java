@@ -3,7 +3,6 @@ package com.aetherteam.aether.block.utility;
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.blockentity.IncubatorBlockEntity;
 import com.aetherteam.aether.client.AetherSoundEvents;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -33,7 +32,6 @@ import net.minecraft.world.phys.BlockHitResult;
  */
 public class IncubatorBlock extends BaseEntityBlock {
 
-    public static final MapCodec<IncubatorBlock> CODEC = simpleCodec(IncubatorBlock::new);
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public IncubatorBlock(Properties properties) {
@@ -41,10 +39,6 @@ public class IncubatorBlock extends BaseEntityBlock {
         this.registerDefaultState(this.getStateDefinition().any().setValue(LIT, false));
     }
 
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

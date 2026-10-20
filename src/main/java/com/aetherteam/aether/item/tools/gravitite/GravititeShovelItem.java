@@ -4,12 +4,11 @@ import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.tools.abilities.GravititeTool;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.context.UseOnContext;
 
-public class GravititeShovelItem extends ShovelItem implements GravititeTool {
+public class GravititeShovelItem extends Item implements GravititeTool {
     public GravititeShovelItem(Item.Properties properties) {
-        super(AetherItemTiers.GRAVITITE, 1.5F, -3.0F, properties);
+        super(properties.shovel(AetherItemTiers.GRAVITITE, 1.5F, -3.0F));
     }
 
     /**

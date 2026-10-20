@@ -9,6 +9,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.component.SwingAnimation;
 
 import javax.annotation.Nullable;
 
@@ -34,7 +35,7 @@ public record MoaInteractPacket(int playerID, boolean mainHand) implements Custo
         if (contextPlayer != null) {
             Entity entity = contextPlayer.level().getEntity(payload.playerID());
             if (entity instanceof Player player) {
-                player.swing(payload.mainHand() ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND);
+                player.swing(payload.mainHand() ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, SwingAnimation.DEFAULT, false);
             }
         }
     }

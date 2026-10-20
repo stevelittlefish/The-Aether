@@ -7,7 +7,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
@@ -36,20 +36,20 @@ public class CrystalTreeTrunkPlacer extends StraightTrunkPlacer {
      * @param random      The {@link RandomSource}.
      * @param height      The {@link Integer} height of the tree.
      * @param pos         The initial {@link BlockPos} for placement.
-     * @param config      The {@link TreeConfiguration}.
+     * @param tree      The {@link TreeFeature}.
      * @return A {@link List} of {@link net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer.FoliageAttachment}s for the tree.
      */
     @Override
-    public List<FoliagePlacer.FoliageAttachment> placeTrunk(WorldGenLevel level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource random, int height, BlockPos pos, TreeConfiguration config) {
-        TrunkPlacer.placeBelowTrunkBlock(level, blockSetter, random, pos.below(), config);
-        super.placeTrunk(level, blockSetter, random, height, pos, config);
+    public List<FoliagePlacer.FoliageAttachment> placeTrunk(WorldGenLevel level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource random, int height, BlockPos pos, TreeFeature tree) {
+        TrunkPlacer.placeBelowTrunkBlock(level, blockSetter, random, pos.below(), tree);
+        super.placeTrunk(level, blockSetter, random, height, pos, tree);
         float f = 0;
         for (int i = 2; i < 7; i += 3) {
             for (int l = 0; l < 4; l++) {
                 int j = (int) Mth.cos(f);
                 int k = (int) Mth.sin(f);
                 BlockPos blockPos = pos.offset(j, i, k);
-                this.placeLog(level, blockSetter, random, blockPos, config);
+                this.placeLog(level, blockSetter, random, blockPos, tree);
                 f += 0.25F * Mth.TWO_PI;
             }
         }

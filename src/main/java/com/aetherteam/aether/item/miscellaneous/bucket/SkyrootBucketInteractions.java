@@ -16,6 +16,7 @@ import net.minecraft.world.entity.animal.cow.Cow;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.level.Level;
 
 import java.util.Optional;
@@ -36,7 +37,7 @@ public final class SkyrootBucketInteractions {
             player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
         }
         ItemStack filledBucket = ItemUtils.createFilledResult(heldStack, player, AetherItems.SKYROOT_MILK_BUCKET.getDefaultInstance());
-        player.swing(hand);
+        player.swing(hand, SwingAnimation.DEFAULT, false);
         player.setItemInHand(hand, filledBucket);
     }
 

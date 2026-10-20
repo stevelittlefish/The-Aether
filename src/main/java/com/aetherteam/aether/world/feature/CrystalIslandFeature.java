@@ -4,49 +4,42 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.data.resources.AetherFeatureStates;
 import com.aetherteam.aether.data.resources.registries.AetherConfiguredFeatures;
-import com.aetherteam.aether.mixin.mixins.common.accessor.ChunkAccessAccessor;
 import com.aetherteam.aether.world.BlockLogicUtil;
-import com.mojang.serialization.Codec;
+import com.aetherteam.aether.world.SurfaceMaterials;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
-import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
-import net.minecraft.world.level.levelgen.NoiseChunk;
-import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
-import net.minecraft.world.level.levelgen.SurfaceRules;
-import net.minecraft.world.level.levelgen.carver.CarvingContext;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.Arrays;
 import java.util.Optional;
 
-public class CrystalIslandFeature extends Feature<NoneFeatureConfiguration> {
-    public CrystalIslandFeature(Codec<NoneFeatureConfiguration> codec) {
-        super(codec);
+public record CrystalIslandFeature() implements Feature {
+    public static final MapCodec<CrystalIslandFeature> CODEC = MapCodec.unit(CrystalIslandFeature::new);
+
+    @Override
+    public MapCodec<CrystalIslandFeature> codec() {
+        return CODEC;
     }
 
     /**
      * Places a Crystal Tree, then creates a small island around it if the placement was successful.
      *
-     * @param context The {@link FeaturePlaceContext} with a {@link NoneFeatureConfiguration}.
+     * @param origin The {@link BlockPos} to place at.
      * @return Whether the placement was successful, as a {@link Boolean}.
      */
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        WorldGenLevel level = context.level();
-        BlockPos pos = context.origin();
-        PlacedFeature feature = PlacementUtils.inlinePlaced(level.registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE).getOrThrow(AetherConfiguredFeatures.CRYSTAL_TREE_CONFIGURATION)).value();
-        if (feature.place(level, context.chunkGenerator(), context.random(), context.origin().above())) {
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos pos) {
+        PlacedFeature feature = PlacementUtils.inlinePlaced(level.registryAccess().lookupOrThrow(Registries.FEATURE).getOrThrow(AetherConfiguredFeatures.CRYSTAL_TREE_CONFIGURATION)).value();
+        if (feature.place(level, chunkGenerator, random, pos.above())) {
             for (int i = 0; i < 3; i++) {
                 BlockState state;
                 if (i == 0) {
@@ -74,21 +67,10 @@ public class CrystalIslandFeature extends Feature<NoneFeatureConfiguration> {
         // If the processor is running outside the center chunk, return immediately.
         if (!(level instanceof WorldGenRegion region) || !BlockLogicUtil.isOutOfBounds(pos, region.getCenter())) {
             BlockState newState = testState;
-            if (level.getChunkSource() instanceof ServerChunkCache serverChunkCache) {
-                if (serverChunkCache.getGenerator() instanceof NoiseBasedChunkGenerator noiseBasedChunkGenerator) {
-                    NoiseGeneratorSettings settingsHolder = noiseBasedChunkGenerator.generatorSettings().value();
-                    SurfaceRules.RuleSource surfaceRule = settingsHolder.surfaceRule();
-                    ChunkAccess chunkAccess = level.getChunk(pos);
-                    NoiseChunk noisechunk = ((ChunkAccessAccessor) chunkAccess).aether$getNoiseChunk();
-                    if (noisechunk != null) {
-                        CarvingContext carvingcontext = new CarvingContext(noiseBasedChunkGenerator, level.registryAccess(), chunkAccess.getHeightAccessorForGeneration(), noisechunk, serverChunkCache.randomState(), surfaceRule);
-                        Optional<BlockState> state = carvingcontext.topMaterial(level.getBiomeManager()::getNoiseBiomeAtPosition, chunkAccess, pos, false);
-                        if (state.isPresent()) {
-                            if (testState.is(AetherTags.Blocks.AETHER_DIRT) && !testState.is(AetherBlocks.AETHER_DIRT) && state.get().is(AetherTags.Blocks.AETHER_DIRT)) {
-                                newState = state.get();
-                            }
-                        }
-                    }
+            Optional<BlockState> state = SurfaceMaterials.topMaterial(level, level.getBiomeManager()::getNoiseBiomeAtPosition, pos, false);
+            if (state.isPresent()) {
+                if (testState.is(AetherTags.Blocks.AETHER_DIRT) && !testState.is(AetherBlocks.AETHER_DIRT) && state.get().is(AetherTags.Blocks.AETHER_DIRT)) {
+                    newState = state.get();
                 }
             }
             this.setBlock(level, pos, newState);

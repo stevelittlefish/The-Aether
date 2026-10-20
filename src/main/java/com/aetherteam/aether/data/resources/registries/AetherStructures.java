@@ -22,7 +22,7 @@ import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
@@ -54,11 +54,11 @@ public class AetherStructures {
 
         HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
         HolderGetter<PlacedFeature> placements = context.lookup(Registries.PLACED_FEATURE);
-        HolderGetter<ConfiguredFeature<?, ?>> configurations = context.lookup(Registries.CONFIGURED_FEATURE);
+        HolderGetter<Feature> configurations = context.lookup(Registries.FEATURE);
         HolderGetter<StructureProcessorList> processors = context.lookup(Registries.PROCESSOR_LIST);
         context.register(LARGE_AERCLOUD, new LargeAercloudStructure(
                 AetherStructureBuilders.structure(biomes.getOrThrow(AetherTags.Biomes.HAS_LARGE_AERCLOUD), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE),
-                BlockStateProvider.simple(AetherBlocks.COLD_AERCLOUD.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true)),
+                BlockStateProvider.of(AetherBlocks.COLD_AERCLOUD.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true)),
                 3, 32));
         context.register(BRONZE_DUNGEON, new BronzeDungeonStructure(AetherStructureBuilders.structure(
                 biomes.getOrThrow(AetherTags.Biomes.HAS_BRONZE_DUNGEON),

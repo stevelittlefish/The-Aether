@@ -4,9 +4,9 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlockStateProperties;
 import com.aetherteam.aether.block.AetherBlocks;
-import com.aetherteam.aether.mixin.mixins.common.accessor.ChunkAccessAccessor;
 import com.aetherteam.aether.mixin.mixins.common.accessor.SpreadingSnowyDirtBlockAccessor;
 import com.aetherteam.aether.world.BlockLogicUtil;
+import com.aetherteam.aether.world.SurfaceMaterials;
 import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
 import com.aetherteam.aether.world.processor.GlowstonePortalAgeProcessor;
 import com.aetherteam.aether.world.processor.HolystoneReplaceProcessor;
@@ -21,7 +21,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -30,10 +29,8 @@ import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.*;
-import net.minecraft.world.level.levelgen.carver.CarvingContext;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
@@ -304,21 +301,10 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
         if (level instanceof WorldGenLevel worldGenLevel) {
             if (!(worldGenLevel instanceof WorldGenRegion region) || !BlockLogicUtil.isOutOfBounds(pos, region.getCenter())) {
                 if (worldGenLevel.getBiome(pos).is(AetherTags.Biomes.HAS_RUINED_PORTAL_AETHER)) {
-                    if (worldGenLevel.getChunkSource() instanceof ServerChunkCache serverChunkCache) {
-                        if (serverChunkCache.getGenerator() instanceof NoiseBasedChunkGenerator noiseBasedChunkGenerator) {
-                            NoiseGeneratorSettings settingsHolder = noiseBasedChunkGenerator.generatorSettings().value();
-                            SurfaceRules.RuleSource surfaceRule = settingsHolder.surfaceRule();
-                            ChunkAccess chunkAccess = worldGenLevel.getChunk(pos);
-                            NoiseChunk noisechunk = ((ChunkAccessAccessor) chunkAccess).aether$getNoiseChunk();
-                            if (noisechunk != null) {
-                                CarvingContext carvingcontext = new CarvingContext(noiseBasedChunkGenerator, worldGenLevel.registryAccess(), chunkAccess.getHeightAccessorForGeneration(), noisechunk, serverChunkCache.randomState(), surfaceRule);
-                                Optional<BlockState> state = carvingcontext.topMaterial(worldGenLevel.getBiomeManager()::getBiome, chunkAccess, pos, false);
-                                if (state.isPresent()) {
-                                    if (originalState.is(AetherTags.Blocks.AETHER_DIRT) && !originalState.is(AetherBlocks.AETHER_DIRT) && state.get().is(AetherTags.Blocks.AETHER_DIRT)) {
-                                        return state.get();
-                                    }
-                                }
-                            }
+                    Optional<BlockState> state = SurfaceMaterials.topMaterial(worldGenLevel, worldGenLevel.getBiomeManager()::getBiome, pos, false);
+                    if (state.isPresent()) {
+                        if (originalState.is(AetherTags.Blocks.AETHER_DIRT) && !originalState.is(AetherBlocks.AETHER_DIRT) && state.get().is(AetherTags.Blocks.AETHER_DIRT)) {
+                            return state.get();
                         }
                     }
                 }

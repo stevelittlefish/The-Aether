@@ -1,16 +1,17 @@
 package com.aetherteam.aether.item.tools.abilities;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShovelItem;
+import net.minecraft.core.component.BlockTransformer;
+import net.minecraft.world.item.component.BlockTransformers;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,9 +19,9 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 
 public final class ToolBlockInteractions {
-    private static final ToolInteraction AXE_STRIP = new ToolInteraction(ToolAbilities.ToolAction.AXE_STRIP, SoundEvents.AXE_STRIP);
-    private static final ToolInteraction SHOVEL_FLATTEN = new ToolInteraction(ToolAbilities.ToolAction.SHOVEL_FLATTEN, SoundEvents.SHOVEL_FLATTEN);
-    private static final ToolInteraction HOE_TILL = new ToolInteraction(ToolAbilities.ToolAction.HOE_TILL, SoundEvents.HOE_TILL);
+    private static final ToolInteraction AXE_STRIP = new ToolInteraction(ToolAbilities.ToolAction.AXE_STRIP, SoundEvents.AXE_STRIP.value());
+    private static final ToolInteraction SHOVEL_FLATTEN = new ToolInteraction(ToolAbilities.ToolAction.SHOVEL_FLATTEN, SoundEvents.SHOVEL_FLATTEN.value());
+    private static final ToolInteraction HOE_TILL = new ToolInteraction(ToolAbilities.ToolAction.HOE_TILL, SoundEvents.HOE_TILL.value());
 
     private ToolBlockInteractions() {
     }
@@ -54,13 +55,18 @@ public final class ToolBlockInteractions {
     }
 
     private static ToolInteraction getInteraction(ItemStack stack) {
-        if (stack.getItem() instanceof AxeItem) {
+        // Tools are told apart by the vanilla block transformer they carry: axes, shovels and hoes are no longer classes.
+        Holder<BlockTransformer> transformer = stack.get(DataComponents.BLOCK_TRANSFORMER);
+        if (transformer == null) {
+            return null;
+        }
+        if (transformer.is(BlockTransformers.AXE)) {
             return AXE_STRIP;
         }
-        if (stack.getItem() instanceof ShovelItem) {
+        if (transformer.is(BlockTransformers.SHOVEL)) {
             return SHOVEL_FLATTEN;
         }
-        if (stack.getItem() instanceof HoeItem) {
+        if (transformer.is(BlockTransformers.HOE)) {
             return HOE_TILL;
         }
         return null;

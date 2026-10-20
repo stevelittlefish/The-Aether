@@ -11,6 +11,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
@@ -68,7 +69,7 @@ public final class InteractionRecipeRules {
                     Vec3 vec3 = Vec3.atCenterOf(pos);
                     level.explode(null, level.damageSources().badRespawnPointExplosion(vec3), null, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, 5.0F, true, Level.ExplosionInteraction.BLOCK);
                 }
-                player.swing(InteractionHand.MAIN_HAND);
+                player.swing(InteractionHand.MAIN_HAND, SwingAnimation.DEFAULT, false);
                 return true;
             }
         }

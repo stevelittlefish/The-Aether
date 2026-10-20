@@ -1,36 +1,42 @@
 package com.aetherteam.aether.world.feature;
 
-import com.aetherteam.aether.world.configuration.AercloudConfiguration;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
-public class AercloudFeature extends Feature<AercloudConfiguration> {
-    public AercloudFeature(Codec<AercloudConfiguration> codec) {
-        super(codec);
+public record AercloudFeature(int bounds, Holder<BlockStateProvider> block) implements Feature {
+    public static final MapCodec<AercloudFeature> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+            Codec.INT.fieldOf("bounds").forGetter(AercloudFeature::bounds),
+            BlockStateProvider.CODEC.fieldOf("blocks").forGetter(AercloudFeature::block)
+    ).apply(instance, AercloudFeature::new));
+
+    @Override
+    public MapCodec<AercloudFeature> codec() {
+        return CODEC;
     }
 
     /**
      * Randomly places an area blocks in a direction to create a cloud.
      * The code is taken from older versions.
      *
-     * @param context The {@link FeaturePlaceContext} with a {@link AercloudConfiguration}.
+     * @param origin The {@link BlockPos} to place at.
      * @return Whether the placement was successful, as a {@link Boolean}.
      */
     @Override
-    public boolean place(FeaturePlaceContext<AercloudConfiguration> context) {
-        WorldGenLevel level = context.level();
-        RandomSource random = context.random();
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
         boolean direction = random.nextBoolean();
-        BlockPos blockPos = context.origin().offset(-random.nextInt(8), 0, (direction ? 8 : 0) - random.nextInt(8));
-        AercloudConfiguration config = context.config();
-        BlockState blockState = config.block().getState(level, random, blockPos);
+        BlockPos blockPos = origin.offset(-random.nextInt(8), 0, (direction ? 8 : 0) - random.nextInt(8));
+        BlockState blockState = this.block.value().getState(level, random, blockPos);
 
-        for (int amount = 0; amount < config.bounds(); ++amount) {
+        for (int amount = 0; amount < this.bounds; ++amount) {
             int xOffset = random.nextInt(2);
             int yOffset = (random.nextBoolean() ? random.nextInt(3) - 1 : 0);
             int zOffset = random.nextInt(2);

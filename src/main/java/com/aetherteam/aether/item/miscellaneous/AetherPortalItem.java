@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -30,7 +31,7 @@ public class AetherPortalItem extends Item {
         Player player = context.getPlayer();
         if (player != null) {
             if (this.createPortalFrame(context)) {
-                player.swing(context.getHand());
+                player.swing(context.getHand(), SwingAnimation.DEFAULT, false);
                 if (!player.getAbilities().instabuild) {
                     context.getItemInHand().shrink(1);
                 }

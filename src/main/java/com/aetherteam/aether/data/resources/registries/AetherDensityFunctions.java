@@ -5,7 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.level.levelgen.DensityFunction;
+import net.minecraft.world.level.levelgen.densityfunction.DensityFunction;
 import net.minecraft.world.level.levelgen.synth.BlendedNoise;
 
 public class AetherDensityFunctions {
@@ -16,7 +16,7 @@ public class AetherDensityFunctions {
     }
 
     public static void bootstrap(BootstrapContext<DensityFunction> context) {
-        context.register(BASE_3D_NOISE_AETHER, BlendedNoise.createUnseeded(
+        context.register(BASE_3D_NOISE_AETHER, new BlendedNoise(
                 0.25, // xz scale
                 0.25, // y scale
                 80.0, // xz factor

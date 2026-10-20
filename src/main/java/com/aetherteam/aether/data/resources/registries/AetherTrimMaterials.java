@@ -8,7 +8,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
 
 public class AetherTrimMaterials {
@@ -27,7 +26,7 @@ public class AetherTrimMaterials {
     }
 
     private static void register(BootstrapContext<TrimMaterial> context, ResourceKey<TrimMaterial> materialKey, Style style) {
-        TrimMaterial trimMaterial = new TrimMaterial(MaterialAssetGroup.create(materialKey.identifier().getPath()), Component.translatable(Util.makeDescriptionId("trim_material", materialKey.identifier())).withStyle(style));
+        TrimMaterial trimMaterial = new TrimMaterial(Identifier.fromNamespaceAndPath(Aether.MODID, "trim/" + materialKey.identifier().getPath()), Component.translatable(Util.makeDescriptionId("trim_material", materialKey.identifier())).withStyle(style));
         context.register(materialKey, trimMaterial);
     }
 }
