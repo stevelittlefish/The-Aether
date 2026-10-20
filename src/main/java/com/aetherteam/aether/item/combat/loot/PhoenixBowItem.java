@@ -4,16 +4,27 @@ import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.attachment.PhoenixArrowAttachment;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 
 public class PhoenixBowItem extends BowItem {
     public PhoenixBowItem(Item.Properties properties) {
         super(properties);
+    }
+
+    /**
+     * Vanilla has no equivalent of NeoForge's {@code customArrow} hook, so arrows are marked as they're created.
+     */
+    @Override
+    protected Projectile createProjectile(Level level, LivingEntity shooter, ItemStack weaponStack, ItemStack projectileStack, boolean isCrit) {
+        Projectile projectile = super.createProjectile(level, shooter, weaponStack, projectileStack, isCrit);
+        return projectile instanceof AbstractArrow arrow ? this.customArrow(arrow, projectileStack, weaponStack) : projectile;
     }
 
     /**
