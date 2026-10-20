@@ -8,12 +8,9 @@ import net.minecraft.world.item.ItemStack;
 
 public class IcePendantItem extends PendantItem implements FreezingAccessory {
     public IcePendantItem(Properties properties) {
-        super("ice_pendant", AetherSoundEvents.ITEM_ACCESSORY_EQUIP_ICE_PENDANT, properties);
+        super("ice_pendant", AetherSoundEvents.ITEM_ACCESSORY_EQUIP_ICE_PENDANT, properties.repairable(AetherTags.Items.ICE_REPAIRING));
     }
 
-    public boolean isValidRepairItem(ItemStack repairItem, ItemStack repairMaterial) {
-        return repairMaterial.is(AetherTags.Items.ICE_REPAIRING);
-    }
 
     @Override
     public void tick(ItemStack stack, SlotReference reference) {

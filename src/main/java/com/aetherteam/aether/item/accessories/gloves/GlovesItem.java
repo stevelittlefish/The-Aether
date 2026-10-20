@@ -39,7 +39,7 @@ public class GlovesItem extends AccessoryItem implements AccessorySlotProvider {
     }
 
     public GlovesItem(ArmorMaterial material, double punchDamage, Identifier glovesName, Holder<SoundEvent> glovesSound, Properties properties) {
-        super(glovesSound, properties);
+        super(glovesSound, properties.repairable(material.repairIngredient()).enchantable(material.enchantmentValue()));
         this.material = material;
         this.damage = punchDamage;
         this.setRenderTexture(glovesName.getNamespace(), glovesName.getPath());
@@ -48,14 +48,6 @@ public class GlovesItem extends AccessoryItem implements AccessorySlotProvider {
     @Override
     public void getDynamicModifiers(ItemStack stack, SlotReference reference, AccessoryAttributeBuilder builder) {
         builder.addStackable(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_PUNCH_DAMAGE_ID, this.damage, AttributeModifier.Operation.ADD_VALUE));
-    }
-
-    public int getEnchantmentValue() {
-        return this.material.enchantmentValue();
-    }
-
-    public boolean isValidRepairItem(ItemStack item, ItemStack material) {
-        return material.is(this.material.repairIngredient());
     }
 
     public ArmorMaterial getMaterial() {
