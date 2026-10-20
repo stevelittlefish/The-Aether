@@ -15,6 +15,7 @@
     "common.ExperienceOrbMixin",
     "common.FishingHookMixin",
     "common.LevelBlockUpdateMixin",
+    "common.LightningBoltMixin",
     "common.LiquidBlockMixin",
     "common.LivingEntityMixin",
     "common.MobMixin",
