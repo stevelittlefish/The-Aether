@@ -3,6 +3,8 @@ package com.aetherteam.aether.entity;
 import com.aetherteam.aether.item.accessories.abilities.AccessoryAbilities;
 import com.aetherteam.aether.item.combat.abilities.armor.PhoenixArmor;
 import com.aetherteam.aether.item.combat.abilities.weapon.WeaponAbilities;
+import com.aetherteam.aether.item.combat.loot.HolySwordItem;
+import com.aetherteam.aether.item.combat.loot.PigSlayerItem;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,5 +26,10 @@ public final class AetherCombat {
         Entity direct = source.getDirectEntity();
         float weaponAdjusted = WeaponAbilities.reduceWeaponEffectiveness(target, direct, amount);
         return WeaponAbilities.reduceArmorEffectiveness(target, direct, weaponAdjusted);
+    }
+
+    public static float modifyDamageAfterReductions(LivingEntity target, DamageSource source, float damage) {
+        float holyAdjusted = HolySwordItem.onLivingDamage(target, source, damage);
+        return PigSlayerItem.onLivingDamage(target, source, holyAdjusted);
     }
 }

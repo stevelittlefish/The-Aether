@@ -17,6 +17,7 @@ import com.aetherteam.aether.item.combat.abilities.armor.NeptuneArmor;
 import com.aetherteam.aether.item.combat.abilities.armor.PhoenixArmor;
 import com.aetherteam.aether.item.combat.abilities.armor.ValkyrieArmor;
 import com.aetherteam.aether.world.AetherTravelController;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -185,6 +186,16 @@ public abstract class LivingEntityMixin implements AccessoryUsingEntity {
     @ModifyVariable(method = "hurtServer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z", at = @At("HEAD"), argsOnly = true, ordinal = 0)
     private float aether$modifyIncomingDamage(float amount, ServerLevel level, DamageSource source) {
         return AetherCombat.modifyIncomingDamage((LivingEntity) (Object) this, source, amount);
+    }
+
+    /**
+     * Adds weapon bonus damage after armor and enchantment reductions, where NeoForge's {@code LivingDamageEvent.Pre} ran.
+     *
+     * @see AetherCombat#modifyDamageAfterReductions(LivingEntity, DamageSource, float)
+     */
+    @ModifyExpressionValue(method = "actuallyHurt(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getDamageAfterMagicAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F"))
+    private float aether$modifyDamageAfterReductions(float damage, ServerLevel level, DamageSource source, float amount) {
+        return AetherCombat.modifyDamageAfterReductions((LivingEntity) (Object) this, source, damage);
     }
 
     @ModifyReturnValue(method = "getVisibilityPercent(Lnet/minecraft/world/entity/Entity;)D", at = @At("RETURN"))
