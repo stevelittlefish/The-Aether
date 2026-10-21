@@ -21,10 +21,6 @@ public final class AetherTimeController {
 
     public static void tickTime(Level level) {
         if (level.dimension().equals(AetherDimensions.AETHER_LEVEL) && level instanceof ServerLevel serverLevel) {
-            ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) serverLevel;
-            com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor) level;
-            long gameTime = levelAccessor.aether$getLevelData().getGameTime() + 1L;
-            serverLevelAccessor.aether$getServerLevelData().setGameTime(gameTime);
             if (serverLevel.getGameRules().get(GameRules.ADVANCE_TIME)) {
                 LevelTimeUtil.setTime(serverLevel, serverLevel.getAttachedOrCreate(AetherDataAttachments.AETHER_TIME).tickTime(level));
             }
@@ -46,7 +42,7 @@ public final class AetherTimeController {
 
     public static void initializeLevelData(LevelAccessor level) {
         if (level instanceof ServerLevel serverLevel && serverLevel.dimension().equals(AetherDimensions.AETHER_LEVEL)) {
-            AetherLevelData levelData = new AetherLevelData(serverLevel, serverLevel.getServer().getWorldData(), serverLevel.getServer().getWorldData().overworldData(), serverLevel.getAttachedOrCreate(AetherDataAttachments.AETHER_TIME).getDayTime());
+            AetherLevelData levelData = new AetherLevelData(serverLevel, serverLevel.getServer().getWorldData(), serverLevel.getServer().getWorldData().overworldData());
             ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) serverLevel;
             com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor) level;
             serverLevelAccessor.aether$setServerLevelData(levelData);

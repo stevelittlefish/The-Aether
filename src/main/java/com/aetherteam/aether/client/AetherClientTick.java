@@ -22,8 +22,7 @@ public final class AetherClientTick {
         if (level != null && !Minecraft.getInstance().isPaused() && level.dimension().equals(AetherDimensions.AETHER_LEVEL)) {
             AetherTimeAttachment data = level.getAttachedOrCreate(AetherDataAttachments.AETHER_TIME);
             if (!data.isTimeSynced()) {
-                long dayTime = data.tickTime(level) - 1;
-                level.getLevelData().setGameTime(dayTime);
+                data.tickTime(level);
             }
         }
         tickPlayerState(client);

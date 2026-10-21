@@ -87,12 +87,6 @@ public final class AetherNetworkingClient {
 
     private static void executeAetherTimeSync(AetherTimeSyncPacket payload, Player player) {
         AetherTimeSyncPacket.execute(payload, player);
-        if (payload.key().equals(AetherTimeAttachment.DAY_TIME_SYNC_KEY)
-                && payload.valueType() == AttachmentSyncable.ValueType.LONG
-                && payload.value() instanceof Long dayTime
-                && player.level() instanceof ClientLevel clientLevel) {
-            clientLevel.getLevelData().setGameTime(dayTime);
-        }
     }
 
     private static <T extends CustomPacketPayload> void registerClientReceiver(CustomPacketPayload.Type<T> type, Consumer<T> handler) {

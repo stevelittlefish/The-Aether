@@ -15,13 +15,14 @@ public class AetherLevelData extends DerivedLevelData {
     private final ServerLevel level;
     private final ServerLevelData wrapped;
 
-    private long dayTime;
-
-    public AetherLevelData(ServerLevel level, WorldData worldData, ServerLevelData overworldData, long dayTime) {
+    // The Aether's day time lives in its AETHER_TIME attachment, not in the game time: game time
+    // drives scheduled ticks and the client's clocks and clouds, and when the Aether's frozen
+    // eternal-day time stood in for it, the client's sky jumped back every second at each time
+    // sync (26.3 port, 2026-10-21).
+    public AetherLevelData(ServerLevel level, WorldData worldData, ServerLevelData overworldData) {
         super(worldData, overworldData);
         this.level = level;
         this.wrapped = overworldData;
-        this.dayTime = dayTime;
     }
 
     /**
@@ -32,31 +33,13 @@ public class AetherLevelData extends DerivedLevelData {
     }
 
     /**
-     * @return The world time in ticks.
+     * @return The Aether's day time in ticks.
      */
     public long getDayTime() {
-        return this.getGameTime();
+        return this.level.getAttachedOrCreate(AetherDataAttachments.AETHER_TIME).getDayTime();
     }
 
-    @Override
-    public long getGameTime() {
-        return this.level.getAttachedOrCreate(AetherDataAttachments.AETHER_TIME).isTimeSynced() ? this.wrapped.getGameTime() : this.dayTime;
-    }
-
-    /**
-     * Sets the world time.
-     *
-     * @param time The {@link Integer} for the time in ticks.
-     */
     public void setDayTime(long time) {
-        this.setGameTime(time);
-    }
-
-    @Override
-    public void setGameTime(long time) {
-        if (this.level.getAttachedOrCreate(AetherDataAttachments.AETHER_TIME).isTimeSynced()) {
-            this.wrapped.setGameTime(time);
-        }
-        this.dayTime = time;
+        this.level.getAttachedOrCreate(AetherDataAttachments.AETHER_TIME).setDayTime(time);
     }
 }

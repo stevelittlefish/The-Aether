@@ -14,7 +14,7 @@ public final class LevelTimeUtil {
 
     public static long getTime(Level level) {
         if (!usesDefaultClock(level)) {
-            return level.getLevelData().getGameTime();
+            return level.getAttachedOrCreate(AetherDataAttachments.AETHER_TIME).getDayTime();
         }
         Holder<WorldClock> clock = getDefaultClock(level);
         if (clock != null) {
@@ -25,7 +25,7 @@ public final class LevelTimeUtil {
 
     public static void setTime(ServerLevel level, long time) {
         if (!usesDefaultClock(level)) {
-            ((ServerLevelAccessor) level).aether$getServerLevelData().setGameTime(time);
+            level.getAttachedOrCreate(AetherDataAttachments.AETHER_TIME).setDayTime(time);
             return;
         }
         Holder<WorldClock> clock = getDefaultClock(level);
