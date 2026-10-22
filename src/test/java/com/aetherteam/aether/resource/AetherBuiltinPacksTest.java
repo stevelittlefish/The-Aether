@@ -16,12 +16,11 @@ class AetherBuiltinPacksTest {
     @Test
     void releasedCatalogKeepsStableIdsAndPackDirectories() {
         List<AetherBuiltinPacks.BuiltinPackDefinition> definitions = AetherBuiltinPacks.definitions();
-        assertEquals(9, definitions.size());
+        assertEquals(8, definitions.size());
         assertEquals(List.of(
                         "builtin/aether_125_art",
                         "builtin/aether_b173_art",
                         "builtin/aether_ctm_fix",
-                        "builtin/aether_tips",
                         "builtin/aether_colorblind",
                         "builtin/aether_tooltips",
                         "builtin/aether_imm_ptl_compat",
@@ -40,7 +39,7 @@ class AetherBuiltinPacksTest {
 
     @Test
     void optionalModConditionsMatchReleasedBehavior() {
-        AetherBuiltinPacks.PackContext noMods = context(Set.of(), true, true, false, false);
+        AetherBuiltinPacks.PackContext noMods = context(Set.of(), true, false, false);
         assertEquals(Set.of(
                         "builtin/aether_125_art",
                         "builtin/aether_b173_art",
@@ -51,22 +50,20 @@ class AetherBuiltinPacksTest {
                 ids(AetherBuiltinPacks.availableDefinitions(PackType.SERVER_DATA, noMods)));
 
         AetherBuiltinPacks.PackContext allMods = context(
-                Set.of("ctm", "tipsmod", "immersive_portals_core"), true, true, false, false);
-        assertEquals(6, AetherBuiltinPacks.availableDefinitions(PackType.CLIENT_RESOURCES, allMods).size());
+                Set.of("ctm", "immersive_portals_core"), true, false, false);
+        assertEquals(5, AetherBuiltinPacks.availableDefinitions(PackType.CLIENT_RESOURCES, allMods).size());
         assertEquals(3, AetherBuiltinPacks.availableDefinitions(PackType.SERVER_DATA, allMods).size());
 
         AetherBuiltinPacks.PackContext disabledConfigs = context(
-                Set.of("tipsmod", "immersive_portals_core"), false, false, false, false);
-        assertFalse(ids(AetherBuiltinPacks.availableDefinitions(PackType.CLIENT_RESOURCES, disabledConfigs))
-                .contains("builtin/aether_tips"));
+                Set.of("immersive_portals_core"), false, false, false);
         assertFalse(ids(AetherBuiltinPacks.availableDefinitions(PackType.SERVER_DATA, disabledConfigs))
                 .contains("builtin/aether_imm_ptl_compat"));
     }
 
     @Test
     void requiredAndConfigDrivenActivationRemainDistinct() {
-        AetherBuiltinPacks.PackContext defaultsOff = context(Set.of(), true, true, false, false);
-        AetherBuiltinPacks.PackContext defaultsOn = context(Set.of(), true, true, true, true);
+        AetherBuiltinPacks.PackContext defaultsOff = context(Set.of(), true, false, false);
+        AetherBuiltinPacks.PackContext defaultsOn = context(Set.of(), true, true, true);
 
         AetherBuiltinPacks.BuiltinPackDefinition ctm = definition("builtin/aether_ctm_fix");
         AetherBuiltinPacks.BuiltinPackDefinition immersive = definition("builtin/aether_imm_ptl_compat");
@@ -83,10 +80,10 @@ class AetherBuiltinPacksTest {
         assertTrue(ruined.shouldAddAutomatically(defaultsOn));
     }
 
-    private static AetherBuiltinPacks.PackContext context(Set<String> mods, boolean trivia,
+    private static AetherBuiltinPacks.PackContext context(Set<String> mods,
                                                            boolean immersivePortals, boolean freezing,
                                                            boolean ruinedPortals) {
-        return new AetherBuiltinPacks.PackContext(mods::contains, trivia, immersivePortals, freezing, ruinedPortals);
+        return new AetherBuiltinPacks.PackContext(mods::contains, immersivePortals, freezing, ruinedPortals);
     }
 
     private static Set<String> ids(List<AetherBuiltinPacks.BuiltinPackDefinition> definitions) {

@@ -5,13 +5,9 @@ import com.aetherteam.aether.entity.AetherMounting;
 import com.aetherteam.aether.entity.AttackStrengthSnapshot;
 import com.aetherteam.aether.item.tools.abilities.ToolAbilities;
 import com.aetherteam.aether.world.AetherTravelController;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
-import net.minecraft.util.RandomSource;
-import net.minecraft.util.Util;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -22,8 +18,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.List;
 
 @Mixin(Player.class)
 public abstract class PlayerMixin implements AttackStrengthSnapshot {
@@ -81,22 +75,6 @@ public abstract class PlayerMixin implements AttackStrengthSnapshot {
         Player player = (Player) (Object) this;
         player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER).onUpdate(player);
         AetherTravelController.travelling(player);
-    }
-
-    /**
-     * Vanilla guards this path with `isEmpty()`, but a transformed runtime can still reach `Util#getRandom` with an empty list.
-     * Preserve the normal selection logic and only short-circuit the impossible empty-list edge case.
-     */
-    @WrapOperation(method = "aiStep()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Util;getRandom(Ljava/util/List;Lnet/minecraft/util/RandomSource;)Ljava/lang/Object;"))
-    private <T> T aether$guardRandomTouchedExperienceOrb(List<T> entities, RandomSource random, Operation<T> original) {
-        return entities.isEmpty() ? null : original.call(entities, random);
-    }
-
-    @WrapOperation(method = "aiStep()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;touch(Lnet/minecraft/world/entity/Entity;)V", ordinal = 1))
-    private void aether$skipMissingRandomTouch(Player instance, Entity entity, Operation<Void> original) {
-        if (entity != null) {
-            original.call(instance, entity);
-        }
     }
 
     @ModifyReturnValue(method = "getDestroySpeed(Lnet/minecraft/world/level/block/state/BlockState;)F", at = @At("RETURN"))

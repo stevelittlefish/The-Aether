@@ -50,14 +50,11 @@
     "client.AdvancementToastMixin",
     "client.FogRendererMixin",
     "client.LightTextureMixin",
-    "client.LogoRendererMixin",
     "client.SkyRendererMixin",
     "client.SoundEngineMixin",
     "client.accessor.AbstractBoatRendererAccessor",
     "client.accessor.AbstractContainerScreenAccessor",
-    "client.accessor.AbstractWidgetAccessor",
     "client.accessor.BossHealthOverlayAccessor",
-    "client.accessor.ButtonAccessor",
     "client.accessor.ButtonBuilderAccessor",
     "client.accessor.FogDataAccessor",
     "client.accessor.GhostSlotsAccessor",
@@ -65,10 +62,7 @@
     "client.accessor.LivingEntityRendererAccessor",
     "client.accessor.PlayerModelAccessor",
     "client.accessor.QuadrupedModelAccessor",
-    "client.accessor.ScreenAccessor",
-    "client.accessor.SplashRendererAccessor",
-    "client.accessor.SoundEngineAccessor",
-    "client.accessor.TitleScreenAccessor"
+    "client.accessor.SoundEngineAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

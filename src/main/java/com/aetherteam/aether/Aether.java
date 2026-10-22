@@ -9,7 +9,6 @@ import com.aetherteam.aether.block.dispenser.DispenseUsableItemBehavior;
 import com.aetherteam.aether.block.dispenser.SkyrootBoatDispenseBehavior;
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.client.AetherSoundEvents;
-import com.aetherteam.aether.client.TriviaGenerator;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
@@ -49,8 +48,6 @@ public final class Aether {
     public static final String MODID = "aether";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final Path DIRECTORY = FabricLoader.getInstance().getConfigDir().resolve(MODID);
-
-    public static final TriviaGenerator TRIVIA_READER = new TriviaGenerator();
 
     private static boolean initialized;
 

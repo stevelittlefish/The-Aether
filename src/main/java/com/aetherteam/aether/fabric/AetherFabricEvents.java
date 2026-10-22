@@ -20,7 +20,6 @@ import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.aether.perk.data.UserData;
 import com.aetherteam.aether.perk.types.MoaSkins;
 import com.aetherteam.aether.recipe.InteractionRecipeRules;
-import com.aetherteam.aether.world.AetherPlayerSpawn;
 import com.aetherteam.aether.world.AetherTimeController;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityLevelChangeEvents;
@@ -81,7 +80,6 @@ public final class AetherFabricEvents {
             ToolAbilities.setDebuffToolsState(player);
             MoaSkins.registerMoaSkins(player.level());
             AetherPacketSender.sendToPlayer(player, new RegisterMoaSkinsPacket());
-            AetherPlayerSpawn.startInAether(player);
         });
         ServerPlayerEvents.LEAVE.register(player -> {
             player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER).onLogout(player);

@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 public final class AetherConfig {
-    public static final AetherConfigFile STARTUP_FILE = new AetherConfigFile("aether-startup.toml");
-    public static final Startup STARTUP = new Startup(STARTUP_FILE);
     public static final AetherConfigFile SERVER_FILE = new AetherConfigFile("aether-server.toml");
     public static final Server SERVER = new Server(SERVER_FILE);
     public static final AetherConfigFile COMMON_FILE = new AetherConfigFile("aether-common.toml");
@@ -24,7 +22,6 @@ public final class AetherConfig {
     }
 
     public static void loadGlobal(Path configDirectory, boolean includeClient) {
-        STARTUP_FILE.load(configDirectory);
         COMMON_FILE.load(configDirectory);
         if (includeClient) {
             CLIENT_FILE.load(configDirectory);
@@ -52,14 +49,6 @@ public final class AetherConfig {
         SERVER_FILE.clearSynchronizedValues();
     }
 
-    public static final class Startup {
-        public final BooleanConfigEntry enable_trivia;
-
-        private Startup(AetherConfigFile file) {
-            this.enable_trivia = file.booleanEntry("Gui", "Enables random trivia", true,
-                    "Adds random trivia and tips to the bottom of loading screens");
-        }
-    }
 
     public static final class Server {
         public final BooleanConfigEntry enable_bed_explosions;
@@ -78,7 +67,6 @@ public final class AetherConfig {
         public final BooleanConfigEntry generate_holiday_tree_seasonally;
         public final BooleanConfigEntry sun_altar_whitelist;
         public final AetherConfigEntry<List<String>> sun_altar_dimensions;
-        public final BooleanConfigEntry spawn_in_aether;
         public final BooleanConfigEntry disable_aether_portal;
         public final BooleanConfigEntry disable_falling_to_overworld;
         public final BooleanConfigEntry disable_eternal_day;
@@ -124,8 +112,6 @@ public final class AetherConfig {
             this.sun_altar_dimensions = file.stringListEntry("Multiplayer", "Configure Sun Altar dimensions", List.of("aether:the_aether"),
                     "Configures what dimensions are able to have their time changed by the Sun Altar");
 
-            this.spawn_in_aether = file.booleanEntry("Modpack", "Spawns the player in the Aether", false,
-                    "Spawns the player in the Aether dimension; this is best enabled alongside other modpack configuration to avoid issues");
             this.disable_aether_portal = file.booleanEntry("Modpack", "Disables Aether Portal creation", false,
                     "Prevents the Aether Portal from being created normally in the mod");
             this.disable_falling_to_overworld = file.booleanEntry("Modpack", "Disables falling into the Overworld", false,
@@ -192,10 +178,6 @@ public final class AetherConfig {
         public final AetherConfigEntry<Integer> music_backup_max_delay;
         public final BooleanConfigEntry disable_music_manager;
         public final BooleanConfigEntry disable_aether_boss_music;
-        public final BooleanConfigEntry disable_aether_menu_music;
-        public final BooleanConfigEntry disable_vanilla_world_preview_menu_music;
-        public final BooleanConfigEntry disable_aether_world_preview_menu_music;
-        public final BooleanConfigEntry enable_server_button;
 
         private Client(AetherConfigFile file) {
             this.legacy_models = file.booleanEntry("Rendering", "Switches to legacy mob models", false,
@@ -226,15 +208,6 @@ public final class AetherConfig {
                     "Disables the Aether's internal music manager, if true, this overrides all other audio configs");
             this.disable_aether_boss_music = file.booleanEntry("Audio", "Disables Aether boss music", false,
                     "Disables the Aether's boss fight music, only works if 'Disables Aether music manager' is false");
-            this.disable_aether_menu_music = file.booleanEntry("Audio", "Disables Aether menu music", false,
-                    "Disables the Aether's menu music in case another mod implements its own, only works if 'Disables Aether music manager' is false");
-            this.disable_vanilla_world_preview_menu_music = file.booleanEntry("Audio", "Disables vanilla world preview menu music", false,
-                    "Disables the menu music on the vanilla world preview menu, only works if 'Disables Aether music manager' is false");
-            this.disable_aether_world_preview_menu_music = file.booleanEntry("Audio", "Disables Aether world preview menu music", false,
-                    "Disables the menu music on the Aether world preview menu, only works if 'Disables Aether music manager' is false");
-
-            this.enable_server_button = file.booleanEntry("Miscellaneous", "Enables server button", false,
-                    "Enables a direct join button for the official server");
         }
     }
 }

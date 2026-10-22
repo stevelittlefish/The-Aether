@@ -35,9 +35,6 @@ public final class AetherBuiltinPacks {
             new BuiltinPackDefinition("builtin/aether_ctm_fix", PackType.CLIENT_RESOURCES,
                     List.of("ctm_fix"), "pack.aether.ctm.title", "pack.aether.ctm.description",
                     Availability.CTM, Activation.REQUIRED),
-            new BuiltinPackDefinition("builtin/aether_tips", PackType.CLIENT_RESOURCES,
-                    List.of("tips"), "pack.aether.tips.title", "pack.aether.tips.description",
-                    Availability.TIPS, Activation.NORMAL),
             new BuiltinPackDefinition("builtin/aether_colorblind", PackType.CLIENT_RESOURCES,
                     List.of("colorblind"), "pack.aether.colorblind.title", "pack.aether.colorblind.description",
                     Availability.ALWAYS, Activation.NORMAL),
@@ -82,7 +79,6 @@ public final class AetherBuiltinPacks {
     private static PackContext currentContext() {
         FabricLoader loader = FabricLoader.getInstance();
         return new PackContext(loader::isModLoaded,
-                AetherConfig.STARTUP.enable_trivia.get(),
                 AetherConfig.COMMON.enable_immersive_portals_compatibility.get(),
                 AetherConfig.COMMON.add_temporary_freezing_automatically.get(),
                 AetherConfig.COMMON.add_ruined_portal_automatically.get());
@@ -121,7 +117,6 @@ public final class AetherBuiltinPacks {
     enum Availability {
         ALWAYS,
         CTM,
-        TIPS,
         IMMERSIVE_PORTALS
     }
 
@@ -132,7 +127,7 @@ public final class AetherBuiltinPacks {
         RUINED_PORTAL_CONFIG
     }
 
-    record PackContext(Predicate<String> isModLoaded, boolean triviaEnabled,
+    record PackContext(Predicate<String> isModLoaded,
                        boolean immersivePortalsCompatibilityEnabled, boolean temporaryFreezingAutoEnabled,
                        boolean ruinedPortalAutoEnabled) {
         boolean isModLoaded(String modId) {
@@ -146,7 +141,6 @@ public final class AetherBuiltinPacks {
             return switch (this.availability) {
                 case ALWAYS -> true;
                 case CTM -> context.isModLoaded("ctm");
-                case TIPS -> context.isModLoaded("tipsmod") && context.triviaEnabled();
                 case IMMERSIVE_PORTALS -> context.isModLoaded("immersive_portals_core")
                         && context.immersivePortalsCompatibilityEnabled();
             };
