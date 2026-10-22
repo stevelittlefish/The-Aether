@@ -28,7 +28,6 @@ public class AetherOverlays {
                 AetherVignetteRendering.renderAetherPortalOverlay(guiGraphics, minecraft, player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER), partialTicks);
                 AetherVignetteRendering.renderInebriationOverlay(guiGraphics, minecraft, window, player);
                 AetherVignetteRendering.renderRemedyOverlay(guiGraphics, minecraft, window, player);
-                AetherVignetteRendering.renderRepulsionOverlay(guiGraphics, minecraft, window, player);
                 AetherStatusHudRendering.renderHammerCooldownOverlay(guiGraphics, minecraft, window, player);
                 AetherStatusHudRendering.renderMoaJumps(guiGraphics, window, player);
             }

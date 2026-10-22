@@ -21,16 +21,6 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "obsidian_gloves": {
-      "conditions": {
-        "items": [
-          {
-            "items": "aether:obsidian_gloves"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "obsidian_helmet": {
       "conditions": {
         "items": [
@@ -78,9 +68,6 @@
     ],
     [
       "obsidian_boots"
-    ],
-    [
-      "obsidian_gloves"
     ]
   ],
   "sends_telemetry_event": true

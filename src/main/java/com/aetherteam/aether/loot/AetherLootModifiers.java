@@ -4,7 +4,6 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
-import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.item.combat.abilities.weapon.SkyrootWeapon;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
@@ -52,7 +51,6 @@ public final class AetherLootModifiers {
             enchantedGrassBerries(context, drops);
             skyrootDoubleDrops(context, drops);
             pigSlayerDrops(context, drops);
-            glovesLoot(context, drops);
         });
     }
 
@@ -125,71 +123,5 @@ public final class AetherLootModifiers {
                 }
             }
         }
-    }
-
-    /**
-     * Swaps vanilla armor in container loot for gloves of the same material, a 1 in 4 chance for each piece, keeping its
-     * enchantments where the gloves can take them.
-     */
-    private static void glovesLoot(LootContext context, List<ItemStack> drops) {
-        Vec3 origin = context.getOptional(LootContextParams.ORIGIN);
-        Entity entity = context.getOptional(LootContextParams.THIS_ENTITY);
-        if (origin == null || entity == null) {
-            return;
-        }
-        ServerLevel level = context.getLevel();
-        if (!(level.getBlockEntity(BlockPos.containing(origin)) instanceof BaseContainerBlockEntity)) {
-            return;
-        }
-        RandomSource random = context.getRandom();
-        for (int i = 0; i < drops.size(); i++) {
-            ItemStack armorStack = drops.get(i);
-            Item gloves = glovesFor(armorStack);
-            if (gloves != null && random.nextInt(4) < 1) {
-                ItemStack glovesStack = enchantLikeArmor(level, random, armorStack, new ItemStack(gloves));
-                if (glovesStack != null) {
-                    drops.set(i, glovesStack);
-                }
-            }
-        }
-    }
-
-    private static final List<Item> VANILLA_MATERIAL_GLOVES = List.of(
-            AetherItems.LEATHER_GLOVES, AetherItems.CHAINMAIL_GLOVES, AetherItems.IRON_GLOVES,
-            AetherItems.GOLDEN_GLOVES, AetherItems.DIAMOND_GLOVES, AetherItems.NETHERITE_GLOVES);
-
-    private static Item glovesFor(ItemStack armorStack) {
-        Equippable equippable = armorStack.get(DataComponents.EQUIPPABLE);
-        if (equippable == null || equippable.slot().getType() != EquipmentSlot.Type.HUMANOID_ARMOR || equippable.assetId().isEmpty()) {
-            return null;
-        }
-        ResourceKey<EquipmentAsset> asset = equippable.assetId().get();
-        for (Item gloves : VANILLA_MATERIAL_GLOVES) {
-            if (gloves instanceof GlovesItem glovesItem && glovesItem.getMaterial().assetId().equals(asset)) {
-                return gloves;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Copies the armor's enchantments the gloves can take, or rolls new ones of similar cost if none carry over.
-     *
-     * @return The gloves, or null if the armor was enchanted and the gloves couldn't be.
-     */
-    private static ItemStack enchantLikeArmor(ServerLevel level, RandomSource random, ItemStack armorStack, ItemStack gloves) {
-        int cost = 0;
-        for (Object2IntMap.Entry<Holder<Enchantment>> entry : armorStack.getEnchantments().entrySet()) {
-            Holder<Enchantment> enchantment = entry.getKey();
-            cost = Math.max(cost, enchantment.value().getMinCost(entry.getIntValue()));
-            if (enchantment.value().isPrimaryItem(gloves)) {
-                gloves.enchant(enchantment, entry.getIntValue());
-            }
-        }
-        if (armorStack.isEnchanted() && !gloves.isEnchanted()) {
-            Optional<? extends HolderSet<Enchantment>> onRandomLoot = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(EnchantmentTags.ON_RANDOM_LOOT);
-            gloves = EnchantmentHelper.enchantItem(random, gloves, cost, level.registryAccess(), onRandomLoot);
-        }
-        return !armorStack.isEnchanted() || gloves.isEnchanted() ? gloves : null;
     }
 }

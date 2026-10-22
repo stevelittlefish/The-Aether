@@ -1,6 +1,0 @@
-{
-  "type": "aether:repairing",
-  "group": "altar_gloves_repair",
-  "ingredient": "aether:golden_gloves",
-  "repairTime": 300
-}

@@ -4,7 +4,6 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.attachment.AetherPlayerAttachment;
 import com.aetherteam.aether.attachment.AetherTimeAttachment;
-import com.aetherteam.aether.client.gui.AccessoryMenuController;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.entity.AetherMounting;
 import net.minecraft.client.Minecraft;
@@ -26,8 +25,6 @@ public final class AetherClientTick {
             }
         }
         tickPlayerState(client);
-        handleAccessoryHotkey(client);
-        AccessoryMenuController.openAccessoryMenu();
     }
 
     private static void tickPlayerState(Minecraft client) {
@@ -65,13 +62,4 @@ public final class AetherClientTick {
         }
     }
 
-    private static void handleAccessoryHotkey(Minecraft client) {
-        if (!(ClientAccess.screen(client) instanceof AbstractContainerScreen<?> containerScreen)) {
-            return;
-        }
-        if (AetherConfig.CLIENT.disable_accessory_button.get() || !AetherKeys.OPEN_ACCESSORY_INVENTORY.consumeClick()) {
-            return;
-        }
-        containerScreen.onClose();
-    }
 }

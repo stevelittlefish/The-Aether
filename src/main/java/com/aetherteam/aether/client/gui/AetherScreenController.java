@@ -1,6 +1,5 @@
 package com.aetherteam.aether.client.gui;
 
-import com.aetherteam.aether.client.gui.component.inventory.AccessoryButton;
 import com.aetherteam.aether.integration.jei.AetherJeiBridge;
 import com.aetherteam.aether.mixin.mixins.client.accessor.SplashRendererAccessor;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
@@ -43,29 +42,10 @@ public final class AetherScreenController {
                 }
             }
         }
-
-        var offsets = com.aetherteam.aether.client.gui.screen.inventory.AetherAccessoriesScreen.getButtonOffset(screen);
-        var inventoryAccessoryButton = AccessoryMenuController.setupAccessoryButton(screen, offsets);
-        if (inventoryAccessoryButton != null && AccessoryMenuController.isAccessoryButtonEnabled()) {
-            Screens.getWidgets(screen).add(inventoryAccessoryButton);
-        }
-
-        GridLayout layout = PerkScreenControls.setupPerksButtons(screen);
-        if (layout != null && !AccessoryMenuController.isAccessoryButtonEnabled()) {
-            addPerkWidgets(screen, layout);
-        }
     }
 
-    private static void addPerkWidgets(Screen screen, GridLayout layout) {
-        layout.visitWidgets(widget -> {
-            if (widget instanceof AbstractWidget abstractWidget) {
-                Screens.getWidgets(screen).add(abstractWidget);
-            }
-        });
-    }
 
     private static void renderScreenOverlay(Screen currentScreen, GuiGraphicsExtractor guiGraphics) {
-        updateAccessoryButtons(currentScreen);
         logJeiOverlayState(currentScreen);
         if (!TIPS_MOD_LOADED) {
             AetherScreenMessages.drawTrivia(currentScreen, guiGraphics);
@@ -73,13 +53,6 @@ public final class AetherScreenController {
         AetherScreenMessages.drawAetherTravelMessage(currentScreen, guiGraphics);
     }
 
-    private static void updateAccessoryButtons(Screen currentScreen) {
-        Screens.getWidgets(currentScreen).forEach(widget -> {
-            if (widget instanceof AccessoryButton accessoryButton) {
-                accessoryButton.updateButtonState();
-            }
-        });
-    }
 
     private static void logJeiOverlayState(Screen screen) {
         if (!JEI_LOADED) {

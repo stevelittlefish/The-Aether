@@ -1,0 +1,5 @@
+{
+  "type": "aether:cape_smithing",
+  "base": "#minecraft:chest_armor",
+  "addition": "#aether:capes"
+}

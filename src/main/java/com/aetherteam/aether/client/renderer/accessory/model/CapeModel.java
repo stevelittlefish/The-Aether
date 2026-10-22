@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.renderer.accessory.model;
 
+import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -28,7 +29,8 @@ public class CapeModel<T extends HumanoidRenderState> extends HumanoidModel<T> {
     @Override
     public void setupAnim(T renderState) {
         super.setupAnim(renderState);
-        if (renderState.chestEquipment.isEmpty()) {
+        // A cape worn on its own has the chest slot to itself; one smithed onto a chestplate sits out over it.
+        if (renderState.chestEquipment.isEmpty() || renderState.chestEquipment.getItem() instanceof CapeItem) {
             if (renderState.isCrouching) {
                 this.cloak.z = 1.4F;
                 this.cloak.y = 1.85F;

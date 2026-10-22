@@ -1,9 +1,7 @@
 package com.aetherteam.aether.client.renderer.accessory.layer;
 
 import com.aetherteam.aether.client.renderer.accessory.model.CapeModel;
-import com.aetherteam.aether.client.renderer.accessory.state.ArmorStandCapeRenderState;
-import com.aetherteam.aether.item.accessories.cape.CapeItem;
-import com.aetherteam.aether.client.renderer.accessory.AccessoryRendering;
+import com.aetherteam.aether.client.renderer.accessory.CapeTextures;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.object.armorstand.ArmorStandArmorModel;
@@ -11,7 +9,6 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.ArmorStandRenderState;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public class ArmorStandCapeLayer extends RenderLayer<ArmorStandRenderState, ArmorStandArmorModel> {
@@ -28,12 +25,7 @@ public class ArmorStandCapeLayer extends RenderLayer<ArmorStandRenderState, Armo
             return;
         }
 
-        ItemStack stack = ((ArmorStandCapeRenderState) renderState).aether$getCapeAccessory();
-        if (stack.isEmpty()) {
-            return;
-        }
-
-        var texture = AccessoryRendering.getCapeTexture(stack);
+        var texture = CapeTextures.get(renderState.chestEquipment);
         if (texture == null) {
             return;
         }

@@ -31,7 +31,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:ice_pendant"
+          "name": "aether:ice_ring"
         },
         {
           "type": "minecraft:item",
@@ -105,8 +105,17 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:iron_ring",
-          "weight": 2
+          "name": "minecraft:iron_ingot",
+          "weight": 2,
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "min": 1.0,
+              "max": 3.0
+            }
+          }
         },
         {
           "type": "minecraft:item",
@@ -230,8 +239,17 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:golden_ring",
-          "weight": 2
+          "name": "minecraft:gold_ingot",
+          "weight": 2,
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "min": 1.0,
+              "max": 3.0
+            }
+          }
         },
         {
           "type": "minecraft:item",

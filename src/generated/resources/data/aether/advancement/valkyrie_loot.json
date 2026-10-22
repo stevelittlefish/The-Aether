@@ -31,16 +31,6 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "valkyrie_gloves": {
-      "conditions": {
-        "items": [
-          {
-            "items": "aether:valkyrie_gloves"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "valkyrie_helmet": {
       "conditions": {
         "items": [
@@ -114,8 +104,7 @@
       "valkyrie_helmet",
       "valkyrie_chestplate",
       "valkyrie_leggings",
-      "valkyrie_boots",
-      "valkyrie_gloves"
+      "valkyrie_boots"
     ]
   ],
   "sends_telemetry_event": true

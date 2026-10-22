@@ -17,7 +17,6 @@ public final class AetherCombat {
     }
 
     public static boolean beforeHurt(LivingEntity target, DamageSource source) {
-        AccessoryAbilities.setAttack(source);
         WeaponAbilities.stickDart(target, source);
         return AccessoryAbilities.preventMagmaDamage(target, source) || PhoenixArmor.extinguishUser(target, source);
     }

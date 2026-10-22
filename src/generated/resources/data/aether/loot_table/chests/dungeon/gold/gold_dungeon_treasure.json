@@ -26,11 +26,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:phoenix_gloves",
-          "weight": 2
-        },
-        {
-          "type": "minecraft:item",
           "name": "aether:life_shard"
         }
       ],

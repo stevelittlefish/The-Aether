@@ -72,12 +72,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:iron_ring",
-          "modifier": {
-            "type": "minecraft:set_count",
-            "add": false,
-            "count": 1.0
-          }
+          "name": "minecraft:iron_ingot"
         },
         {
           "type": "minecraft:item",

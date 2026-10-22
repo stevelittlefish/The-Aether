@@ -69,7 +69,6 @@ class ThreeModApiCompatibilityTest {
                 "aether:gravitite_hoe",
                 "aether:valkyrie_pickaxe")));
         assertTrue(excludedTools.containsAll(Set.of(
-                "#aether:accessories",
                 "#aether:tools/hammers",
                 "#aether:tools/lances",
                 "aether:skyroot_sword",

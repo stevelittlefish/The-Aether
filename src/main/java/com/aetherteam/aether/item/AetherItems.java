@@ -1,28 +1,12 @@
 package com.aetherteam.aether.item;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.data.resources.registries.AetherJukeboxSongs;
 import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.entity.AetherEntityTypes;
-import com.aetherteam.aether.item.accessories.cape.AgilityCapeItem;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
-import com.aetherteam.aether.item.accessories.cape.InvisibilityCloakItem;
-import com.aetherteam.aether.item.accessories.cape.ValkyrieCapeItem;
-import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
-import com.aetherteam.aether.item.accessories.gloves.GoldGlovesItem;
-import com.aetherteam.aether.item.accessories.gloves.LeatherGlovesItem;
-import com.aetherteam.aether.item.accessories.gloves.ZaniteGlovesItem;
-import com.aetherteam.aether.item.accessories.miscellaneous.GoldenFeatherItem;
-import com.aetherteam.aether.item.accessories.miscellaneous.IronBubbleItem;
-import com.aetherteam.aether.item.accessories.miscellaneous.RegenerationStoneItem;
-import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
-import com.aetherteam.aether.item.accessories.pendant.IcePendantItem;
-import com.aetherteam.aether.item.accessories.pendant.PendantItem;
-import com.aetherteam.aether.item.accessories.pendant.ZanitePendantItem;
-import com.aetherteam.aether.item.accessories.ring.IceRingItem;
-import com.aetherteam.aether.item.accessories.ring.RingItem;
-import com.aetherteam.aether.item.accessories.ring.ZaniteRingItem;
 import com.aetherteam.aether.item.combat.*;
 import com.aetherteam.aether.item.combat.loot.*;
 import com.aetherteam.aether.item.components.AetherDataComponents;
@@ -55,8 +39,6 @@ import com.aetherteam.aether.item.tools.zanite.ZaniteAxeItem;
 import com.aetherteam.aether.item.tools.zanite.ZaniteHoeItem;
 import com.aetherteam.aether.item.tools.zanite.ZanitePickaxeItem;
 import com.aetherteam.aether.item.tools.zanite.ZaniteShovelItem;
-import com.aetherteam.aether.accessories.api.AccessoriesAPI;
-import com.aetherteam.aether.accessories.api.core.Accessory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Registry;
@@ -76,7 +58,8 @@ import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.item.equipment.ArmorMaterials;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
@@ -190,43 +173,24 @@ public class AetherItems {
     public static final Item CANDY_CANE = register("candy_cane", properties -> new Item(properties.food(AetherFoods.CANDY_CANE)));
     public static final Item GINGERBREAD_MAN = register("gingerbread_man", properties -> new Item(properties.food(AetherFoods.GINGERBREAD_MAN)));
 
-    // Accessories
-    public static final Item IRON_RING = register("iron_ring", properties -> new RingItem(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_IRON_RING, properties.stacksTo(1)));
-    public static final Item GOLDEN_RING = register("golden_ring", properties -> new RingItem(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_GOLD_RING, properties.stacksTo(1)));
-    public static final Item ZANITE_RING = register("zanite_ring", properties -> new ZaniteRingItem(properties.durability(49)));
-    public static final Item ICE_RING = register("ice_ring", properties -> new IceRingItem(properties.durability(125)));
+    // Capes and charms. Capes are worn in the chest slot or smithed onto a chestplate; charms work from the off hand.
+    // The rings, pendants and gloves that needed accessory slots are gone (Aether lite, 2026-10-22).
+    public static final Item ZANITE_RING = register("zanite_ring", properties -> new Item(properties.durability(49).repairable(AetherTags.Items.ZANITE_REPAIRING)));
+    public static final Item ICE_RING = register("ice_ring", properties -> new Item(properties.durability(125).repairable(AetherTags.Items.ICE_REPAIRING)));
 
-    public static final Item IRON_PENDANT = register("iron_pendant", properties -> new PendantItem("iron_pendant", AetherSoundEvents.ITEM_ACCESSORY_EQUIP_IRON_PENDANT, properties.stacksTo(1)));
-    public static final Item GOLDEN_PENDANT = register("golden_pendant", properties -> new PendantItem("golden_pendant", AetherSoundEvents.ITEM_ACCESSORY_EQUIP_GOLD_PENDANT, properties.stacksTo(1)));
-    public static final Item ZANITE_PENDANT = register("zanite_pendant", properties -> new ZanitePendantItem(properties.durability(98)));
-    public static final Item ICE_PENDANT = register("ice_pendant", properties -> new IcePendantItem(properties.durability(250)));
+    public static final Item RED_CAPE = register("red_cape", properties -> new CapeItem("red_cape", cape(properties)));
+    public static final Item BLUE_CAPE = register("blue_cape", properties -> new CapeItem("blue_cape", cape(properties)));
+    public static final Item YELLOW_CAPE = register("yellow_cape", properties -> new CapeItem("yellow_cape", cape(properties)));
+    public static final Item WHITE_CAPE = register("white_cape", properties -> new CapeItem("white_cape", cape(properties)));
+    public static final Item AGILITY_CAPE = register("agility_cape", properties -> new CapeItem("agility_cape", cape(properties).rarity(AETHER_LOOT)));
+    public static final Item SWET_CAPE = register("swet_cape", properties -> new CapeItem("swet_cape", cape(properties)));
+    public static final Item INVISIBILITY_CLOAK = register("invisibility_cloak", properties -> new CapeItem(null, cape(properties).rarity(AETHER_LOOT)));
+    public static final Item VALKYRIE_CAPE = register("valkyrie_cape", properties -> new CapeItem("valkyrie_cape", cape(properties).rarity(AETHER_LOOT)));
 
-    public static final Item LEATHER_GLOVES = register("leather_gloves", properties -> new LeatherGlovesItem(0.25, properties.durability(59)));
-    public static final Item CHAINMAIL_GLOVES = register("chainmail_gloves", properties -> new GlovesItem(ArmorMaterials.CHAINMAIL, 0.35, "chainmail_gloves", SoundEvents.ARMOR_EQUIP_CHAIN, properties.durability(131)));
-    public static final Item IRON_GLOVES = register("iron_gloves", properties -> new GlovesItem(ArmorMaterials.IRON, 0.5, "iron_gloves", SoundEvents.ARMOR_EQUIP_IRON, properties.durability(250)));
-    public static final Item GOLDEN_GLOVES = register("golden_gloves", properties -> new GoldGlovesItem(0.25, properties.durability(32)));
-    public static final Item DIAMOND_GLOVES = register("diamond_gloves", properties -> new GlovesItem(ArmorMaterials.DIAMOND, 0.75, "diamond_gloves", SoundEvents.ARMOR_EQUIP_DIAMOND, properties.durability(1561)));
-    public static final Item NETHERITE_GLOVES = register("netherite_gloves", properties -> new GlovesItem(ArmorMaterials.NETHERITE, 1.0, "netherite_gloves", SoundEvents.ARMOR_EQUIP_NETHERITE, properties.durability(2031).fireResistant()));
-    public static final Item ZANITE_GLOVES = register("zanite_gloves", properties -> new ZaniteGlovesItem(0.5, properties.durability(250)));
-    public static final Item GRAVITITE_GLOVES = register("gravitite_gloves", properties -> new GlovesItem(AetherArmorMaterials.GRAVITITE, 0.75, "gravitite_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_GRAVITITE, properties.durability(1561)));
-    public static final Item VALKYRIE_GLOVES = register("valkyrie_gloves", properties -> new GlovesItem(AetherArmorMaterials.VALKYRIE, 1.0, "valkyrie_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_VALKYRIE, properties.stacksTo(1).rarity(AETHER_LOOT).durability(1561)));
-    public static final Item NEPTUNE_GLOVES = register("neptune_gloves", properties -> new GlovesItem(AetherArmorMaterials.NEPTUNE, 0.5, "neptune_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_NEPTUNE, properties.stacksTo(1).rarity(AETHER_LOOT).durability(250)));
-    public static final Item PHOENIX_GLOVES = register("phoenix_gloves", properties -> new GlovesItem(AetherArmorMaterials.PHOENIX, 1.0, "phoenix_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_PHOENIX, properties.stacksTo(1).rarity(AETHER_LOOT).fireResistant().durability(1561)));
-    public static final Item OBSIDIAN_GLOVES = register("obsidian_gloves", properties -> new GlovesItem(AetherArmorMaterials.OBSIDIAN, 1.0, "obsidian_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_OBSIDIAN, properties.stacksTo(1).rarity(AETHER_LOOT).durability(2031)));
-
-    public static final Item RED_CAPE = register("red_cape", properties -> new CapeItem("red_cape", properties.stacksTo(1)));
-    public static final Item BLUE_CAPE = register("blue_cape", properties -> new CapeItem("blue_cape", properties.stacksTo(1)));
-    public static final Item YELLOW_CAPE = register("yellow_cape", properties -> new CapeItem("yellow_cape", properties.stacksTo(1)));
-    public static final Item WHITE_CAPE = register("white_cape", properties -> new CapeItem("white_cape", properties.stacksTo(1)));
-    public static final Item AGILITY_CAPE = register("agility_cape", properties -> new AgilityCapeItem("agility_cape", properties.stacksTo(1).rarity(AETHER_LOOT)));
-    public static final Item SWET_CAPE = register("swet_cape", properties -> new CapeItem("swet_cape", properties.stacksTo(1)));
-    public static final Item INVISIBILITY_CLOAK = register("invisibility_cloak", properties -> new InvisibilityCloakItem(properties.stacksTo(1).rarity(AETHER_LOOT)));
-    public static final Item VALKYRIE_CAPE = register("valkyrie_cape", properties -> new ValkyrieCapeItem(properties.stacksTo(1).rarity(AETHER_LOOT)));
-
-    public static final Item GOLDEN_FEATHER = register("golden_feather", properties -> new GoldenFeatherItem(properties.stacksTo(1).rarity(AETHER_LOOT)));
-    public static final Item REGENERATION_STONE = register("regeneration_stone", properties -> new RegenerationStoneItem(properties.stacksTo(1).rarity(AETHER_LOOT)));
-    public static final Item IRON_BUBBLE = register("iron_bubble", properties -> new IronBubbleItem(properties.stacksTo(1).rarity(AETHER_LOOT)));
-    public static final Item SHIELD_OF_REPULSION = register("shield_of_repulsion", properties -> new ShieldOfRepulsionItem(properties.durability(512).rarity(AETHER_LOOT)));
+    public static final Item GOLDEN_FEATHER = register("golden_feather", properties -> new Item(properties.stacksTo(1).rarity(AETHER_LOOT)));
+    public static final Item REGENERATION_STONE = register("regeneration_stone", properties -> new Item(properties.stacksTo(1).rarity(AETHER_LOOT)));
+    public static final Item IRON_BUBBLE = register("iron_bubble", properties -> new Item(properties.stacksTo(1).rarity(AETHER_LOOT)));
+    public static final Item SHIELD_OF_REPULSION = register("shield_of_repulsion", properties -> new Item(properties.durability(512).rarity(AETHER_LOOT)));
 
     // Materials
     public static final Item SKYROOT_STICK = register("skyroot_stick", Item::new);
@@ -308,6 +272,11 @@ public class AetherItems {
     public static void bootstrap() {
     }
 
+    private static Item.Properties cape(Item.Properties properties) {
+        return properties.stacksTo(1).component(DataComponents.EQUIPPABLE, Equippable.builder(EquipmentSlot.CHEST)
+                .setEquipSound(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_CAPE)).setDamageOnHurt(false).build());
+    }
+
     private static <I extends Item> I register(String name, Function<Item.Properties, ? extends I> factory) {
         Identifier id = Identifier.fromNamespaceAndPath(Aether.MODID, name);
         ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, id);
@@ -315,44 +284,6 @@ public class AetherItems {
         return Registry.register(BuiltInRegistries.ITEM, id, item);
     }
 
-    public static void registerAccessories() {
-        AccessoriesAPI.registerAccessory(AetherItems.IRON_RING, (Accessory) AetherItems.IRON_RING);
-        AccessoriesAPI.registerAccessory(AetherItems.GOLDEN_RING, (Accessory) AetherItems.GOLDEN_RING);
-        AccessoriesAPI.registerAccessory(AetherItems.ZANITE_RING, (Accessory) AetherItems.ZANITE_RING);
-        AccessoriesAPI.registerAccessory(AetherItems.ICE_RING, (Accessory) AetherItems.ICE_RING);
-
-        AccessoriesAPI.registerAccessory(AetherItems.IRON_PENDANT, (Accessory) AetherItems.IRON_PENDANT);
-        AccessoriesAPI.registerAccessory(AetherItems.GOLDEN_PENDANT, (Accessory) AetherItems.GOLDEN_PENDANT);
-        AccessoriesAPI.registerAccessory(AetherItems.ZANITE_PENDANT, (Accessory) AetherItems.ZANITE_PENDANT);
-        AccessoriesAPI.registerAccessory(AetherItems.ICE_PENDANT, (Accessory) AetherItems.ICE_PENDANT);
-
-        AccessoriesAPI.registerAccessory(AetherItems.LEATHER_GLOVES, (Accessory) AetherItems.LEATHER_GLOVES);
-        AccessoriesAPI.registerAccessory(AetherItems.CHAINMAIL_GLOVES, (Accessory) AetherItems.CHAINMAIL_GLOVES);
-        AccessoriesAPI.registerAccessory(AetherItems.IRON_GLOVES, (Accessory) AetherItems.IRON_GLOVES);
-        AccessoriesAPI.registerAccessory(AetherItems.GOLDEN_GLOVES, (Accessory) AetherItems.GOLDEN_GLOVES);
-        AccessoriesAPI.registerAccessory(AetherItems.DIAMOND_GLOVES, (Accessory) AetherItems.DIAMOND_GLOVES);
-        AccessoriesAPI.registerAccessory(AetherItems.NETHERITE_GLOVES, (Accessory) AetherItems.NETHERITE_GLOVES);
-        AccessoriesAPI.registerAccessory(AetherItems.ZANITE_GLOVES, (Accessory) AetherItems.ZANITE_GLOVES);
-        AccessoriesAPI.registerAccessory(AetherItems.GRAVITITE_GLOVES, (Accessory) AetherItems.GRAVITITE_GLOVES);
-        AccessoriesAPI.registerAccessory(AetherItems.VALKYRIE_GLOVES, (Accessory) AetherItems.VALKYRIE_GLOVES);
-        AccessoriesAPI.registerAccessory(AetherItems.NEPTUNE_GLOVES, (Accessory) AetherItems.NEPTUNE_GLOVES);
-        AccessoriesAPI.registerAccessory(AetherItems.PHOENIX_GLOVES, (Accessory) AetherItems.PHOENIX_GLOVES);
-        AccessoriesAPI.registerAccessory(AetherItems.OBSIDIAN_GLOVES, (Accessory) AetherItems.OBSIDIAN_GLOVES);
-
-        AccessoriesAPI.registerAccessory(AetherItems.RED_CAPE, (Accessory) AetherItems.RED_CAPE);
-        AccessoriesAPI.registerAccessory(AetherItems.BLUE_CAPE, (Accessory) AetherItems.BLUE_CAPE);
-        AccessoriesAPI.registerAccessory(AetherItems.YELLOW_CAPE, (Accessory) AetherItems.YELLOW_CAPE);
-        AccessoriesAPI.registerAccessory(AetherItems.WHITE_CAPE, (Accessory) AetherItems.WHITE_CAPE);
-        AccessoriesAPI.registerAccessory(AetherItems.AGILITY_CAPE, (Accessory) AetherItems.AGILITY_CAPE);
-        AccessoriesAPI.registerAccessory(AetherItems.SWET_CAPE, (Accessory) AetherItems.SWET_CAPE);
-        AccessoriesAPI.registerAccessory(AetherItems.INVISIBILITY_CLOAK, (Accessory) AetherItems.INVISIBILITY_CLOAK);
-        AccessoriesAPI.registerAccessory(AetherItems.VALKYRIE_CAPE, (Accessory) AetherItems.VALKYRIE_CAPE);
-
-        AccessoriesAPI.registerAccessory(AetherItems.GOLDEN_FEATHER, (Accessory) AetherItems.GOLDEN_FEATHER);
-        AccessoriesAPI.registerAccessory(AetherItems.REGENERATION_STONE, (Accessory) AetherItems.REGENERATION_STONE);
-        AccessoriesAPI.registerAccessory(AetherItems.IRON_BUBBLE, (Accessory) AetherItems.IRON_BUBBLE);
-        AccessoriesAPI.registerAccessory(AetherItems.SHIELD_OF_REPULSION, (Accessory) AetherItems.SHIELD_OF_REPULSION);
-    }
 
     /**
      * Sets up the possible replacements for vanilla buckets to Skyroot buckets.

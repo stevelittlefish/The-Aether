@@ -62,9 +62,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
     public static final String ENCHANTED_DART_COUNT_SYNC_KEY = "setEnchantedDartCount";
     public static final String REMEDY_START_DURATION_SYNC_KEY = "setRemedyStartDuration";
     public static final String LIFE_SHARD_COUNT_SYNC_KEY = "setLifeShardCount";
-    public static final String ATTACKED_WITH_INVISIBILITY_SYNC_KEY = "setAttackedWithInvisibility";
-    public static final String INVISIBILITY_ENABLED_SYNC_KEY = "setInvisibilityEnabled";
-    public static final String WEARING_INVISIBILITY_CLOAK_SYNC_KEY = "setWearingInvisibilityCloak";
     public static final String LAST_RIDDEN_MOA_SYNC_KEY = "setLastRiddenMoa";
 
     private static final Identifier LIFE_SHARD_HEALTH_ID = Identifier.fromNamespaceAndPath(Aether.MODID, "life_shard_max_health");
@@ -90,9 +87,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
 
     private int remedyStartDuration;
 
-    private int impactedMaximum;
-    private int impactedTimer;
-
     private boolean performVampireHealing;
 
     @Nullable
@@ -105,11 +99,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
 
     private int wingRotationO;
     private int wingRotation;
-
-    private int invisibilityAttackCooldown;
-    private boolean attackedWithInvisibility;
-    private boolean invisibilityEnabled = true;
-    private boolean wearingInvisibilityCloak;
 
     private static final int FLIGHT_TIMER_MAX = 52;
     private static final float FLIGHT_MODIFIER_MAX = 15.0F;
@@ -142,9 +131,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
         Map.entry(POISON_DART_COUNT_SYNC_KEY, new SyncField(ValueType.INT, (object) -> this.setPoisonDartCount((int) object), this::getPoisonDartCount)),
         Map.entry(ENCHANTED_DART_COUNT_SYNC_KEY, new SyncField(ValueType.INT, (object) -> this.setEnchantedDartCount((int) object), this::getEnchantedDartCount)),
         Map.entry(REMEDY_START_DURATION_SYNC_KEY, new SyncField(ValueType.INT, (object) -> this.setRemedyStartDuration((int) object), this::getRemedyStartDuration)),
-        Map.entry(ATTACKED_WITH_INVISIBILITY_SYNC_KEY, new SyncField(ValueType.BOOLEAN, (object) -> this.setAttackedWithInvisibility((boolean) object), this::attackedWithInvisibility)),
-        Map.entry(INVISIBILITY_ENABLED_SYNC_KEY, new SyncField(ValueType.BOOLEAN, (object) -> this.setInvisibilityEnabled((boolean) object), this::isInvisibilityEnabled)),
-        Map.entry(WEARING_INVISIBILITY_CLOAK_SYNC_KEY, new SyncField(ValueType.BOOLEAN, (object) -> this.setWearingInvisibilityCloak((boolean) object), this::isWearingInvisibilityCloak)),
         Map.entry(LIFE_SHARD_COUNT_SYNC_KEY, new SyncField(ValueType.INT, (object) -> this.setLifeShardCount((int) object), this::getLifeShardCount)),
         Map.entry(LAST_RIDDEN_MOA_SYNC_KEY, new SyncField(ValueType.UUID, (object) -> this.setLastRiddenMoa((UUID) object), this::getLastRiddenMoa))
     );
@@ -249,9 +235,7 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
         this.activateParachute(player);
         this.handleRemoveDarts(player);
         this.removeRemedyDuration(player);
-        this.tickDownProjectileImpact(player);
         this.handleWingRotation(player);
-        this.handleAttackCooldown(player);
         this.handleVampireHealing(player);
         this.checkToRemoveAerbunny(player);
         this.checkToRemoveCloudMinions();
@@ -387,20 +371,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
     }
 
     /**
-     * Decreases the opacity of the Shield of Repulsion overlay vignette.
-     */
-    private void tickDownProjectileImpact(Player player) {
-        if (player.level().isClientSide()) {
-            if (this.getProjectileImpactedTimer() > 0) {
-                this.setProjectileImpactedTimer(this.getProjectileImpactedTimer() - 1);
-            } else {
-                this.setProjectileImpactedMaximum(0);
-                this.setProjectileImpactedTimer(0);
-            }
-        }
-    }
-
-    /**
      * Handles the rotation for the Valkyrie Armor wings layer renderer at {@link com.aetherteam.aether.client.renderer.player.layer.PlayerWingsLayer}.
      */
     private void handleWingRotation(Player player) {
@@ -410,22 +380,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
                 this.wingRotation = player.tickCount;
             } else {
                 this.wingRotation = 0;
-            }
-        }
-    }
-
-    /**
-     * Decreases the attack cooldown after a player has attacked. This is used for when the player has attacked while wearing an Invisibility Cloak.
-     */
-    private void handleAttackCooldown(Player player) {
-        if (!player.level().isClientSide()) {
-            if (this.attackedWithInvisibility()) {
-                --this.invisibilityAttackCooldown;
-                if (this.invisibilityAttackCooldown <= 0) {
-                    this.setSyncedToClients(player, ATTACKED_WITH_INVISIBILITY_SYNC_KEY, false);
-                }
-            } else {
-                this.invisibilityAttackCooldown = AetherConfig.SERVER.invisibility_visibility_time.get();
             }
         }
     }
@@ -702,28 +656,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
         return this.remedyStartDuration;
     }
 
-    public void setProjectileImpactedMaximum(int projectileImpactedMaximum) {
-        this.impactedMaximum = projectileImpactedMaximum;
-    }
-
-    /**
-     * @return An {@link Integer} for the max time duration of the Shield of Repulsion vignette.
-     */
-    public int getProjectileImpactedMaximum() {
-        return this.impactedMaximum;
-    }
-
-    public void setProjectileImpactedTimer(int projectileImpactedTimer) {
-        this.impactedTimer = projectileImpactedTimer;
-    }
-
-    /**
-     * @return The {@link Integer} timer for how long until the Shield of Repulsion vignette disappears.
-     */
-    public int getProjectileImpactedTimer() {
-        return this.impactedTimer;
-    }
-
     public void setVampireHealing(boolean performVampireHealing) {
         this.performVampireHealing = performVampireHealing;
     }
@@ -796,39 +728,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
      */
     public int getWingRotation() {
         return this.wingRotation;
-    }
-
-    public void setAttackedWithInvisibility(boolean attacked) {
-        this.attackedWithInvisibility = attacked;
-    }
-
-    /**
-     * @return Whether the player attacked, as a {@link Boolean}.
-     */
-    public boolean attackedWithInvisibility() {
-        return this.attackedWithInvisibility;
-    }
-
-    public void setInvisibilityEnabled(boolean enabled) {
-        this.invisibilityEnabled = enabled;
-    }
-
-    /**
-     * @return Whether the player's invisibility is enabled when wearing an Invisibility Cloak, as a {@link Boolean}.
-     */
-    public boolean isInvisibilityEnabled() {
-        return this.invisibilityEnabled;
-    }
-
-    public void setWearingInvisibilityCloak(boolean wearing) {
-        this.wearingInvisibilityCloak = wearing;
-    }
-
-    /**
-     * @return Whether the player is wearing an Invisibility Cloak.
-     */
-    public boolean isWearingInvisibilityCloak() {
-        return this.wearingInvisibilityCloak;
     }
 
     /**

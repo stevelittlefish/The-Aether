@@ -17,7 +17,7 @@ import com.aetherteam.aether.item.tools.abilities.ToolAbilities;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.integration.twilightforest.client.TwilightForestClientIntegration;
+import com.aetherteam.aether.item.components.AetherDataComponents;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -25,13 +25,16 @@ import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +51,6 @@ public class AetherClient {
         initialized = true;
         registerClientContent();
         registerClientCallbacks();
-        TwilightForestClientIntegration.init();
     }
 
     public static void registerItemModelProperties() {
@@ -60,6 +62,18 @@ public class AetherClient {
     public static void registerTooltipOverrides() {
         ItemTooltipCallback.EVENT.register((stack, context, tooltipType, components) ->
                 AbilityTooltips.addAbilityTooltips(Minecraft.getInstance().player, stack, components, context));
+        // How to use a cape or charm, and the cape on a chestplate: there are no accessory slots to show it (Aether lite).
+        ItemTooltipCallback.EVENT.register((stack, context, tooltipType, components) -> {
+            int line = Math.min(1, components.size());
+            Holder<Item> cape = stack.get(AetherDataComponents.CAPE);
+            if (cape != null) {
+                components.add(line, Component.translatable("tooltip.aether.caped", new ItemStack(cape).getHoverName()).withStyle(ChatFormatting.GRAY));
+            } else if (stack.is(AetherTags.Items.CAPES)) {
+                components.add(line, Component.translatable("tooltip.aether.cape").withStyle(ChatFormatting.GRAY));
+            } else if (stack.is(AetherTags.Items.CHARMS)) {
+                components.add(line, Component.translatable("tooltip.aether.charm").withStyle(ChatFormatting.GRAY));
+            }
+        });
         registerHealingGummySwetOverride(AetherItems.BLUE_GUMMY_SWET.builtInRegistryHolder());
         registerHealingGummySwetOverride(AetherItems.GOLDEN_GUMMY_SWET.builtInRegistryHolder());
         registerLifeShardOverride();

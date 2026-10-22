@@ -287,41 +287,29 @@ public class AetherCreativeTabs {
                 output.accept(AetherItems.ZANITE_CHESTPLATE);
                 output.accept(AetherItems.ZANITE_LEGGINGS);
                 output.accept(AetherItems.ZANITE_BOOTS);
-                output.accept(AetherItems.ZANITE_GLOVES);
                 output.accept(AetherItems.GRAVITITE_HELMET);
                 output.accept(AetherItems.GRAVITITE_CHESTPLATE);
                 output.accept(AetherItems.GRAVITITE_LEGGINGS);
                 output.accept(AetherItems.GRAVITITE_BOOTS);
-                output.accept(AetherItems.GRAVITITE_GLOVES);
                 output.accept(AetherItems.NEPTUNE_HELMET);
                 output.accept(AetherItems.NEPTUNE_CHESTPLATE);
                 output.accept(AetherItems.NEPTUNE_LEGGINGS);
                 output.accept(AetherItems.NEPTUNE_BOOTS);
-                output.accept(AetherItems.NEPTUNE_GLOVES);
                 output.accept(AetherItems.VALKYRIE_HELMET);
                 output.accept(AetherItems.VALKYRIE_CHESTPLATE);
                 output.accept(AetherItems.VALKYRIE_LEGGINGS);
                 output.accept(AetherItems.VALKYRIE_BOOTS);
-                output.accept(AetherItems.VALKYRIE_GLOVES);
                 output.accept(AetherItems.PHOENIX_HELMET);
                 output.accept(AetherItems.PHOENIX_CHESTPLATE);
                 output.accept(AetherItems.PHOENIX_LEGGINGS);
                 output.accept(AetherItems.PHOENIX_BOOTS);
-                output.accept(AetherItems.PHOENIX_GLOVES);
                 output.accept(AetherItems.OBSIDIAN_HELMET);
                 output.accept(AetherItems.OBSIDIAN_CHESTPLATE);
                 output.accept(AetherItems.OBSIDIAN_LEGGINGS);
                 output.accept(AetherItems.OBSIDIAN_BOOTS);
-                output.accept(AetherItems.OBSIDIAN_GLOVES);
                 output.accept(AetherItems.SENTRY_BOOTS);
-                output.accept(AetherItems.IRON_RING);
-                output.accept(AetherItems.IRON_PENDANT);
-                output.accept(AetherItems.GOLDEN_RING);
-                output.accept(AetherItems.GOLDEN_PENDANT);
                 output.accept(AetherItems.ZANITE_RING);
-                output.accept(AetherItems.ZANITE_PENDANT);
                 output.accept(AetherItems.ICE_RING);
-                output.accept(AetherItems.ICE_PENDANT);
                 output.accept(AetherItems.WHITE_CAPE);
                 output.accept(AetherItems.YELLOW_CAPE);
                 output.accept(AetherItems.RED_CAPE);
@@ -408,16 +396,5 @@ public class AetherCreativeTabs {
             }).build());
 
     public static void bootstrap() {
-    }
-
-    public static void registerVanillaTabEntries() {
-        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT).register(entries -> {
-            entries.insertAfter(Items.LEATHER_BOOTS, AetherItems.LEATHER_GLOVES);
-            entries.insertAfter(Items.CHAINMAIL_BOOTS, AetherItems.CHAINMAIL_GLOVES);
-            entries.insertAfter(Items.IRON_BOOTS, AetherItems.IRON_GLOVES);
-            entries.insertAfter(Items.GOLDEN_BOOTS, AetherItems.GOLDEN_GLOVES);
-            entries.insertAfter(Items.DIAMOND_BOOTS, AetherItems.DIAMOND_GLOVES);
-            entries.insertAfter(Items.NETHERITE_BOOTS, AetherItems.NETHERITE_GLOVES);
-        });
     }
 }

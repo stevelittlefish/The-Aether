@@ -24,8 +24,7 @@ public class AetherPlayerSyncPacket extends SyncEntityPacket<AetherPlayerAttachm
             AetherPlayerAttachment.HITTING_SYNC_KEY,
             AetherPlayerAttachment.MOVING_SYNC_KEY,
             AetherPlayerAttachment.JUMPING_SYNC_KEY,
-            AetherPlayerAttachment.GRAVITITE_JUMP_ACTIVE_SYNC_KEY,
-            AetherPlayerAttachment.INVISIBILITY_ENABLED_SYNC_KEY
+            AetherPlayerAttachment.GRAVITITE_JUMP_ACTIVE_SYNC_KEY
     );
 
     public static final StreamCodec<RegistryFriendlyByteBuf, AetherPlayerSyncPacket> STREAM_CODEC = CustomPacketPayload.codec(

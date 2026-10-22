@@ -153,15 +153,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:iron_gloves",
-          "weight": 15,
-          "modifier": {
-            "type": "minecraft:enchant_randomly",
-            "options": "#minecraft:on_random_loot"
-          }
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:iron_horse_armor",
           "weight": 5
         },

@@ -3,11 +3,8 @@ package com.aetherteam.aether.item.accessories.abilities;
 import com.aetherteam.aether.block.FreezingBehavior;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.block.AccessoryFreezableRecipe;
-import com.aetherteam.aether.accessories.api.AccessoriesAPI;
-import com.aetherteam.aether.accessories.api.slot.SlotReference;
 import net.minecraft.commands.CacheableFunction;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -26,26 +23,16 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
     /**
      * Freezes blocks around the wearer in a radius of 1.9 as long as they aren't flying or in spectator. This also damages the Ice accessory for every 3 blocks frozen.
      *
-     * @param context The {@link SlotReference} of the accessory.
-     * @param stack   The accessory {@link ItemStack}.
+     * @param livingEntity The {@link LivingEntity} holding the Ice Ring.
+     * @param stack        The Ice Ring {@link ItemStack}.
+     * @param slot         The {@link EquipmentSlot} it's in, for breaking it.
      */
-    default void freezeTick(SlotReference context, ItemStack stack) {
-        LivingEntity livingEntity = context.entity();
+    default void freezeTick(LivingEntity livingEntity, ItemStack stack, EquipmentSlot slot) {
         if (!(livingEntity instanceof Player player) || (!player.getAbilities().flying && !player.isSpectator())) {
             int damage = this.freezeBlocks(livingEntity.level(), livingEntity.blockPosition(), stack, 1.9F);
             int durabilityLoss = damage / 3;
-            if (durabilityLoss <= 0 || livingEntity.level().isClientSide()) {
-                return;
-            }
-
-            if (livingEntity.level() instanceof ServerLevel serverLevel && livingEntity instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
-                context.getStack().hurtAndBreak(durabilityLoss, serverLevel, serverPlayer, (item) -> AccessoriesAPI.breakStack(context));
-            } else {
-                ItemStack accessoryStack = context.getStack();
-                accessoryStack.hurtAndBreak(durabilityLoss, livingEntity, EquipmentSlot.MAINHAND);
-                if (accessoryStack.isEmpty()) {
-                    context.setStack(ItemStack.EMPTY);
-                }
+            if (durabilityLoss > 0 && !livingEntity.level().isClientSide()) {
+                stack.hurtAndBreak(durabilityLoss, livingEntity, slot);
             }
         }
     }

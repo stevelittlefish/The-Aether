@@ -21,16 +21,6 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "gravitite_gloves": {
-      "conditions": {
-        "items": [
-          {
-            "items": "aether:gravitite_gloves"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "gravitite_helmet": {
       "conditions": {
         "items": [
@@ -77,9 +67,6 @@
     ],
     [
       "gravitite_boots"
-    ],
-    [
-      "gravitite_gloves"
     ]
   ],
   "sends_telemetry_event": true

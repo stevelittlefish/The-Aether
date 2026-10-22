@@ -222,9 +222,6 @@ public class AetherJEIPlugin implements IModPlugin {
         addItemCatalyst(registration,
                 new ItemStack(AetherItems.ICE_RING),
                 AccessoryFreezableRecipeCategory.RECIPE_TYPE);
-        addItemCatalyst(registration,
-                new ItemStack(AetherItems.ICE_PENDANT),
-                AccessoryFreezableRecipeCategory.RECIPE_TYPE);
         addItemCatalyst(registration, new ItemStack(AetherItems.AETHER_PORTAL_FRAME), PlacementConversionRecipeCategory.RECIPE_TYPE);
         addItemCatalyst(registration, new ItemStack(Items.FLINT_AND_STEEL), ItemBanRecipeCategory.RECIPE_TYPE);
         addItemCatalyst(registration, new ItemStack(Blocks.TORCH), BlockBanRecipeCategory.RECIPE_TYPE);

@@ -3,10 +3,12 @@ package com.aetherteam.aether.item.components;
 import com.aetherteam.aether.Aether;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
 
 public final class AetherDataComponents {
     public static final DataComponentType<Boolean> LOCKED = Registry.register(
@@ -17,6 +19,12 @@ public final class AetherDataComponents {
             BuiltInRegistries.DATA_COMPONENT_TYPE,
             Identifier.fromNamespaceAndPath(Aether.MODID, "dungeon_kind"),
             DataComponentType.<DungeonKind>builder().persistent(DungeonKind.CODEC).networkSynchronized(DungeonKind.STREAM_CODEC).build());
+
+    // The cape smithed onto a chestplate (Aether lite: capes have no slot of their own).
+    public static final DataComponentType<Holder<Item>> CAPE = Registry.register(
+            BuiltInRegistries.DATA_COMPONENT_TYPE,
+            Identifier.fromNamespaceAndPath(Aether.MODID, "cape"),
+            DataComponentType.<Holder<Item>>builder().persistent(Item.CODEC).networkSynchronized(Item.STREAM_CODEC).build());
 
     private AetherDataComponents() {
     }

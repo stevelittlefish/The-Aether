@@ -30,8 +30,7 @@
     ]
   },
   "mixins": [
-    "aether.mixins.json",
-    "aether.twilightforest.mixins.json"
+    "aether.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

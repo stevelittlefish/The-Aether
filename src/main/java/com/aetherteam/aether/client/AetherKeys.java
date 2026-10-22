@@ -8,13 +8,9 @@ import net.minecraft.resources.Identifier;
 
 public class AetherKeys {
     private static final KeyMapping.Category AETHER_CATEGORY = KeyMapping.Category.register(Identifier.fromNamespaceAndPath(Aether.MODID, "category"));
-    public final static KeyMapping OPEN_ACCESSORY_INVENTORY = new KeyMapping("key.aether.open_accessories.desc", InputConstants.KEY_I, AETHER_CATEGORY);
     public final static KeyMapping GRAVITITE_JUMP_ABILITY = new KeyMapping("key.aether.gravitite_jump_ability.desc", InputConstants.KEY_SPACE, AETHER_CATEGORY);
-    public final static KeyMapping INVISIBILITY_TOGGLE = new KeyMapping("key.aether.invisibility_toggle.desc", InputConstants.KEY_V, AETHER_CATEGORY);
 
     public static void registerKeyMappings() {
-        KeyMappingHelper.registerKeyMapping(OPEN_ACCESSORY_INVENTORY);
         KeyMappingHelper.registerKeyMapping(GRAVITITE_JUMP_ABILITY);
-        KeyMappingHelper.registerKeyMapping(INVISIBILITY_TOGGLE);
     }
 }

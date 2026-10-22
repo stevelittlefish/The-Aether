@@ -14,8 +14,6 @@ import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.ai.attribute.AetherAttributes;
-import com.aetherteam.aether.inventory.AetherAccessorySlots;
-import com.aetherteam.aether.integration.twilightforest.TwilightForestIntegration;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItemComponents;
@@ -106,7 +104,6 @@ public final class Aether {
         AetherItemTiers.bootstrap();
         AetherFoods.bootstrap();
         AetherItems.bootstrap();
-        AetherCreativeTabs.registerVanillaTabEntries();
         AetherPoi.registerBlockStateMappings();
         AetherEntityTypes.registerEntityAttributes();
         AetherEntityTypes.registerSpawnPlacements();
@@ -115,7 +112,6 @@ public final class Aether {
 
         AetherBlocks.registerFlammability();
 
-        AetherItems.registerAccessories();
         AetherItems.setupBucketReplacements();
 
         SkyrootBoatDispenseBehavior.registerDispenserBehaviors();
@@ -123,7 +119,5 @@ public final class Aether {
         DispenseUsableItemBehavior.registerDispenserBehaviors();
         AetherCauldronInteractions.registerCauldronInteractions();
 
-        AetherAccessorySlots.register();
-        TwilightForestIntegration.init();
     }
 }

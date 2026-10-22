@@ -112,8 +112,6 @@ public class AetherTags {
         public static final TagKey<Item> ACCEPTED_MUSIC_DISCS = tag("accepted_music_discs");
         public static final TagKey<Item> SAVE_NBT_IN_RECIPE = tag("save_nbt_in_recipe");
         public static final TagKey<Item> MOA_EGGS = tag("moa_eggs");
-        public static final TagKey<Item> FREEZABLE_RINGS = tag("freezable_rings");
-        public static final TagKey<Item> FREEZABLE_PENDANTS = tag("freezable_pendants");
         public static final TagKey<Item> PACIFIES_SWETS = tag("pacifies_swets");
         public static final TagKey<Item> SLIDER_DAMAGING_ITEMS = tag("slider_damaging_items");
         public static final TagKey<Item> BRONZE_DUNGEON_LOOT = tag("bronze_dungeon_loot");
@@ -152,14 +150,9 @@ public class AetherTags {
         public static final TagKey<Item> TOOLS_LANCES = tag("tools/lances");
         public static final TagKey<Item> TOOLS_HAMMERS = tag("tools/hammers");
 
-        public static final TagKey<Item> ACCESSORIES_RINGS = tag("accessories_rings");
-        public static final TagKey<Item> ACCESSORIES_PENDANTS = tag("accessories_pendants");
-        public static final TagKey<Item> ACCESSORIES_GLOVES = tag("accessories_gloves");
-        public static final TagKey<Item> ACCESSORIES_CAPES = tag("accessories_capes");
-        public static final TagKey<Item> ACCESSORIES_MISCELLANEOUS = tag("accessories_miscellaneous");
-        public static final TagKey<Item> ACCESSORIES_SHIELDS = tag("accessories_shields");
+        public static final TagKey<Item> CAPES = tag("capes");
+        public static final TagKey<Item> CHARMS = tag("charms");
 
-        public static final TagKey<Item> ACCESSORIES = tag("accessories");
 
         public static final TagKey<Item> RANDOMIUM_BLACKLIST = moddedTag("randomium", "blacklist");
 

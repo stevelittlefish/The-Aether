@@ -68,8 +68,12 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:zanite_gloves",
-          "weight": 2
+          "name": "minecraft:book",
+          "weight": 2,
+          "modifier": {
+            "type": "minecraft:enchant_with_levels",
+            "levels": 15.0
+          }
         },
         {
           "type": "minecraft:item",
@@ -77,7 +81,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:zanite_pendant"
+          "name": "aether:zanite_ring"
         },
         {
           "type": "minecraft:item",

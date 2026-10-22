@@ -36,11 +36,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:gravitite_gloves",
-          "weight": 4
-        },
-        {
-          "type": "minecraft:item",
           "name": "aether:gravitite_pickaxe",
           "weight": 3
         },

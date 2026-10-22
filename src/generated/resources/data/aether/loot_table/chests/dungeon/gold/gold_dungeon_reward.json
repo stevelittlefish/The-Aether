@@ -60,8 +60,17 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:gravitite_gloves",
-          "weight": 5
+          "name": "minecraft:diamond",
+          "weight": 5,
+          "modifier": {
+            "type": "minecraft:set_count",
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "min": 1.0,
+              "max": 3.0
+            }
+          }
         },
         {
           "type": "minecraft:item",
@@ -99,12 +108,12 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:chainmail_gloves",
+          "name": "minecraft:enchanted_golden_apple",
           "weight": 2
         },
         {
           "type": "minecraft:item",
-          "name": "aether:ice_pendant",
+          "name": "aether:ice_ring",
           "weight": 6
         },
         {

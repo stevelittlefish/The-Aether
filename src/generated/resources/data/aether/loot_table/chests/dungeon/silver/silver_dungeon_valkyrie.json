@@ -31,11 +31,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:valkyrie_gloves",
-          "weight": 4
-        },
-        {
-          "type": "minecraft:item",
           "name": "aether:valkyrie_pickaxe",
           "weight": 3
         },

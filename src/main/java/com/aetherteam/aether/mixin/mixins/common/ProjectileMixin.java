@@ -1,7 +1,6 @@
 package com.aetherteam.aether.mixin.mixins.common;
 
 import com.aetherteam.aether.item.combat.abilities.weapon.WeaponAbilities;
-import com.aetherteam.aether.item.accessories.abilities.ShieldOfRepulsionAccessory;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,8 +14,5 @@ public abstract class ProjectileMixin {
     private void aether$onHit(HitResult hitResult, CallbackInfo ci) {
         Projectile projectile = (Projectile) (Object) this;
         WeaponAbilities.phoenixArrowHit(hitResult, projectile);
-        if (ShieldOfRepulsionAccessory.deflectProjectile(hitResult, projectile)) {
-            ci.cancel();
-        }
     }
 }

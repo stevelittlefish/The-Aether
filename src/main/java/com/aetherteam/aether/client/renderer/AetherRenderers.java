@@ -4,9 +4,9 @@ import com.aetherteam.aether.attachment.AetherPlayerAttachment;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.client.AetherClient;
+import com.aetherteam.aether.client.renderer.accessory.layer.ArmorStandCapeLayer;
+import com.aetherteam.aether.client.renderer.accessory.layer.PlayerCapeLayer;
 import com.aetherteam.aether.client.renderer.accessory.model.CapeModel;
-import com.aetherteam.aether.client.renderer.accessory.model.GlovesModel;
-import com.aetherteam.aether.client.renderer.accessory.model.PendantModel;
 import com.aetherteam.aether.client.renderer.blockentity.ChestMimicRenderer;
 import com.aetherteam.aether.client.renderer.blockentity.TreasureChestRenderer;
 import com.aetherteam.aether.client.renderer.entity.*;
@@ -27,6 +27,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.StandingSignRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 
 public class AetherRenderers {
@@ -133,16 +134,6 @@ public class AetherRenderers {
 
         ModelLayerRegistry.registerModelLayer(AetherModelLayers.VALKYRIE_ARMOR_WINGS, () -> ValkyrieWingsModel.createMainLayer(3.5F, 3.375F));
 
-        ModelLayerRegistry.registerModelLayer(AetherModelLayers.PENDANT, PendantModel::createLayer);
-        ModelLayerRegistry.registerModelLayer(AetherModelLayers.GLOVES, () -> GlovesModel.createLayer(new CubeDeformation(0.5F), false, false));
-        ModelLayerRegistry.registerModelLayer(AetherModelLayers.GLOVES_TRIM, () -> GlovesModel.createLayer(new CubeDeformation(0.5F), false, true));
-        ModelLayerRegistry.registerModelLayer(AetherModelLayers.GLOVES_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.5F), true, false));
-        ModelLayerRegistry.registerModelLayer(AetherModelLayers.GLOVES_TRIM_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.5F), true, true));
-        ModelLayerRegistry.registerModelLayer(AetherModelLayers.GLOVES_FIRST_PERSON, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), false, false));
-        ModelLayerRegistry.registerModelLayer(AetherModelLayers.GLOVES_TRIM_FIRST_PERSON, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), false, true));
-        ModelLayerRegistry.registerModelLayer(AetherModelLayers.SHIELD_OF_REPULSION, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), false), 64, 64));
-        ModelLayerRegistry.registerModelLayer(AetherModelLayers.SHIELD_OF_REPULSION_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.15F), true), 64, 64));
-        ModelLayerRegistry.registerModelLayer(AetherModelLayers.SHIELD_OF_REPULSION_ARM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), false), 64, 64));
         ModelLayerRegistry.registerModelLayer(AetherModelLayers.CAPE, CapeModel::createLayer);
 
         ModelLayerRegistry.registerModelLayer(AetherModelLayers.PLAYER_HALO, () -> HaloModel.createLayer(0.0F, 0.0F, 0.0F, 0.0F));
@@ -155,6 +146,9 @@ public class AetherRenderers {
         LivingEntityRenderLayerRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
             if (entityRenderer instanceof AvatarRenderer avatarRenderer) {
                 registrationHelper.register(new PlayerWingsLayer(avatarRenderer, new ValkyrieWingsModel<>(context.getModelSet().bakeLayer(AetherModelLayers.VALKYRIE_ARMOR_WINGS))));
+                registrationHelper.register(new PlayerCapeLayer(avatarRenderer, context.getModelSet()));
+            } else if (entityRenderer instanceof ArmorStandRenderer armorStandRenderer) {
+                registrationHelper.register(new ArmorStandCapeLayer(armorStandRenderer, new CapeModel<>(context.getModelSet().bakeLayer(AetherModelLayers.CAPE))));
             }
         });
     }

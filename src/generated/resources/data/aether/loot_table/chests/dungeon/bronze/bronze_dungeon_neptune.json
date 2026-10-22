@@ -19,10 +19,6 @@
         {
           "type": "minecraft:item",
           "name": "aether:neptune_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:neptune_gloves"
         }
       ],
       "rolls": 1.0

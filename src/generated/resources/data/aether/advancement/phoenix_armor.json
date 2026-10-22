@@ -21,16 +21,6 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "phoenix_gloves": {
-      "conditions": {
-        "items": [
-          {
-            "items": "aether:phoenix_gloves"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "phoenix_helmet": {
       "conditions": {
         "items": [
@@ -70,8 +60,7 @@
       "phoenix_helmet",
       "phoenix_chestplate",
       "phoenix_leggings",
-      "phoenix_boots",
-      "phoenix_gloves"
+      "phoenix_boots"
     ]
   ],
   "sends_telemetry_event": true

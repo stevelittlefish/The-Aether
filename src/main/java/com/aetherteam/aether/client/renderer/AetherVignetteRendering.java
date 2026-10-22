@@ -21,7 +21,6 @@ import net.minecraft.world.entity.player.Player;
 final class AetherVignetteRendering {
     private static final Identifier TEXTURE_INEBRIATION_VIGNETTE = Identifier.fromNamespaceAndPath(Aether.MODID, "textures/blur/inebriation_vignette.png");
     private static final Identifier TEXTURE_REMEDY_VIGNETTE = Identifier.fromNamespaceAndPath(Aether.MODID, "textures/blur/remedy_vignette.png");
-    private static final Identifier TEXTURE_SHIELD_OF_REPULSION_VIGNETTE = Identifier.fromNamespaceAndPath(Aether.MODID, "textures/blur/shield_of_repulsion_vignette.png");
 
     private AetherVignetteRendering() {
     }
@@ -75,18 +74,6 @@ final class AetherVignetteRendering {
         if (remedyStartDuration > 0 && remedyDuration > 0) {
             float alpha = ((float) remedyDuration / remedyStartDuration) / 1.5F;
             renderVignette(guiGraphics, window, minecraft.options.screenEffectScale().get(), alpha, TEXTURE_REMEDY_VIGNETTE);
-        }
-    }
-
-    static void renderRepulsionOverlay(GuiGraphicsExtractor guiGraphics, Minecraft minecraft, Window window, Player player) {
-        if (minecraft.gui.hud.isHidden()) {
-            return;
-        }
-
-        var handler = player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER);
-        if (handler.getProjectileImpactedTimer() > 0) {
-            float alpha = (float) handler.getProjectileImpactedTimer() / handler.getProjectileImpactedMaximum();
-            renderVignette(guiGraphics, window, minecraft.options.screenEffectScale().get(), alpha, TEXTURE_SHIELD_OF_REPULSION_VIGNETTE);
         }
     }
 

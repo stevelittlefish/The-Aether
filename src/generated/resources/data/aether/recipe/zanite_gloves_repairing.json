@@ -1,6 +1,0 @@
-{
-  "type": "aether:repairing",
-  "group": "altar_gloves_repair",
-  "ingredient": "aether:zanite_gloves",
-  "repairTime": 750
-}

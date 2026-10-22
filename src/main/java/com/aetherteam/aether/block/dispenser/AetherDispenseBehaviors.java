@@ -1,13 +1,7 @@
 package com.aetherteam.aether.block.dispenser;
 
-import com.aetherteam.aether.accessories.api.AccessoriesAPI;
-import com.aetherteam.aether.accessories.api.core.Accessory;
-import com.aetherteam.aether.accessories.api.slot.SlotReference;
-import com.aetherteam.aether.accessories.api.slot.SlotTypeReference;
-import com.aetherteam.aether.accessories.impl.MobAccessorySpawning;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.item.combat.loot.HammerOfKingbdogzItem;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import net.minecraft.core.BlockPos;
@@ -39,65 +33,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class AetherDispenseBehaviors {
-    private static final Predicate<Entity> ACCESSORY_TARGET_SELECTOR = EntitySelector.NO_SPECTATORS.and(Entity::isAlive);
-
-    /**
-     * Behavior for allowing dispensers to equip accessories to players.
-     */
-    public static final DispenseItemBehavior DISPENSE_ACCESSORY_BEHAVIOR = new DefaultDispenseItemBehavior() {
-        @Override
-        protected ItemStack execute(BlockSource blockSource, ItemStack stack) {
-            return dispenseAccessory(blockSource, stack) ? stack : super.execute(blockSource, stack);
-        }
-    };
-
-    /**
-     * Based on {@link net.minecraft.world.item.ArmorItem#dispenseArmor(BlockSource, ItemStack)}.<br><br>
-     * Handles checking if an accessory shot from a dispenser can be equipped, and handles that equipping behavior if it can.
-     *
-     * @param blockSource The {@link BlockSource} for the dispenser.
-     * @param stack       The {@link ItemStack} in the dispenser.
-     * @return Whether the accessory can be dispensed, as a {@link Boolean}.
-     */
-    public static boolean dispenseAccessory(BlockSource blockSource, ItemStack stack) {
-        BlockPos pos = blockSource.pos().relative(blockSource.state().getValue(DispenserBlock.FACING));
-        List<LivingEntity> list = blockSource.level().getEntitiesOfClass(LivingEntity.class, new AABB(pos), ACCESSORY_TARGET_SELECTOR::test);
-        if (list.isEmpty()) {
-            return false;
-        }
-
-        ItemStack candidateStack = stack.copyWithCount(1);
-        Accessory accessory = AccessoriesAPI.getOrDefaultAccessory(candidateStack);
-        for (LivingEntity livingEntity : list) {
-            var accessories = AccessoriesAPI.getAccessories(livingEntity);
-            if (accessories == null) {
-                continue;
-            }
-
-            var equipReference = accessories.canEquipAccessory(candidateStack, true);
-            if (equipReference == null || !accessory.canEquip(candidateStack, equipReference.reference())) {
-                continue;
-            }
-
-            ItemStack itemStack = stack.split(1);
-            SlotReference reference = equipReference.reference();
-            SlotTypeReference slotTypeReference = SlotTypeReference.of(reference.slotName());
-            accessory.onEquipFromUse(itemStack, reference);
-            equipReference.action().accept(itemStack.copy());
-            if (livingEntity instanceof ArmorStand armorStand) {
-                if (reference.slotName().equals(GlovesItem.getStaticSlotType().slotName())) {
-                    armorStand.setShowArms(true);
-                }
-            } else if (livingEntity instanceof Mob mob && MobAccessorySpawning.canMobSpawnWithAccessories(mob)) {
-                mob.getAttachedOrCreate(AetherDataAttachments.MOB_ACCESSORY).setGuaranteedDrop(slotTypeReference);
-                mob.setPersistenceRequired();
-            }
-            return true;
-        }
-
-        return false;
-    }
-
     /**
      * Behavior for dispensing Kingbdogz Hammer projectiles.
      */

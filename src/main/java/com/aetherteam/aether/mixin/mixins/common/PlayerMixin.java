@@ -3,7 +3,6 @@ package com.aetherteam.aether.mixin.mixins.common;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.entity.AetherMounting;
 import com.aetherteam.aether.entity.AttackStrengthSnapshot;
-import com.aetherteam.aether.item.accessories.abilities.AccessoryAbilities;
 import com.aetherteam.aether.item.tools.abilities.ToolAbilities;
 import com.aetherteam.aether.world.AetherTravelController;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -55,21 +54,6 @@ public abstract class PlayerMixin implements AttackStrengthSnapshot {
     @Inject(at = @At("RETURN"), method = "attack(Lnet/minecraft/world/entity/Entity;)V")
     private void aether$releaseAttackStrength(Entity target, CallbackInfo ci) {
         this.aether$attackStrengthSnapshot = Float.NaN;
-    }
-
-    /**
-     * Damages gloves only once during a sweeping attack, instead of once for every damaged entity in the attack.
-     *
-     * @param target The target {@link Entity}.
-     * @param ci     The {@link CallbackInfo} for the void method return.
-     * @see AccessoryAbilities#damageGloves(Player)
-     */
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setLastHurtMob(Lnet/minecraft/world/entity/Entity;)V", shift = At.Shift.AFTER), method = "attack(Lnet/minecraft/world/entity/Entity;)V")
-    private void attack(Entity target, CallbackInfo ci) {
-        Player player = (Player) (Object) this;
-        if (target instanceof LivingEntity) {
-            AccessoryAbilities.damageGloves(player);
-        }
     }
 
     /**

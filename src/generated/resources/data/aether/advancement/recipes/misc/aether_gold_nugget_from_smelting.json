@@ -1,36 +1,6 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_golden_gloves": {
-      "conditions": {
-        "items": [
-          {
-            "items": "aether:golden_gloves"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_golden_pendant": {
-      "conditions": {
-        "items": [
-          {
-            "items": "aether:golden_pendant"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_golden_ring": {
-      "conditions": {
-        "items": [
-          {
-            "items": "aether:golden_ring"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_the_recipe": {
       "conditions": {
         "recipes": "aether:aether_gold_nugget_from_smelting"
@@ -51,9 +21,6 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_golden_gloves",
-      "has_golden_pendant",
-      "has_golden_ring",
       "has_victory_medal"
     ]
   ],

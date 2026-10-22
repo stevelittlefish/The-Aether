@@ -71,14 +71,11 @@ public final class AetherConfig {
         public final AetherConfigEntry<Integer> hammer_of_kingbdogz_cooldown;
         public final AetherConfigEntry<Integer> cloud_staff_cooldown;
         public final AetherConfigEntry<Integer> maximum_life_shards;
-        public final BooleanConfigEntry require_gloves;
         public final BooleanConfigEntry spawn_golden_feather;
         public final BooleanConfigEntry spawn_valkyrie_cape;
         public final BooleanConfigEntry generate_tall_grass;
         public final BooleanConfigEntry generate_holiday_tree_always;
         public final BooleanConfigEntry generate_holiday_tree_seasonally;
-        public final BooleanConfigEntry balance_invisibility_cloak;
-        public final AetherConfigEntry<Integer> invisibility_visibility_time;
         public final BooleanConfigEntry sun_altar_whitelist;
         public final AetherConfigEntry<List<String>> sun_altar_dimensions;
         public final BooleanConfigEntry spawn_in_aether;
@@ -109,8 +106,6 @@ public final class AetherConfig {
                     "Determines the cooldown in ticks for the Hammer of Kingbdogz's ability");
             this.cloud_staff_cooldown = file.integerEntry("Gameplay", "Cooldown for the Cloud Staff", 40,
                     "Determines the cooldown in ticks for the Cloud Staff's ability");
-            this.require_gloves = file.booleanEntry("Gameplay", "Require gloves for set abilities", true,
-                    "Makes armor abilities depend on wearing the respective gloves belonging to an armor set");
 
             this.spawn_golden_feather = file.booleanEntry("Loot", "Golden Feather in loot", false,
                     "Allows the Golden Feather to spawn in the Silver Dungeon loot table");
@@ -124,10 +119,6 @@ public final class AetherConfig {
             this.generate_holiday_tree_seasonally = file.booleanEntry("World Generation", "Generate Holiday Trees seasonally", true,
                     "Determines whether Holiday Trees should be able to generate during the time frame of December and January when exploring new chunks in the Aether, only works if 'Generate Holiday Trees always' is set to false");
 
-            this.balance_invisibility_cloak = file.booleanEntry("Multiplayer", "Balance Invisibility Cloak for PVP", false,
-                    "Makes the Invisibility Cloak more balanced in PVP by disabling equipment invisibility temporarily after attacks");
-            this.invisibility_visibility_time = file.integerEntry("Multiplayer", "Invisibility Cloak visibility timer", 50,
-                    "Sets the time in ticks that it takes for the player to become fully invisible again after attacking when wearing an Invisibility Cloak; only works with 'Balance Invisibility Cloak for PVP'");
             this.sun_altar_whitelist = file.booleanEntry("Multiplayer", "Only whitelisted users access Sun Altars", false,
                     "Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server");
             this.sun_altar_dimensions = file.stringListEntry("Multiplayer", "Configure Sun Altar dimensions", List.of("aether:the_aether"),
@@ -194,17 +185,7 @@ public final class AetherConfig {
         public final BooleanConfigEntry colder_lightmap;
         public final BooleanConfigEntry green_sunset;
         public final BooleanConfigEntry enable_silver_hearts;
-        public final BooleanConfigEntry disable_accessory_button;
-        public final BooleanConfigEntry disable_skins_button;
         public final AetherConfigEntry<Integer> portal_text_y;
-        public final AetherConfigEntry<Integer> button_inventory_x;
-        public final AetherConfigEntry<Integer> button_inventory_y;
-        public final AetherConfigEntry<Integer> button_creative_x;
-        public final AetherConfigEntry<Integer> button_creative_y;
-        public final AetherConfigEntry<Integer> button_accessories_x;
-        public final AetherConfigEntry<Integer> button_accessories_y;
-        public final AetherConfigEntry<Integer> layout_perks_x;
-        public final AetherConfigEntry<Integer> layout_perks_y;
         public final BooleanConfigEntry enable_hammer_cooldown_overlay;
         public final BooleanConfigEntry blue_aercloud_bounce_sfx;
         public final AetherConfigEntry<Integer> music_backup_min_delay;
@@ -230,28 +211,8 @@ public final class AetherConfig {
 
             this.enable_silver_hearts = file.booleanEntry("Gui", "Enables silver life shard hearts", true,
                     "Makes the extra hearts given by life shards display as silver colored");
-            this.disable_accessory_button = file.booleanEntry("Gui", "Disables the accessories button", false,
-                    "Disables the Aether's accessories button from appearing in GUIs");
-            this.disable_skins_button = file.booleanEntry("Gui", "Disables the Moa Skins button", false,
-                    "Disables the Aether's Moa Skins button from appearing in GUIs");
             this.portal_text_y = file.integerEntry("Gui", "Portal text y-coordinate in loading screens", 50,
                     "The y-coordinate of the Ascending to the Aether and Descending from the Aether text in loading screens");
-            this.button_inventory_x = file.integerEntry("Gui", "Button x-coordinate in inventory menus", 27,
-                    "The x-coordinate of the accessories button in the inventory and accessories menus");
-            this.button_inventory_y = file.integerEntry("Gui", "Button y-coordinate in inventory menus", 68,
-                    "The y-coordinate of the accessories button in the inventory and accessories menus");
-            this.button_creative_x = file.integerEntry("Gui", "Button x-coordinate in creative menu", 74,
-                    "The x-coordinate of the accessories button in the creative menu");
-            this.button_creative_y = file.integerEntry("Gui", "Button y-coordinate in creative menu", 40,
-                    "The y-coordinate of the accessories button in the creative menu");
-            this.button_accessories_x = file.integerEntry("Gui", "Button x-coordinate in accessories menu", 9,
-                    "The x-coordinate of the accessories button in the accessories menu");
-            this.button_accessories_y = file.integerEntry("Gui", "Button y-coordinate in accessories menu", 68,
-                    "The y-coordinate of the accessories button in the accessories menu");
-            this.layout_perks_x = file.integerEntry("Gui", "Perks layout x-coordinate in pause menu", -116,
-                    "The x-coordinate of the layout of perks buttons when in the pause menu");
-            this.layout_perks_y = file.integerEntry("Gui", "Perks layout y-coordinate in pause menu", 0,
-                    "The y-coordinate of the layout of perks buttons when in the pause menu");
             this.enable_hammer_cooldown_overlay = file.booleanEntry("Gui", "Enables Hammer of Kingbdogz' cooldown overlay", true,
                     "Enables the overlay at the top of the screen for the Hammer of Kingbdogz' cooldown");
 

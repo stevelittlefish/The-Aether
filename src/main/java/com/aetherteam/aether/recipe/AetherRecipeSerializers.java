@@ -5,6 +5,8 @@ import com.aetherteam.aether.recipe.recipes.ban.BlockBanRecipe;
 import com.aetherteam.aether.recipe.recipes.ban.ItemBanRecipe;
 import com.aetherteam.aether.recipe.recipes.block.*;
 import com.aetherteam.aether.recipe.recipes.item.AltarRepairRecipe;
+import com.aetherteam.aether.recipe.recipes.item.CapeRemovalRecipe;
+import com.aetherteam.aether.recipe.recipes.item.CapeSmithingRecipe;
 import com.aetherteam.aether.recipe.recipes.item.EnchantingRecipe;
 import com.aetherteam.aether.recipe.recipes.item.FreezingRecipe;
 import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;
@@ -14,6 +16,14 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
 public final class AetherRecipeSerializers {
+    public static final RecipeSerializer<CapeSmithingRecipe> CAPE_SMITHING = Registry.register(
+            BuiltInRegistries.RECIPE_SERIALIZER,
+            Identifier.fromNamespaceAndPath(Aether.MODID, "cape_smithing"),
+            new RecipeSerializer<>(CapeSmithingRecipe.MAP_CODEC, CapeSmithingRecipe.STREAM_CODEC));
+    public static final RecipeSerializer<CapeRemovalRecipe> CAPE_REMOVAL = Registry.register(
+            BuiltInRegistries.RECIPE_SERIALIZER,
+            Identifier.fromNamespaceAndPath(Aether.MODID, "cape_removal"),
+            new RecipeSerializer<>(CapeRemovalRecipe.MAP_CODEC, CapeRemovalRecipe.STREAM_CODEC));
     public static final RecipeSerializer<AltarRepairRecipe> REPAIRING = Registry.register(
             BuiltInRegistries.RECIPE_SERIALIZER,
             Identifier.fromNamespaceAndPath(Aether.MODID, "repairing"),

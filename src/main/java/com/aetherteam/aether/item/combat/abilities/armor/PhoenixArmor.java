@@ -3,9 +3,6 @@ package com.aetherteam.aether.item.combat.abilities.armor;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
-import com.aetherteam.aether.accessories.api.AccessoriesAPI;
-import com.aetherteam.aether.accessories.api.AccessoriesContainer;
-import com.aetherteam.aether.accessories.api.slot.SlotEntryReference;
 import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.particles.ParticleTypes;
@@ -107,8 +104,8 @@ public interface PhoenixArmor {
 
     /**
      * Slowly increments a timer to convert a player's Phoenix Armor if they're in water, rain, or a bubble column.<br><br>
-     * This is done by looping through the armor {@link EquipmentSlot}s and also checking with {@link EquipmentUtil#getAccessory(LivingEntity, Item)} for the gloves.<br><br>
-     * The methods used for this are {@link PhoenixArmor#breakPhoenixArmor(LivingEntity, ItemStack, ItemStack, EquipmentSlot)} and {@link PhoenixArmor#breakPhoenixGloves(LivingEntity, SlotEntryReference, ItemStack)}.
+     * This is done by looping through the armor {@link EquipmentSlot}s.<br><br>
+     * The methods used for this are {@link PhoenixArmor#breakPhoenixArmor(LivingEntity, ItemStack, ItemStack, EquipmentSlot)}.
      *
      * @param entity The {@link LivingEntity} wearing the armor.
      */
@@ -138,10 +135,6 @@ public interface PhoenixArmor {
                         }
                     }
                 }
-                SlotEntryReference slotResult = EquipmentUtil.getAccessory(entity, AetherItems.PHOENIX_GLOVES);
-                if (slotResult != null) {
-                    breakPhoenixGloves(entity, slotResult, new ItemStack(AetherItems.OBSIDIAN_GLOVES));
-                }
             }
         }
     }
@@ -162,26 +155,6 @@ public interface PhoenixArmor {
         }
     }
 
-    /**
-     * Replaces the gloves stack and copies over its tags and enchantments.
-     *
-     * @param entity       The {@link LivingEntity} wearing the armor.
-     * @param slotResult   The {@link SlotEntryReference} of the accessory item.
-     * @param outcomeStack The replacement {@link ItemStack}.
-     */
-    private static void breakPhoenixGloves(LivingEntity entity, SlotEntryReference slotResult, ItemStack outcomeStack) {
-        outcomeStack = new ItemStack(outcomeStack.typeHolder(), 1, slotResult.stack().getComponentsPatch());
-        var accessories = AccessoriesAPI.getAccessories(entity);
-        if (accessories != null) {
-            AccessoriesContainer accessoriesContainer = accessories.getContainer(slotResult.reference().type());
-            if (accessoriesContainer != null) {
-                accessoriesContainer.getAccessories().setItem(slotResult.reference().slot(), outcomeStack);
-            }
-        }
-        if (entity instanceof ServerPlayer serverPlayer) {
-            CriteriaTriggers.INVENTORY_CHANGED.trigger(serverPlayer, serverPlayer.getInventory(), outcomeStack);
-        }
-    }
 
     /**
      * Prevents a user from receiving fire damage if wearing a full set of Phoenix Armor.

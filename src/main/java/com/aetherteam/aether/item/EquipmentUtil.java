@@ -1,12 +1,10 @@
 package com.aetherteam.aether.item;
 
-import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.entity.AttackStrengthSnapshot;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
-import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
-import com.aetherteam.aether.accessories.api.AccessoriesAPI;
-import com.aetherteam.aether.accessories.api.slot.SlotEntryReference;
+import com.aetherteam.aether.item.components.AetherDataComponents;
+import net.minecraft.core.Holder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -15,9 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.fabricmc.loader.api.FabricLoader;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
 
 public final class EquipmentUtil {
     /**
@@ -51,143 +46,38 @@ public final class EquipmentUtil {
     }
 
     /**
-     * Searches for gloves in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
+     * The cape an entity has on: a cape in its chest slot, or the cape smithed onto its chestplate.
      *
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotEntryReference} for the accessory item.
+     * @return The cape's {@link Item}, or null.
      */
     @Nullable
-    public static SlotEntryReference getGloves(LivingEntity entity) {
-        Optional<SlotEntryReference> slotResultOptional = EquipmentUtil.findFirstAccessory(entity, (stack) -> stack.getItem() instanceof GlovesItem);
-        return slotResultOptional.orElse(null);
+    public static Item getCape(LivingEntity entity) {
+        return getCape(entity.getItemBySlot(EquipmentSlot.CHEST));
     }
 
     /**
-     * Searches for Zanite Rings in an entity's accessory inventory and returns all the {@link SlotEntryReference} instances.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link List} of {@link SlotEntryReference}s for the accessory items.
-     */
-    public static List<SlotEntryReference> getZaniteRings(LivingEntity entity) {
-        return getAccessories(entity, AetherItems.ZANITE_RING);
-    }
-
-    /**
-     * Searches for a Zanite Pendant in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotEntryReference} for the accessory item.
+     * @param stack A chest slot {@link ItemStack}.
+     * @return The cape it is or carries, or null.
      */
     @Nullable
-    public static SlotEntryReference getZanitePendant(LivingEntity entity) {
-        return getAccessory(entity, AetherItems.ZANITE_PENDANT);
-    }
-
-    /**
-     * Checks if an Ice Pendant or Ice Ring exists in an entity's accessory inventory.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @return The result of the check, as a {@link Boolean}.
-     */
-    public static boolean hasFreezingAccessory(LivingEntity entity) {
-        return hasAccessory(entity, AetherItems.ICE_PENDANT) || hasAccessory(entity, AetherItems.ICE_RING);
-    }
-
-    /**
-     * Checks if an accessory that pacifies Swets exists in an entity's accessory inventory.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @return The result of the check, as a {@link Boolean}.
-     */
-    public static boolean hasSwetPacifyingAccessory(LivingEntity entity) {
-        return findFirstAccessory(entity, stack -> stack.is(AetherTags.Items.PACIFIES_SWETS)).isPresent();
-    }
-
-    /**
-     * Checks if a Swet Cape exists in an entity's accessory inventory.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @return The result of the check, as a {@link Boolean}.
-     */
-    public static boolean hasSwetCape(LivingEntity entity) {
-        return hasAccessory(entity, AetherItems.SWET_CAPE);
-    }
-
-    /**
-     * Checks if an Invisibility Cloak exists in an entity's accessory inventory.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @return The result of the check, as a {@link Boolean}.
-     */
-    public static boolean hasInvisibilityCloak(LivingEntity entity) {
-        return hasAccessory(entity, AetherItems.INVISIBILITY_CLOAK);
-    }
-
-    /**
-     * Checks if a {@link CapeItem} exists in an entity's accessory inventory.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @return The result of the check, as a {@link Boolean}.
-     */
-    public static boolean hasCape(LivingEntity entity) {
-        return findFirstAccessory(entity, stack -> stack.getItem() instanceof CapeItem).isPresent();
-    }
-
-    /**
-     * Searches for a {@link CapeItem} in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotEntryReference} for the accessory item.
-     */
-    @Nullable
-    public static SlotEntryReference getCape(LivingEntity entity) {
-        return findFirstAccessory(entity, stack -> stack.getItem() instanceof CapeItem).orElse(null);
-    }
-
-    /**
-     * Checks if an accessory {@link Item} exists in an entity's accessory inventory.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @param item   The accessory {@link Item} to look for.
-     * @return The result of the check, as a {@link Boolean}.
-     */
-    public static boolean hasAccessory(LivingEntity entity, Item item) {
-        return findFirstAccessory(entity, item).isPresent();
-    }
-
-    /**
-     * Searches for an accessory {@link Item} in an entity's accessory inventory and returns the first {@link SlotEntryReference} instance.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @param item   The accessory {@link Item} to look for.
-     * @return The {@link SlotEntryReference} for the accessory item.
-     */
-    @Nullable
-    public static SlotEntryReference getAccessory(LivingEntity entity, Item item) {
-        return findFirstAccessory(entity, item).orElse(null);
-    }
-
-    /**
-     * Searches for an accessory {@link Item} in an entity's accessory inventory and returns all the {@link SlotEntryReference} instances.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @param item   The accessory {@link Item} to look for.
-     * @return The {@link List} of {@link SlotEntryReference}s for the accessory items.
-     */
-    public static List<SlotEntryReference> getAccessories(LivingEntity entity, Item item) {
-        var accessories = AccessoriesAPI.getAccessories(entity);
-        if (accessories != null) {
-            return accessories.getEquipped(item);
+    public static Item getCape(ItemStack stack) {
+        if (stack.getItem() instanceof CapeItem) {
+            return stack.getItem();
         }
-        return List.of();
+        Holder<Item> cape = stack.get(AetherDataComponents.CAPE);
+        return cape != null ? cape.value() : null;
     }
 
-    /**
-     * Checks if the player is wearing Sentry Boots.
-     *
-     * @param entity The {@link LivingEntity} wearer.
-     * @return The result of the check, as a {@link Boolean}.
-     */
+    public static boolean hasSwetPacifyingAccessory(LivingEntity entity) {
+        Item cape = getCape(entity);
+        return cape != null && cape.builtInRegistryHolder().is(AetherTags.Items.PACIFIES_SWETS);
+    }
+
+    public static boolean hasSwetCape(LivingEntity entity) {
+        return getCape(entity) == AetherItems.SWET_CAPE;
+    }
+
     public static boolean hasSentryBoots(LivingEntity entity) {
         return entity.getItemBySlot(EquipmentSlot.FEET).is(AetherItems.SENTRY_BOOTS);
     }
@@ -209,7 +99,7 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasFullGravititeSet(LivingEntity entity) {
-        return hasArmorSet(entity, AetherItems.GRAVITITE_HELMET, AetherItems.GRAVITITE_CHESTPLATE, AetherItems.GRAVITITE_LEGGINGS, AetherItems.GRAVITITE_BOOTS, AetherItems.GRAVITITE_GLOVES);
+        return hasArmorSet(entity, AetherItems.GRAVITITE_HELMET, AetherItems.GRAVITITE_CHESTPLATE, AetherItems.GRAVITITE_LEGGINGS, AetherItems.GRAVITITE_BOOTS);
     }
 
     /**
@@ -219,7 +109,7 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasFullValkyrieSet(LivingEntity entity) {
-        return hasArmorSet(entity, AetherItems.VALKYRIE_HELMET, AetherItems.VALKYRIE_CHESTPLATE, AetherItems.VALKYRIE_LEGGINGS, AetherItems.VALKYRIE_BOOTS, AetherItems.VALKYRIE_GLOVES);
+        return hasArmorSet(entity, AetherItems.VALKYRIE_HELMET, AetherItems.VALKYRIE_CHESTPLATE, AetherItems.VALKYRIE_LEGGINGS, AetherItems.VALKYRIE_BOOTS);
     }
 
     /**
@@ -229,7 +119,7 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasFullNeptuneSet(LivingEntity entity) {
-        return hasArmorSet(entity, AetherItems.NEPTUNE_HELMET, AetherItems.NEPTUNE_CHESTPLATE, AetherItems.NEPTUNE_LEGGINGS, AetherItems.NEPTUNE_BOOTS, AetherItems.NEPTUNE_GLOVES);
+        return hasArmorSet(entity, AetherItems.NEPTUNE_HELMET, AetherItems.NEPTUNE_CHESTPLATE, AetherItems.NEPTUNE_LEGGINGS, AetherItems.NEPTUNE_BOOTS);
     }
 
     /**
@@ -239,7 +129,7 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasFullPhoenixSet(LivingEntity entity) {
-        return hasArmorSet(entity, AetherItems.PHOENIX_HELMET, AetherItems.PHOENIX_CHESTPLATE, AetherItems.PHOENIX_LEGGINGS, AetherItems.PHOENIX_BOOTS, AetherItems.PHOENIX_GLOVES);
+        return hasArmorSet(entity, AetherItems.PHOENIX_HELMET, AetherItems.PHOENIX_CHESTPLATE, AetherItems.PHOENIX_LEGGINGS, AetherItems.PHOENIX_BOOTS);
     }
 
     /**
@@ -249,7 +139,7 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasAnyPhoenixArmor(LivingEntity entity) {
-        return hasAnyArmor(entity, AetherItems.PHOENIX_HELMET, AetherItems.PHOENIX_CHESTPLATE, AetherItems.PHOENIX_LEGGINGS, AetherItems.PHOENIX_BOOTS, AetherItems.PHOENIX_GLOVES);
+        return hasAnyArmor(entity, AetherItems.PHOENIX_HELMET, AetherItems.PHOENIX_CHESTPLATE, AetherItems.PHOENIX_LEGGINGS, AetherItems.PHOENIX_BOOTS);
     }
 
     /**
@@ -260,48 +150,29 @@ public final class EquipmentUtil {
      * @param chestplate The chestplate {@link Item}.
      * @param leggings   The leggings {@link Item}.
      * @param boots      The boots {@link Item}.
-     * @param gloves     The gloves {@link Item}.
      * @return The result of the check, as a {@link Boolean}.
      */
-    private static boolean hasArmorSet(LivingEntity entity, Item helmet, Item chestplate, Item leggings, Item boots, Item gloves) {
+    private static boolean hasArmorSet(LivingEntity entity, Item helmet, Item chestplate, Item leggings, Item boots) {
         return entity.getItemBySlot(EquipmentSlot.HEAD).is(helmet)
                 && entity.getItemBySlot(EquipmentSlot.CHEST).is(chestplate)
                 && entity.getItemBySlot(EquipmentSlot.LEGS).is(leggings)
-                && entity.getItemBySlot(EquipmentSlot.FEET).is(boots)
-                && (!AetherConfig.SERVER.require_gloves.get() || findFirstAccessory(entity, gloves).isPresent());
+                && entity.getItemBySlot(EquipmentSlot.FEET).is(boots);
     }
 
     /**
-     * Checks if the player is wearing any armor pieces out of a set.
+     * Checks if the player is wearing any armor piece out of a set.
      *
      * @param entity     The {@link LivingEntity} wearer.
      * @param helmet     The helmet {@link Item}.
      * @param chestplate The chestplate {@link Item}.
      * @param leggings   The leggings {@link Item}.
      * @param boots      The boots {@link Item}.
-     * @param gloves     The gloves {@link Item}.
      * @return The result of the check, as a {@link Boolean}.
      */
-    private static boolean hasAnyArmor(LivingEntity entity, Item helmet, Item chestplate, Item leggings, Item boots, Item gloves) {
+    private static boolean hasAnyArmor(LivingEntity entity, Item helmet, Item chestplate, Item leggings, Item boots) {
         return entity.getItemBySlot(EquipmentSlot.HEAD).is(helmet)
                 || entity.getItemBySlot(EquipmentSlot.CHEST).is(chestplate)
                 || entity.getItemBySlot(EquipmentSlot.LEGS).is(leggings)
-                || entity.getItemBySlot(EquipmentSlot.FEET).is(boots)
-                || findFirstAccessory(entity, gloves).isPresent();
-    }
-
-    public static Optional<SlotEntryReference> findFirstAccessory(LivingEntity entity, Item item) {
-        return findFirstAccessory(entity, (itemStack) -> itemStack.is(item));
-    }
-
-    public static Optional<SlotEntryReference> findFirstAccessory(LivingEntity entity, Predicate<ItemStack> predicate) {
-        var accessories = AccessoriesAPI.getAccessories(entity);
-        if (accessories != null) {
-            SlotEntryReference slotEntryReference = accessories.getFirstEquipped(predicate);
-            if (slotEntryReference != null) {
-                return Optional.of(slotEntryReference);
-            }
-        }
-        return Optional.empty();
+                || entity.getItemBySlot(EquipmentSlot.FEET).is(boots);
     }
 }

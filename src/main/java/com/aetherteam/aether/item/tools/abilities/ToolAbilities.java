@@ -3,7 +3,6 @@ package com.aetherteam.aether.item.tools.abilities;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
-import com.aetherteam.aether.item.accessories.abilities.AccessoryAbilities;
 import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.loot.AetherLootContexts;
 import com.aetherteam.aether.network.AetherPacketSender;
@@ -117,12 +116,10 @@ public final class ToolAbilities {
     }
 
     /**
-     * Applies Aether accessory, tool, and effectiveness modifiers to vanilla block breaking speed.
+     * Applies Aether tool and effectiveness modifiers to vanilla block breaking speed.
      */
     public static float modifyBreakSpeed(Player player, BlockState state, float speed) {
         ItemStack stack = player.getMainHandItem();
-        speed = AccessoryAbilities.handleZaniteRingAbility(player, speed);
-        speed = AccessoryAbilities.handleZanitePendantAbility(player, speed);
         speed = handleZaniteToolAbility(stack, speed);
         return reduceToolEffectiveness(player, state, stack, speed);
     }

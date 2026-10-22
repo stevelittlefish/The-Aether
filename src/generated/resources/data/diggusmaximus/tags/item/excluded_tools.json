@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "#aether:accessories",
     "#aether:tools/hammers",
     "#aether:tools/lances",
     "aether:skyroot_sword",

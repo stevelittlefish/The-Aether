@@ -8,10 +8,8 @@ import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
 import com.aetherteam.aether.network.packet.AetherTimeSyncPacket;
 import com.aetherteam.aether.network.packet.PhoenixArrowSyncPacket;
 import com.aetherteam.aether.network.packet.clientbound.AetherTravelPacket;
-import com.aetherteam.aether.network.packet.clientbound.AccessorySyncPacket;
 import com.aetherteam.aether.network.packet.clientbound.BossInfoPacket;
 import com.aetherteam.aether.network.packet.clientbound.ClientDeveloperGlowPacket;
-import com.aetherteam.aether.network.packet.clientbound.ClientGrabItemPacket;
 import com.aetherteam.aether.network.packet.clientbound.ClientHaloPacket;
 import com.aetherteam.aether.network.packet.clientbound.ClientMoaSkinPacket;
 import com.aetherteam.aether.network.packet.clientbound.CloudMinionPacket;
@@ -52,13 +50,11 @@ public final class AetherNetworkingClient {
         registered = true;
 
         registerClientReceiver(AetherTravelPacket.TYPE, AetherTravelPacket::execute);
-        registerClientReceiver(AccessorySyncPacket.TYPE, AccessorySyncPacket::execute);
         registerClientReceiver(BossInfoPacket.Display.TYPE, payload -> AetherBossBarTracker.track(payload.getBossEvent(), payload.getEntityID()));
         registerClientReceiver(BossInfoPacket.Remove.TYPE, payload -> AetherBossBarTracker.untrack(payload.getBossEvent()));
         registerClientReceiver(ClientDeveloperGlowPacket.Apply.TYPE, ClientDeveloperGlowPacket.Apply::execute);
         registerClientReceiver(ClientDeveloperGlowPacket.Remove.TYPE, ClientDeveloperGlowPacket.Remove::execute);
         registerClientReceiver(ClientDeveloperGlowPacket.Sync.TYPE, ClientDeveloperGlowPacket.Sync::execute);
-        registerClientReceiver(ClientGrabItemPacket.TYPE, ClientGrabItemPacket::execute);
         registerClientReceiver(ClientHaloPacket.Apply.TYPE, ClientHaloPacket.Apply::execute);
         registerClientReceiver(ClientHaloPacket.Remove.TYPE, ClientHaloPacket.Remove::execute);
         registerClientReceiver(ClientHaloPacket.Sync.TYPE, ClientHaloPacket.Sync::execute);
