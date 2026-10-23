@@ -4,7 +4,7 @@
 This is an **unofficial fork** of [The Aether](https://github.com/The-Aether-Team/The-Aether) by The Aether Team. It is a cut-down "lite" version of the mod for Fabric on Minecraft 26.3. It keeps the dimension, the mobs, the dungeons and the progression, and drops the parts that change the base game's interface.
 
 > [!IMPORTANT]
-> This fork is not made or supported by The Aether Team. Please don't report problems with it on the official issue tracker or Discord. Report them on [this fork's issue tracker](https://github.com/stevelittlefish/The-Aether/issues) instead.
+> This fork is not made or supported by The Aether Team. Please don't report problems with it on the official issue tracker or Discord. Report them on [this fork's issue tracker](https://github.com/stevelittlefish/The-Aether-Lite/issues) instead.
 
 ## :evergreen_tree: Where this fork comes from
 
@@ -66,8 +66,8 @@ Optional integrations: [JEI](https://modrinth.com/mod/jei), [Jade](https://modri
 There are no published releases of the lite version yet. Build it from source:
 
 ```
-git clone -b main https://github.com/stevelittlefish/The-Aether.git
-cd The-Aether
+git clone -b main https://github.com/stevelittlefish/The-Aether-Lite.git
+cd The-Aether-Lite
 ./gradlew build
 ```
 
@@ -75,7 +75,7 @@ The mod jar is written to `build/libs/`.
 
 ## :bug: Reporting issues
 
-Report issues on [this fork's issue tracker](https://github.com/stevelittlefish/The-Aether/issues). If you can, first check whether the same problem happens in the official mod. If it does, it may belong upstream.
+Report issues on [this fork's issue tracker](https://github.com/stevelittlefish/The-Aether-Lite/issues). If you can, first check whether the same problem happens in the official mod. If it does, it may belong upstream.
 
 ## :scroll: License
 
