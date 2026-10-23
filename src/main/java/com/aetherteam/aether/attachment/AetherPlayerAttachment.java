@@ -4,7 +4,6 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.portal.PortalClientUtil;
-import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
@@ -27,10 +26,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -114,11 +111,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
     private float savedHealth = 0.0F;
     private int lifeShards;
 
-    private static final Style DISCORD = Style.EMPTY.withColor(5793266).withUnderlined(true);
-    private static final Style PATREON = Style.EMPTY.withColor(16728653).withUnderlined(true);
-    private boolean canShowPatreonMessage = true;
-    private int loginsUntilPatreonMessage = -1;
-
     /**
      * Stores the following methods as able to be synced between client and server and vice-versa.
      */
@@ -144,16 +136,14 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
         Codec.BOOL.fieldOf("seen_sun_spirit").forGetter(AetherPlayerAttachment::hasSeenSunSpiritDialogue),
         Codec.INT.fieldOf("remedy_start_duration").forGetter(AetherPlayerAttachment::getRemedyStartDuration),
         CompoundTag.CODEC.optionalFieldOf("mounted_aerbunny").forGetter(AetherPlayerAttachment::getMountedAerbunnyTag),
-        UUIDUtil.CODEC.optionalFieldOf("last_ridden_moa").forGetter(o -> o.lastRiddenMoa),
-        Codec.BOOL.fieldOf("show_patreon_message").forGetter(o -> o.canShowPatreonMessage),
-        Codec.INT.fieldOf("logins_until_patreon_message").forGetter(o -> o.loginsUntilPatreonMessage)
+        UUIDUtil.CODEC.optionalFieldOf("last_ridden_moa").forGetter(o -> o.lastRiddenMoa)
     ).apply(instance, AetherPlayerAttachment::new));
 
     public AetherPlayerAttachment() {
 
     }
 
-    public AetherPlayerAttachment(boolean portal, boolean spawnInAether, float savedHealth, int lifeShards, boolean seenSunSpirit, int remedyDuration, Optional<CompoundTag> mountedAerbunnyTag, Optional<UUID> lastRiddenMoa, boolean showPatreonMessage, int loginUntilMessage) {
+    public AetherPlayerAttachment(boolean portal, boolean spawnInAether, float savedHealth, int lifeShards, boolean seenSunSpirit, int remedyDuration, Optional<CompoundTag> mountedAerbunnyTag, Optional<UUID> lastRiddenMoa) {
         this.setCanGetPortal(portal);
         this.setCanSpawnInAether(spawnInAether);
         this.setSavedHealth(savedHealth);
@@ -162,8 +152,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
         this.setRemedyStartDuration(remedyDuration);
         this.setMountedAerbunnyTag(mountedAerbunnyTag);
         this.setLastRiddenMoa(lastRiddenMoa.orElse(null));
-        this.canShowPatreonMessage = showPatreonMessage;
-        this.loginsUntilPatreonMessage = loginUntilMessage;
     }
 
     public void copyPersistentStateFrom(AetherPlayerAttachment source) {
@@ -175,8 +163,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
         this.setRemedyStartDuration(source.getRemedyStartDuration());
         this.setMountedAerbunnyTag(source.getMountedAerbunnyTag().map(CompoundTag::copy));
         this.setLastRiddenMoa(source.getLastRiddenMoa());
-        this.canShowPatreonMessage = source.canShowPatreonMessage;
-        this.loginsUntilPatreonMessage = source.loginsUntilPatreonMessage;
     }
 
     public Map<String, SyncField> getSyncFields() {
@@ -197,7 +183,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
     public void onLogin(Player player) {
         this.handleGivePortal(player);
         this.remountAerbunny(player);
-        this.handlePatreonMessage(player);
         this.shouldSyncAfterJoin = true;
         ServerPerkData.MOA_SKIN_INSTANCE.syncFromServer(player);
         ServerPerkData.HALO_INSTANCE.syncFromServer(player);
@@ -481,59 +466,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
         if (health != null && health.hasModifier(this.getLifeShardHealthAttributeModifier().id())) {
             this.setSavedHealth(player.getHealth());
         }
-    }
-
-    /**
-     * Sends a message linking the mod's Patreon and Discord, as long as the {@link AetherConfig.Common#show_patreon_message} config is not disabled.
-     * The message will only be able to show up 1 or 2 logins after the player has defeated a boss, and after it sends it will not be able to show up again on any world.
-     */
-    private void handlePatreonMessage(Player player) {
-        if (player instanceof ServerPlayer serverPlayer) {
-            if (AetherConfig.COMMON.show_patreon_message.get() && this.canShowPatreonMessage) {
-                if (this.loginsUntilPatreonMessage < 0) {
-                    if (serverPlayer.level().dimension() == AetherDimensions.AETHER_LEVEL
-                        && (serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(AetherEntityTypes.SLIDER)) > 0
-                        || serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(AetherEntityTypes.VALKYRIE_QUEEN)) > 0
-                        || serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(AetherEntityTypes.SUN_SPIRIT)) > 0)) {
-                        this.loginsUntilPatreonMessage = serverPlayer.getRandom().nextInt(2);
-                    }
-                }
-                if (this.loginsUntilPatreonMessage == 0) {
-                    this.sendPatreonMessage(serverPlayer);
-                    this.canShowPatreonMessage = false;
-                    AetherConfig.COMMON.show_patreon_message.set(false);
-                    AetherConfig.COMMON.show_patreon_message.save();
-                } else if (this.loginsUntilPatreonMessage > 0) {
-                    --this.loginsUntilPatreonMessage;
-                }
-            } else if (!AetherConfig.COMMON.show_patreon_message.get()) {
-                this.canShowPatreonMessage = false;
-            }
-        }
-    }
-
-    /**
-     * Handles the component setup for the Patreon message.
-     *
-     * @param serverPlayer The {@link ServerPlayer} to send the message to.
-     */
-    private void sendPatreonMessage(ServerPlayer serverPlayer) {
-        Component component = Component.translatable("gui.aether.patreon.message");
-        List<String> unlinkedBodyArray = Arrays.stream(component.getString().split("(?=(%s1))|(?<=(%s1))|(?=(%s2))|(?<=(%s2))|(?=(%s3))|(?<=(%s3))")).toList();
-        List<MutableComponent> bodyArray = unlinkedBodyArray.stream().map((string) ->
-            switch (string) {
-                case "%s1" -> Component.literal("The Aether").setStyle(Style.EMPTY.withColor(8445183).withItalic(true));
-                case "%s2" ->
-                    Component.literal("").append(Component.literal("! ").setStyle(DISCORD)).append(Component.literal("Discord").setStyle(DISCORD));
-                case "%s3" ->
-                    Component.literal("").append(Component.literal(", ").setStyle(PATREON)).append(Component.literal("Patreon").setStyle(PATREON));
-                default -> Component.literal(string);
-            }).toList();
-        MutableComponent message = Component.literal("");
-        bodyArray.forEach(message::append);
-        serverPlayer.sendSystemMessage(message);
-        Component note = Component.translatable("gui.aether.patreon.note").setStyle(Style.EMPTY.withColor(7631988).withItalic(true));
-        serverPlayer.sendSystemMessage(note);
     }
 
     /**

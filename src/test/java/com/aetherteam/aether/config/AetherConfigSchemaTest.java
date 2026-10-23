@@ -13,7 +13,7 @@ class AetherConfigSchemaTest {
     @Test
     void schemaContainsAllReleasedEntries() {
         assertEquals(23, AetherConfig.SERVER_FILE.entries().size());
-        assertEquals(9, AetherConfig.COMMON_FILE.entries().size());
+        assertEquals(8, AetherConfig.COMMON_FILE.entries().size());
         assertEquals(13, AetherConfig.CLIENT_FILE.entries().size());
     }
 

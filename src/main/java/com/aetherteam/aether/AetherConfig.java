@@ -136,7 +136,6 @@ public final class AetherConfig {
         public final BooleanConfigEntry enable_startup_loot;
         public final BooleanConfigEntry reposition_slider_message;
         public final BooleanConfigEntry repeat_sun_spirit_dialogue;
-        public final BooleanConfigEntry show_patreon_message;
         public final BooleanConfigEntry add_temporary_freezing_automatically;
         public final BooleanConfigEntry add_ruined_portal_automatically;
         public final BooleanConfigEntry randomize_boss_names;
@@ -151,8 +150,6 @@ public final class AetherConfig {
                     "Moves the message for when a player attacks the Slider with an incorrect item to be above the hotbar instead of in chat");
             this.repeat_sun_spirit_dialogue = file.booleanEntry("Gameplay", "Repeat Sun Spirit's battle dialogue", true,
                     "Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him");
-            this.show_patreon_message = file.booleanEntry("Gameplay", "Show Patreon message", true,
-                    "Determines if a message that links The Aether mod's Patreon should show");
             this.add_temporary_freezing_automatically = file.worldRestartBooleanEntry("Data Pack", "Add Temporary Freezing automatically", false,
                     "Sets the Aether Temporary Freezing data pack to be added to new worlds automatically");
             this.add_ruined_portal_automatically = file.worldRestartBooleanEntry("Data Pack", "Add Ruined Portals automatically", false,

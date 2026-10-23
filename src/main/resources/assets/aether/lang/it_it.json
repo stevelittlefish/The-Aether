@@ -350,8 +350,6 @@
   "gui.aether.moa_skins.tooltip.pledging": "Hai accesso a questa skin finché il tuo %s tier è attivo!",
   "gui.aether.moa_skins.tooltip.title.access.lifetime": "Accesso permanente",
   "gui.aether.moa_skins.tooltip.title.access.pledging": "Accesso Temporaneo",
-  "gui.aether.patreon.message": "Ti piace %s1? Dai un'occhiata ai nostri %s2 e %s3!",
-  "gui.aether.patreon.note": "Questo messaggio verrà mostrato solo una volta.",
   "gui.aether.player.dialog.challenge": "Voglio combattere con te!",
   "gui.aether.player.dialog.deny_fight": "Ripensandoci, è meglio di no.",
   "gui.aether.player.dialog.have_medals": "Sono pronto, ho le medaglie proprio qui!",
