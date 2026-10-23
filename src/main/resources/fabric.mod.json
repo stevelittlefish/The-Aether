@@ -10,7 +10,7 @@
   "contact": {
     "homepage": "${mod_url}",
     "issues": "${mod_tracker}",
-    "sources": "https://github.com/The-Aether-Team/The-Aether-fabric"
+    "sources": "https://github.com/stevelittlefish/The-Aether-Lite"
   },
   "license": "${mod_license}",
   "icon": "aether.png",
