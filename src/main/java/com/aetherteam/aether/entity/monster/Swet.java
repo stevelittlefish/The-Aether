@@ -665,9 +665,11 @@ public class Swet extends Slime implements MountableMob {
                     } else if (this.jumps == 2) {
                         this.swet.setDeltaMovement(this.swet.getDeltaMovement().add(0, 1.55, 0));
                     } else {
-                        this.swet.getPassengers().getFirst().stopRiding();
+                        // Gone first, so the prey's dismount isn't refused (AetherMounting).
+                        Entity prey = this.swet.getPassengers().getFirst();
                         this.swet.spawnDissolveParticles();
                         this.swet.discard();
+                        prey.stopRiding();
                     }
                     if (!this.swet.getMidJump()) {
                         this.jumps++;

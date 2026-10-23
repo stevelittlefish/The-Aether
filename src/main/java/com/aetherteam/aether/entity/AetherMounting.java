@@ -70,6 +70,11 @@ public final class AetherMounting {
      * @return Whether to prevent the rider from dismounting, as a {@link Boolean}.
      */
     public static boolean dismountPrevention(Entity rider, Entity mount, boolean dismounting) {
+        // A mount that's dead or gone always lets go. Holding on left a player riding a Swet that
+        // had dissolved: stuck in the air, shaking, with nothing to kill (Steve, 2026-10-23).
+        if (mount.isRemoved() || !mount.isAlive()) {
+            return false;
+        }
         if (dismounting && rider.isShiftKeyDown()) {
             return (mount instanceof MountableAnimal && !mount.onGround() && !mount.isInLiquid() && !mount.isPassenger()) || (mount instanceof Swet swet && !swet.isFriendly());
         }

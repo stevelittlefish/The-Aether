@@ -6,7 +6,8 @@
   "environment": "*",
   "entrypoints": {
     "fabric-gametest": [
-      "com.aetherteam.aether.blockentity.ApiCompatibilityGameTests"
+      "com.aetherteam.aether.blockentity.ApiCompatibilityGameTests",
+      "com.aetherteam.aether.entity.SwetGameTests"
     ],
     "fabric-client-gametest": [
       "com.aetherteam.aether.integration.viewer.AetherViewerClientGameTest"
