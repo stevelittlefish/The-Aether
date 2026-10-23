@@ -41,7 +41,7 @@ public class SunAltarScreen extends Screen {
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, xSize, ySize, 256, 256);
 
         FormattedCharSequence sequence = this.title.getVisualOrderText();
-        guiGraphics.text(this.font, this.title, (int) ((this.width - this.font.width(sequence)) / 2.0F), y + 20, 0x404040, false);
+        guiGraphics.text(this.font, this.title, (int) ((this.width - this.font.width(sequence)) / 2.0F), y + 20, 0xFF404040, false);
     }
 
     @Override

@@ -27,6 +27,6 @@ public final class AetherScreenMessages {
         Component message = AetherTravelState.playerLeavingAether
                 ? Component.translatable("gui.aether.descending")
                 : Component.translatable("gui.aether.ascending");
-        guiGraphics.centeredText(minecraft.font, message, screen.width / 2, AetherConfig.CLIENT.portal_text_y.get(), 16777215);
+        guiGraphics.centeredText(minecraft.font, message, screen.width / 2, AetherConfig.CLIENT.portal_text_y.get(), 0xFFFFFFFF);
     }
 }

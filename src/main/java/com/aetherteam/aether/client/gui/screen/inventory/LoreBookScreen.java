@@ -215,7 +215,7 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
     }
 
     private void drawBookText(GuiGraphicsExtractor guiGraphics, Font fontRenderer, String text, int x, int y) {
-        guiGraphics.text(fontRenderer, text, x, y, 4210752, false);
+        guiGraphics.text(fontRenderer, text, x, y, 0xFF404040, false); // ARGB: without the alpha it draws nothing
     }
 
     private List<String> wrapText(String text, int width) {
