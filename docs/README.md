@@ -66,7 +66,7 @@ Optional integrations: [JEI](https://modrinth.com/mod/jei), [Jade](https://modri
 There are no published releases of the lite version yet. Build it from source:
 
 ```
-git clone -b main https://github.com/stevelittlefish/The-Aether-Lite.git
+git clone https://github.com/stevelittlefish/The-Aether-Lite.git
 cd The-Aether-Lite
 ./gradlew build
 ```
