@@ -14,11 +14,7 @@ import com.aetherteam.aether.item.tools.abilities.ToolAbilities;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketInteractions;
 import com.aetherteam.aether.mixin.mixins.common.accessor.MobAccessor;
 import com.aetherteam.aether.network.AetherPacketSender;
-import com.aetherteam.aether.network.packet.clientbound.RegisterMoaSkinsPacket;
 import com.aetherteam.aether.network.packet.clientbound.ServerConfigSyncPacket;
-import com.aetherteam.aether.perk.data.ServerPerkData;
-import com.aetherteam.aether.perk.data.UserData;
-import com.aetherteam.aether.perk.types.MoaSkins;
 import com.aetherteam.aether.recipe.InteractionRecipeRules;
 import com.aetherteam.aether.world.AetherTimeController;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
@@ -70,16 +66,7 @@ public final class AetherFabricEvents {
             AetherPacketSender.sendToPlayer(player, ServerConfigSyncPacket.create());
             player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER).onLogin(player);
             AetherTimeController.syncAetherTime(player);
-            var playerId = player.getGameProfile().id();
-            if (!UserData.Server.getStoredUsers().containsKey(playerId)) {
-                var server = player.level().getServer();
-                ServerPerkData.MOA_SKIN_INSTANCE.removePerk(server, playerId);
-                ServerPerkData.HALO_INSTANCE.removePerk(server, playerId);
-                ServerPerkData.DEVELOPER_GLOW_INSTANCE.removePerk(server, playerId);
-            }
             ToolAbilities.setDebuffToolsState(player);
-            MoaSkins.registerMoaSkins(player.level());
-            AetherPacketSender.sendToPlayer(player, new RegisterMoaSkinsPacket());
         });
         ServerPlayerEvents.LEAVE.register(player -> {
             player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER).onLogout(player);
@@ -108,9 +95,6 @@ public final class AetherFabricEvents {
             } else if (entity.getClass() == Fox.class) {
                 Fox fox = (Fox) entity;
                 ((MobAccessor) fox).aether$getGoalSelector().addGoal(10, new FoxEatBerryBushGoal(fox, 1.2F, 12, 1));
-            }
-            if (entity instanceof Player player) {
-                player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER).onJoinLevel(player);
             }
         });
         ServerMobEffectEvents.ALLOW_ADD.register((effectInstance, livingEntity, context) ->

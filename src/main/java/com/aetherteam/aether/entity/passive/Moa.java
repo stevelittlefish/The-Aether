@@ -21,8 +21,6 @@ import com.aetherteam.aether.entity.monster.Swet;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
 import com.aetherteam.aether.network.packet.clientbound.MoaInteractPacket;
-import com.aetherteam.aether.perk.data.ServerPerkData;
-import com.aetherteam.aether.perk.types.MoaData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -277,7 +275,7 @@ public class Moa extends MountableAnimal implements WingedBird {
     }
 
     /**
-     * Tracks the last rider and Moa Skin data when a player mounts a Moa.
+     * Tracks the last rider when a player mounts a Moa.
      *
      * @param passenger The passenger {@link Entity}.
      */
@@ -290,12 +288,6 @@ public class Moa extends MountableAnimal implements WingedBird {
             }
             if (!player.level().isClientSide()) {
                 player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER).setSyncedToClients(player, AetherPlayerAttachment.LAST_RIDDEN_MOA_SYNC_KEY, this.getMoaUUID()); // Tracks the player as having last ridden this Moa.
-                if (player.level().getServer() != null) {
-                    Map<UUID, MoaData> userSkinsData = ServerPerkData.MOA_SKIN_INSTANCE.getServerPerkData(player.level().getServer());
-                    if (userSkinsData.containsKey(this.getLastRider())) { // Tracks a Moa Skin as being tied to this Moa and this passenger.
-                        ServerPerkData.MOA_SKIN_INSTANCE.applyPerkWithVerification(player.level().getServer(), this.getLastRider(), new MoaData(this.getMoaUUID(), userSkinsData.get(this.getLastRider()).moaSkin()));
-                    }
-                }
             }
         }
         super.addPassenger(passenger);

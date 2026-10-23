@@ -15,11 +15,6 @@ import com.aetherteam.aether.item.miscellaneous.ParachuteItem;
 import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
 import com.aetherteam.aether.network.packet.clientbound.CloudMinionPacket;
 import com.aetherteam.aether.network.packet.clientbound.RemountAerbunnyPacket;
-import com.aetherteam.aether.perk.CustomizationsOptions;
-import com.aetherteam.aether.perk.data.ClientDeveloperGlowPerkData;
-import com.aetherteam.aether.perk.data.ClientHaloPerkData;
-import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
-import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.aether.network.packet.SyncPacket;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -184,18 +179,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
         this.handleGivePortal(player);
         this.remountAerbunny(player);
         this.shouldSyncAfterJoin = true;
-        ServerPerkData.MOA_SKIN_INSTANCE.syncFromServer(player);
-        ServerPerkData.HALO_INSTANCE.syncFromServer(player);
-        ServerPerkData.DEVELOPER_GLOW_INSTANCE.syncFromServer(player);
-    }
-
-    /**
-     * Handles functions when the player joins a world.
-     */
-    public void onJoinLevel(Player player) {
-        if (player.level().isClientSide() && player.isLocalPlayer()) {
-            CustomizationsOptions.INSTANCE.load();
-        }
     }
 
     /**
@@ -226,9 +209,6 @@ public class AetherPlayerAttachment implements AttachmentSyncable {
         this.checkToRemoveCloudMinions();
         this.handleSavedHealth(player);
         this.handleLifeShardModifier(player);
-        ClientMoaSkinPerkData.INSTANCE.syncFromClient(player);
-        ClientHaloPerkData.INSTANCE.syncFromClient(player);
-        ClientDeveloperGlowPerkData.INSTANCE.syncFromClient(player);
     }
 
     private void syncAfterJoin(Player player) {

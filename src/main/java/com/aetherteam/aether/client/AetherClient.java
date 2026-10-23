@@ -18,7 +18,6 @@ import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.components.AetherDataComponents;
-import com.aetherteam.aether.perk.CustomizationsOptions;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
@@ -106,7 +105,6 @@ public class AetherClient {
     }
 
     private static void registerClientContent() {
-        CustomizationsOptions.bootstrap();
         AetherAdvancementSoundOverrides.bootstrap();
         registerVisualContent();
         registerMenuAndInputContent();

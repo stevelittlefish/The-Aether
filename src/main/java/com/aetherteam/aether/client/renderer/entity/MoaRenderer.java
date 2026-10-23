@@ -2,8 +2,6 @@ package com.aetherteam.aether.client.renderer.entity;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.api.registers.MoaType;
-import com.aetherteam.aether.client.ClientAccess;
-import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.layers.*;
 import com.aetherteam.aether.client.renderer.entity.model.MoaModel;
@@ -11,16 +9,11 @@ import com.aetherteam.aether.client.renderer.entity.state.MoaRenderState;
 import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.entity.monster.Cockatrice;
 import com.aetherteam.aether.entity.passive.Moa;
-import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
-import com.aetherteam.aether.perk.types.MoaData;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
 
-import javax.annotation.Nullable;
-import java.util.Map;
 import java.util.UUID;
 
 public class MoaRenderer extends MobRenderer<Moa, MoaRenderState, MoaModel> {
@@ -30,11 +23,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaRenderState, MoaModel> {
 
     public MoaRenderer(EntityRendererProvider.Context context) {
         super(context, new MoaModel(context.bakeLayer(AetherModelLayers.MOA)), 0.7F);
-        this.addLayer(new MoaEmissiveLayer(this));
-        this.addLayer(new MoaHatLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_HAT))));
-        this.addLayer(new MoaHatEmissiveLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_HAT))));
         this.addLayer(new MoaSaddleLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
-        this.addLayer(new MoaSaddleEmissiveLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
     }
 
     @Override
@@ -88,7 +77,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaRenderState, MoaModel> {
     }
 
     /**
-     * Retrieves the texture for the Moa, whether it be from the {@link MoaType}, a player's {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin}, or an Easter Egg skin.
+     * Retrieves the texture for the Moa, whether it be from the {@link MoaType} or an Easter Egg skin.
      *
      * @param renderState The {@link MoaRenderState} to retrieve the skin from.
      * @return The {@link Identifier} for the emissive texture.
@@ -99,10 +88,6 @@ public class MoaRenderer extends MobRenderer<Moa, MoaRenderState, MoaModel> {
     }
 
     public static Identifier getTexture(MoaRenderState renderState) {
-        Identifier moaSkin = getMoaSkinLocation(renderState);
-        if (moaSkin != null) {
-            return moaSkin;
-        }
         if (renderState.nameTag != null && renderState.nameTag.getString().equals("Mos")) {
             return MOS_TEXTURE;
         }
@@ -112,24 +97,5 @@ public class MoaRenderer extends MobRenderer<Moa, MoaRenderState, MoaModel> {
         }
         Identifier moaType = renderState.location;
         return moaType == null ? DEFAULT_TEXTURE : moaType;
-    }
-
-    /**
-     * Retrieves the texture for the player's {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin}, if there is one and the player has a Moa Skin.
-     *
-     * @param renderState The {@link MoaRenderState} to retrieve the skin from.
-     * @return The {@link Identifier} for the emissive texture.
-     */
-    @Nullable
-    private static Identifier getMoaSkinLocation(MoaRenderState renderState) {
-        UUID lastRiderUUID = renderState.lastRider;
-        UUID moaUUID = renderState.moaUUID;
-        Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();
-        if (ClientAccess.screen(Minecraft.getInstance()) instanceof MoaSkinsScreen moaSkinsScreen && moaSkinsScreen.getSelectedSkin() != null && moaSkinsScreen.getPreviewMoa() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID().equals(moaUUID)) {
-            return moaSkinsScreen.getSelectedSkin().getSkinLocation();
-        } else if (lastRiderUUID != null && userSkinsData.containsKey(lastRiderUUID) && userSkinsData.get(lastRiderUUID).moaSkin() != null && userSkinsData.get(lastRiderUUID).moaUUID() != null && userSkinsData.get(lastRiderUUID).moaUUID().equals(moaUUID)) {
-            return userSkinsData.get(lastRiderUUID).moaSkin().getSkinLocation();
-        }
-        return null;
     }
 }

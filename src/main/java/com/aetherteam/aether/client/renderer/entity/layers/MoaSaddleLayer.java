@@ -1,23 +1,13 @@
 package com.aetherteam.aether.client.renderer.entity.layers;
 
 import com.aetherteam.aether.api.registers.MoaType;
-import com.aetherteam.aether.client.ClientAccess;
-import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.client.renderer.entity.model.MoaModel;
 import com.aetherteam.aether.client.renderer.entity.state.MoaRenderState;
-import com.aetherteam.aether.entity.passive.Moa;
-import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
-import com.aetherteam.aether.perk.types.MoaData;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.Identifier;
-
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.UUID;
 
 public class MoaSaddleLayer extends RenderLayer<MoaRenderState, MoaModel> {
     private static final Identifier DEFAULT_LOCATION = Identifier.withDefaultNamespace("textures/entity/mobs/moa/black_moa_saddle.png");
@@ -29,7 +19,7 @@ public class MoaSaddleLayer extends RenderLayer<MoaRenderState, MoaModel> {
     }
 
     /**
-     * Renders a saddle layer on a Moa if there is one from the {@link MoaType} or one from a {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin}.
+     * Renders a saddle layer on a Moa, with the {@link MoaType}'s saddle texture.
      *
      * @param poseStack       The rendering {@link PoseStack}.
      * @param collector       The rendering {@link SubmitNodeCollector}.
@@ -42,31 +32,8 @@ public class MoaSaddleLayer extends RenderLayer<MoaRenderState, MoaModel> {
     public void submit(PoseStack poseStack, SubmitNodeCollector collector, int packedLight, MoaRenderState renderState, float netHeadYaw, float headPitch) {
         if (renderState.saddle && !renderState.isInvisible) {
             Identifier texture = renderState.type != null ? renderState.saddleLocation : DEFAULT_LOCATION;
-            Identifier moaSkin = this.getMoaSkinLocation(renderState);
-            if (moaSkin != null) {
-                texture = moaSkin;
-            }
             this.saddle.setupAnim(renderState);
             renderColoredCutoutModel(this.saddle, texture, poseStack, collector, packedLight, renderState, -1, 0);
         }
-    }
-
-    /**
-     * Retrieves the saddle texture for the player's {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin}, if there is one and the player has a Moa Skin.
-     *
-     * @param renderState The {@link MoaRenderState} to retrieve the skin from.
-     * @return The {@link Identifier} for the emissive texture.
-     */
-    @Nullable
-    private Identifier getMoaSkinLocation(MoaRenderState renderState) {
-        UUID lastRiderUUID = renderState.lastRider;
-        UUID moaUUID = renderState.moaUUID;
-        Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();
-        if (ClientAccess.screen(Minecraft.getInstance()) instanceof MoaSkinsScreen moaSkinsScreen && moaSkinsScreen.getSelectedSkin() != null && moaSkinsScreen.getPreviewMoa() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID().equals(moaUUID)) {
-            return moaSkinsScreen.getSelectedSkin().getSaddleLocation();
-        } else if (lastRiderUUID != null && userSkinsData.containsKey(lastRiderUUID) && userSkinsData.get(lastRiderUUID).moaSkin() != null && userSkinsData.get(lastRiderUUID).moaUUID() != null && userSkinsData.get(lastRiderUUID).moaUUID().equals(moaUUID)) {
-            return userSkinsData.get(lastRiderUUID).moaSkin().getSaddleLocation();
-        }
-        return null;
     }
 }
