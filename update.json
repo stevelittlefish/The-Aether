@@ -1,4 +1,7 @@
 {
   "homepage": "https://github.com/stevelittlefish/The-Aether-Lite",
-  "promos": {}
+  "promos": {
+    "26.3-recommended": "1.0.0",
+    "26.3-latest": "1.0.0"
+  }
 }

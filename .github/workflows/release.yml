@@ -1,0 +1,77 @@
+name: Release
+
+# Push a tag named <minecraft_version>-<mod_version>-lite (for example 26.3-1.0.0-lite) to build, test and publish a
+# GitHub Release. The release notes are read from docs/releases/<tag>.md.
+
+on:
+  push:
+    tags:
+      - '*-lite'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Check the tag matches the version and has release notes
+        id: release
+        shell: bash
+        run: |
+          set -euo pipefail
+          minecraft_version=$(awk -F= '$1 == "minecraft_version" { print $2 }' gradle.properties)
+          mod_version=$(awk -F= '$1 == "mod_version" { print $2 }' gradle.properties)
+          expected="${minecraft_version}-${mod_version}-lite"
+          if [ "$GITHUB_REF_NAME" != "$expected" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match gradle.properties, which expects $expected"
+            exit 1
+          fi
+          notes="docs/releases/${GITHUB_REF_NAME}.md"
+          if [ ! -f "$notes" ]; then
+            echo "::error::Missing release notes at $notes"
+            exit 1
+          fi
+          echo "notes=$notes" >> "$GITHUB_OUTPUT"
+          echo "title=The Aether Lite ${mod_version} for Minecraft ${minecraft_version}" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Java 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build and test
+        run: ./gradlew clean build --console=plain
+
+      - name: Publish the GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp "${{ steps.release.outputs.notes }}" release-notes.md
+          {
+            echo
+            echo '## SHA-256'
+            echo
+            echo '```'
+            (cd build/libs && sha256sum *.jar)
+            echo '```'
+          } >> release-notes.md
+          gh release create "$GITHUB_REF_NAME" build/libs/*.jar \
+            --title "${{ steps.release.outputs.title }}" \
+            --notes-file release-notes.md \
+            --verify-tag

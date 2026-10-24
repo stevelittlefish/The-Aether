@@ -63,7 +63,9 @@ Requirements:
 
 Optional integrations: [JEI](https://modrinth.com/mod/jei), [Jade](https://modrinth.com/mod/jade), [WTHIT](https://modrinth.com/mod/wthit), Diggus Maximus and Carry On.
 
-There are no published releases of the lite version yet. Build it from source:
+Download `aether-lite-<minecraft version>-fabric-<version>.jar` from the [Releases page](https://github.com/stevelittlefish/The-Aether-Lite/releases) and put it in your `mods` folder. The `-sources` jar isn't needed to play.
+
+### Building from source
 
 ```
 git clone https://github.com/stevelittlefish/The-Aether-Lite.git
@@ -71,7 +73,15 @@ cd The-Aether-Lite
 ./gradlew build
 ```
 
-The mod jar is written to `build/libs/`.
+The mod jar is written to `build/libs/`. Every push to `main` and `lite` is also built on GitHub Actions, and the jar from each run can be downloaded there.
+
+### Making a release
+
+1. Set `mod_version` in `gradle.properties`.
+2. Write the release notes in `docs/releases/<minecraft version>-<version>-lite.md`.
+3. Commit, then push a tag with the same name, for example `git tag 26.3-1.0.0-lite && git push origin 26.3-1.0.0-lite`.
+
+The release workflow checks the tag against `gradle.properties`, builds and tests the mod, and publishes a GitHub Release with the jars and their checksums.
 
 ## :bug: Reporting issues
 

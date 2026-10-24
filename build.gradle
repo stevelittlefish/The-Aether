@@ -14,7 +14,7 @@ version = project.mod_version
 group = mod_group
 
 base {
-    archivesName = "${mod_id}-${minecraft_version}-fabric"
+    archivesName = "${mod_id}-lite-${minecraft_version}-fabric"
 }
 
 java {
