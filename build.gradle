@@ -116,7 +116,8 @@ configurations {
     wthitApiArtifact
 }
 
-def viewerCompatTest = (project.findProperty("viewerCompatTest") ?: "wthit").toString()
+// WTHIT has no 26.3 build yet, so the game tests run alongside Jade by default.
+def viewerCompatTest = (project.findProperty("viewerCompatTest") ?: "jade").toString()
 if (!(viewerCompatTest in ["none", "jade", "wthit", "both"])) {
     throw new GradleException("viewerCompatTest must be one of: none, jade, wthit, both")
 }
